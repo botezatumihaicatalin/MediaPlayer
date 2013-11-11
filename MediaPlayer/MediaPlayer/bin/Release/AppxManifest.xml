@@ -25,6 +25,9 @@
       <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+        </InitialRotationPreference>
       </VisualElements>
     </Application>
   </Applications>

@@ -48,10 +48,6 @@ C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\Themes\Generic.xaml
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\MediaPlayer.exe
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\MediaPlayer.pdb
-C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\priconfig.xml.intermediate
-C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\layout.resfiles.intermediate
-C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\resources.resfiles.intermediate
-C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\pri.resfiles.intermediate
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\priconfig.xml
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\layout.resfiles
 C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\obj\Release\resources.resfiles

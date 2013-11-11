@@ -23,6 +23,9 @@ namespace MediaPlayer
             get { return mDirectVideoURL; }
         }
 
+        public YoutubeDecoder()
+        {           
+        }
         public YoutubeDecoder(string VideoID)
         {
             this.VideoID = VideoID;

@@ -15,12 +15,17 @@ namespace MediaPlayer
 
         private string mVideoTitle;
         private string mVideoImageURL;
+        private int mDurationInSeconds;
         private BitmapImage mVideoImage;
 
         public string VideoID
         {
             get;
             set;
+        }
+        public int DurationInSeconds
+        {
+            get{ return mDurationInSeconds; }
         }
         public string VideoTitle
         {
@@ -39,6 +44,9 @@ namespace MediaPlayer
         public YoutubeStats(String VideoID)
         {
             this.VideoID = VideoID;
+        }
+        public YoutubeStats()
+        {
         }
 
         public async Task getData()
@@ -61,12 +69,21 @@ namespace MediaPlayer
             int titleEndIndex = result.IndexOf("</title>");
             mVideoTitle = result.Substring(titleStartIndex, titleEndIndex - titleStartIndex);
 
+            int durationStartIndex = result.IndexOf("duration=") + "duration=".Length + 1;
+            int durationEndIndex = durationStartIndex;
+            while (result[durationEndIndex] != "' "[0])
+            {
+                durationEndIndex++;
+            }
+            mDurationInSeconds = Convert.ToInt32(result.Substring(durationStartIndex, durationEndIndex - durationStartIndex));
+
             string startString = "<media:thumbnail url='";
             int imageStartIndex = result.IndexOf(startString) + startString.Length;
             int imageEndIndex = result.IndexOf("default.jpg") + "default.jpg".Length;
 
             mVideoImageURL = result.Substring(imageStartIndex, imageEndIndex - imageStartIndex);
             mVideoImage = new BitmapImage(new Uri(mVideoImageURL));
+
         }
 
 
