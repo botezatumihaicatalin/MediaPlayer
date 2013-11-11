@@ -26,7 +26,6 @@ namespace MediaPlayer
         public MainPage()
         {
             this.InitializeComponent();
-            //PopulateUI();
         }
 
         private async void PopulateUI(string VideoID)
@@ -39,7 +38,6 @@ namespace MediaPlayer
             await decoder.getVideoCacheURL();
             MusicPlayer.Source = new Uri(decoder.DirectVideoURL);
             MusicPlayer.Play();
-            TextViewer.Text = decoder.DirectVideoURL;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

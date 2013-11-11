@@ -14,7 +14,6 @@
             <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="1168" FontSize="36" Canvas.Left="141" Canvas.Top="10"/>
             <MediaElement x:Name="MusicPlayer" Height="100" Canvas.Left="-16" Canvas.Top="608" Width="134"/>
         </Canvas>
-        <TextBox x:Name="TextViewer" HorizontalAlignment="Left" Margin="32,258,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="190" Width="1324"/>
         <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Margin="234,666,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" ToolTipService.ToolTip="Enter the Video ID"/>
         <Button x:ConnectionId='1' x:Name="Set" Content="Button" HorizontalAlignment="Left" Height="52" Margin="708,666,0,0" VerticalAlignment="Top" Width="186"                  />
     </Grid>

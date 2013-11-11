@@ -13,58 +13,58 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2013-11-11T03:56:35.057</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-11T07:07:01.115</Modified>
+      <Modified>2013-11-11T07:16:37.668</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-11T07:07:00.970</Modified>
+      <Modified>2013-11-11T07:16:37.606</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\Logo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Logo.png">
       <PackagePath>Assets\Logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-03-16T04:42:52.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
       <PackagePath>Assets\SmallLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-03-16T04:42:52.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
       <PackagePath>Assets\SplashScreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-03-16T04:42:52.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2012-03-16T04:42:52.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\App.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\App.xaml">
       <PackagePath>App.xaml</PackagePath>
       <Modified>2013-11-10T03:48:49.009</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Common\StandardStyles.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Common\StandardStyles.xaml">
       <PackagePath>Common\StandardStyles.xaml</PackagePath>
       <Modified>2012-06-27T00:19:20.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-      <Modified>2013-11-11T07:05:46.930</Modified>
+      <Modified>2013-11-11T07:16:18.500</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
       <Modified>2013-11-10T08:36:06.653</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <Modified>2013-11-10T07:16:38.627</Modified>
     </AppxPackagedFile>

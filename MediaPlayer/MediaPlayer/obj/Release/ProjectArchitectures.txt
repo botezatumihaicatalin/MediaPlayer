@@ -1,1 +1,1 @@
-D:\Workspace-Mihai\MediaPlayer\MediaPlayer\MediaPlayer.csproj;neutral
+C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\MediaPlayer.csproj;neutral

@@ -7,47 +7,47 @@
     <PackageArchitecture>neutral</PackageArchitecture>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\Logo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Logo.png">
       <PackagePath>Assets\Logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
       <PackagePath>Assets\SmallLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
       <PackagePath>Assets\SplashScreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\App.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\App.xaml">
       <PackagePath>App.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Common\StandardStyles.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Common\StandardStyles.xaml">
       <PackagePath>Common\StandardStyles.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Diana\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>
