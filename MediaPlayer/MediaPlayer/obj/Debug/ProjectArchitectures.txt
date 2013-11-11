@@ -1,0 +1,1 @@
+D:\Workspace-Mihai\MediaPlayer\MediaPlayer\MediaPlayer.csproj;neutral

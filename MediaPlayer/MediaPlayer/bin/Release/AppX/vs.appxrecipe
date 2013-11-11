@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>DIANA-PC</Machine>
+    <WindowsUser>Diana</WindowsUser>
+    <SolutionConfiguration>Release|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <RegisteredManifestChecksum>7D73FB04B48514A7DDCB4AC6B373C102A5E4ABB74C4CB48E0CD17B5E0A81D2C1</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>fbfa820c-ba87-4e49-802a-f2a555208d0a_1.0.0.0_neutral__12pve03w2jdy4</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>fbfa820c-ba87-4e49-802a-f2a555208d0a_12pve03w2jdy4!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>fbfa820c-ba87-4e49-802a-f2a555208d0a</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Diana</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2013-11-11T03:56:35.057</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
+      <PackagePath>MediaPlayer.exe</PackagePath>
+      <Modified>2013-11-11T07:07:01.115</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
+      <PackagePath>MediaPlayer.pdb</PackagePath>
+      <Modified>2013-11-11T07:07:00.970</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\Logo.png">
+      <PackagePath>Assets\Logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-16T04:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
+      <PackagePath>Assets\SmallLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-16T04:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
+      <PackagePath>Assets\SplashScreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-16T04:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-16T04:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\App.xaml">
+      <PackagePath>App.xaml</PackagePath>
+      <Modified>2013-11-10T03:48:49.009</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Common\StandardStyles.xaml">
+      <PackagePath>Common\StandardStyles.xaml</PackagePath>
+      <Modified>2012-06-27T00:19:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
+      <PackagePath>MainPage.xaml</PackagePath>
+      <Modified>2013-11-11T07:05:46.930</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
+      <PackagePath>Themes\Generic.xaml</PackagePath>
+      <Modified>2013-11-10T08:36:06.653</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2013-11-10T07:16:38.627</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
