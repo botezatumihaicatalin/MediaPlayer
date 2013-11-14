@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,7 +39,61 @@ namespace MediaPlayer
             this.InitializeComponent();
             stats = new YoutubeStats();
             decoder = new YoutubeDecoder();
+            MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
+            
+        }
+
+        private async Task<string> saveImageToFile(BitmapImage image)
+        {
+            HttpWebRequest request;
+            WebResponse response;
+            Stream stream;
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile storageFile = null;
+            bool found = false;
+
+            try
+            {
+                storageFile = await storageFolder.GetFileAsync("thumbnail.jpg");
+                found = true;
+            }
+            catch(Exception er)
+            {
+                
+            }
+
+            if (!found) storageFile = await storageFolder.CreateFileAsync("thumbnail.jpg");
+
+            request = (HttpWebRequest)WebRequest.Create(image.UriSource);
+            try
+            {
+                request = (HttpWebRequest)WebRequest.Create(image.UriSource);
+                response = await request.GetResponseAsync();
+                stream = response.GetResponseStream();
+
+                using (IRandomAccessStream fileStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
+                    {
+                        using (DataWriter dataWriter = new DataWriter(outputStream))
+                        {
+                            int one_byte;
+                            while ((one_byte = stream.ReadByte()) != -1)
+                            {
+                                dataWriter.WriteByte(Convert.ToByte(one_byte));
+                            }
+                            await dataWriter.StoreAsync();
+                            dataWriter.DetachStream();
+                        }
+                    }
+                }
+                return storageFile.Path;                
+            }
+            catch (Exception er)
+            {
+                throw er;
+            }
         }
 
         private async void PopulateUI(string VideoID)
@@ -47,11 +106,17 @@ namespace MediaPlayer
                 VideoImageHolder.Source = stats.VideoImage;
                 VideoTitleHolder.Text = stats.VideoTitle;
                 await decoder.getVideoCacheURL();
+                
 
                 ProgressSlider.Maximum = stats.DurationInSeconds * 4.0 / 5.0;
                 ProgressSlider.Value = 0;
 
+                MediaControl.TrackName = stats.VideoTitle;
+                String t = await saveImageToFile(stats.VideoImage);
+                MediaControl.AlbumArt = new Uri("ms-appdata:///local/thumbnail.jpg");
+
                 mediaPlayer.Source = decoder.DirectVideoURL;
+
             }
             catch (Exception er)
             {
@@ -62,6 +127,7 @@ namespace MediaPlayer
 
         private void Set_Click(object sender, RoutedEventArgs e)
         {
+            mediaPlayer.stop();
             PopulateUI(VideoIdTextBox.Text);
         }
 

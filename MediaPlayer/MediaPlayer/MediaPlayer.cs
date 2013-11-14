@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace MediaPlayer
@@ -19,11 +21,12 @@ namespace MediaPlayer
         private bool mMediaWasOpened = false;
         private bool mMediaIsPlaying = false;
         private FrameworkElement mFrameWorkElement = null;
+        private string mSource;
 
         public string Source
         {
-            get;
-            set;
+            get { return mSource; }
+            set { mSource = value; mMediaWasOpened = false; }
         }
 
         public MediaPlayer(FrameworkElement frameworkElement , MediaElement mediaPlayer, Image playPauseButton, Slider progressSlider)
@@ -34,6 +37,12 @@ namespace MediaPlayer
             mMedia = mediaPlayer;
             mMedia.MediaOpened += mMedia_MediaOpened;
             mMedia.MediaEnded += mMedia_MediaEnded;
+
+            MediaControl.PlayPressed += MediaControl_PlayPressed;
+            MediaControl.PausePressed += MediaControl_PausePressed;
+            MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
+            MediaControl.StopPressed += MediaControl_StopPressed;
+
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
 
@@ -65,7 +74,7 @@ namespace MediaPlayer
 
         private void mMedia_MediaEnded(object sender, RoutedEventArgs e)
         {
-            mMediaWasOpened = false;
+            stop();
             mSlider.Value = mSlider.Maximum;
         }
       
@@ -77,19 +86,26 @@ namespace MediaPlayer
         public void play()
         {
             mMediaIsPlaying = true;
-            if(mMedia.Source != new Uri(Source))
+            if (mMedia.Source != new Uri(mSource))
             {
-                mMedia.Source = new Uri(Source);
+                mMedia.Source = new Uri(mSource);
             }
             mMedia.Play();
-            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause.png");
+            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");            
         }
 
         public void pause()
         {
             mMediaIsPlaying = false;
             mMedia.Pause();
-            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play.png");
+            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+        }
+
+        public void stop()
+        {
+            mMediaIsPlaying = false;
+            mMedia.Stop();
+            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
         }
 
         public void playPause()
@@ -97,5 +113,29 @@ namespace MediaPlayer
             if (mMediaIsPlaying) pause();
             else play();
         }
+
+        private async void MediaControl_StopPressed(object sender, object e)
+        {
+            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => stop());
+        }
+
+        private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
+        {
+            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                playPause();
+            });
+        }
+
+        private async void MediaControl_PausePressed(object sender, object e)
+        {
+           await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => pause());
+        }
+
+        private async void MediaControl_PlayPressed(object sender, object e)
+        {
+            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
+        }
+
     }
 }

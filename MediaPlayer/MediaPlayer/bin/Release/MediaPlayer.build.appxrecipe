@@ -26,11 +26,17 @@
       <PackagePath>Assets\Logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause.png">
-      <PackagePath>Assets\pause.png</PackagePath>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_147x147.png">
+      <PackagePath>Assets\pause_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play.png">
-      <PackagePath>Assets\play.png</PackagePath>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_2100x2100.png">
+      <PackagePath>Assets\pause_2100x2100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_147x147.png">
+      <PackagePath>Assets\play_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
+      <PackagePath>Assets\play_2100x2100.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
       <PackagePath>Assets\SmallLogo.png</PackagePath>

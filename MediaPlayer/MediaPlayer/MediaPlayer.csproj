@@ -123,8 +123,10 @@
   <ItemGroup>
     <Content Include="Assets\fast_forward.png" />
     <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\pause.png" />
-    <Content Include="Assets\play.png" />
+    <Content Include="Assets\pause_147x147.png" />
+    <Content Include="Assets\pause_2100x2100.png" />
+    <Content Include="Assets\play_147x147.png" />
+    <Content Include="Assets\play_2100x2100.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />

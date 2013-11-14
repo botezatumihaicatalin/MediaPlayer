@@ -5,7 +5,7 @@
     <WindowsUser>Mihai</WindowsUser>
     <SolutionConfiguration>Release|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>94AED480660942AB736C85CCB20E02894B76524B99ED7D4E364D1D652F802EB7</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>57556622F8912F4109E9735B113AB70F382B61BB26C61398BD572442DC89ECD8</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>fbfa820c-ba87-4e49-802a-f2a555208d0a_1.0.0.0_neutral__12pve03w2jdy4</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>fbfa820c-ba87-4e49-802a-f2a555208d0a_12pve03w2jdy4!App</RegisteredUserModeAppID>
     <RegisteredPackageID>fbfa820c-ba87-4e49-802a-f2a555208d0a</RegisteredPackageID>
@@ -16,17 +16,17 @@
     <AppXManifest Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-11-13T19:04:53.012</Modified>
+      <Modified>2013-11-14T09:07:23.035</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-13T22:32:06.415</Modified>
+      <Modified>2013-11-14T11:07:49.232</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-13T22:32:06.341</Modified>
+      <Modified>2013-11-14T11:07:49.205</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward.png">
       <PackagePath>Assets\fast_forward.png</PackagePath>
@@ -37,12 +37,20 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2013-11-11T23:22:56.381</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause.png">
-      <PackagePath>Assets\pause.png</PackagePath>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_147x147.png">
+      <PackagePath>Assets\pause_147x147.png</PackagePath>
+      <Modified>2013-11-14T07:57:13.914</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_2100x2100.png">
+      <PackagePath>Assets\pause_2100x2100.png</PackagePath>
       <Modified>2013-11-13T17:05:41.616</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play.png">
-      <PackagePath>Assets\play.png</PackagePath>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_147x147.png">
+      <PackagePath>Assets\play_147x147.png</PackagePath>
+      <Modified>2013-11-14T07:54:40.820</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
+      <PackagePath>Assets\play_2100x2100.png</PackagePath>
       <Modified>2013-11-13T17:01:59.747</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
@@ -70,7 +78,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-      <Modified>2013-11-13T20:16:13.676</Modified>
+      <Modified>2013-11-14T09:48:26.818</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
@@ -78,7 +86,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-11-13T17:16:18.419</Modified>
+      <Modified>2013-11-14T09:07:22.922</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

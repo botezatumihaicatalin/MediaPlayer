@@ -80,6 +80,8 @@ namespace MediaPlayer
             }
             result = result.Substring(audioIndex, result.Length - audioIndex);
 
+
+
             int urlIndex = result.IndexOf("url=") + "url=".Length;
 
             if (urlIndex == -1)
