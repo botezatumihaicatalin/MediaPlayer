@@ -109,6 +109,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediaPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YoutubeDecoder.cs" />
     <Compile Include="YoutubeStats.cs" />
@@ -120,7 +121,10 @@
     <None Include="MediaPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\fast_forward.png" />
     <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\pause.png" />
+    <Content Include="Assets\play.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />

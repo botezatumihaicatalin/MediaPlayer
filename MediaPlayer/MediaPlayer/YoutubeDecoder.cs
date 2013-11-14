@@ -57,7 +57,7 @@ namespace MediaPlayer
             }
             catch
             {
-                throw new Exception("Network error , or invalid URI");
+                throw new Exception("No internet connection or bad request!"); 
             }
             string result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
@@ -91,7 +91,7 @@ namespace MediaPlayer
 
             int finalIndex = result.IndexOf("\\u0026");
             result = result.Substring(0, finalIndex);
-            return result;           
+            return result;
         }
 
         public async Task getVideoCacheURL()
@@ -108,7 +108,8 @@ namespace MediaPlayer
                 {
 
                 }
-            } while (!is_good);
+                
+            }while (!is_good);
         }
     }
 }

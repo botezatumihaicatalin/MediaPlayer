@@ -12,14 +12,15 @@
             <RowDefinition Height="47*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas HorizontalAlignment="Left" Height="14" Margin="1304,220,0,0" VerticalAlignment="Top" Width="5"/>
         <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="156" Margin="10,10,0,0" VerticalAlignment="Top" Width="1346" Background="#FF403D3D">
-            <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="86" VerticalAlignment="Top" Width="126" Canvas.Left="10" Canvas.Top="10" Stretch="UniformToFill"/>
-            <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="1168" FontSize="36" Canvas.Left="141" Canvas.Top="10"/>
-            <MediaElement x:Name="MusicPlayer" Height="136" Canvas.Left="10" Canvas.Top="602" Width="190" Visibility="Collapsed" MediaOpened="MusicPlayer_MediaOpened" MediaEnded="MusicPlayer_MediaEnded"/>
-            <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="1308" Canvas.Left="18" Canvas.Top="98" StepFrequency="0.1"/>
+            <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="132" Canvas.Left="160" Canvas.Top="10" Stretch="UniformToFill"/>
+            <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="88" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="1012" FontSize="36" Canvas.Left="297" Canvas.Top="10"/>
+            <MediaElement x:Name="MusicPlayer" Height="136" Canvas.Left="10" Canvas.Top="602" Width="190" Visibility="Collapsed"/>
+            <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="1166" Canvas.Left="160" Canvas.Top="98" StepFrequency="0.1" Foreground="{x:Null}"/>
+            <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="136" VerticalAlignment="Top" Width="136" Canvas.Left="10" Canvas.Top="10" Source="Assets/play.png" Stretch="UniformToFill" Tapped="PlayPause_Tapped"/>
         </Canvas>
         <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Margin="234,666,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" ToolTipService.ToolTip="Enter the Video ID"/>
         <Button x:Name="Set" Content="Play It!" HorizontalAlignment="Left" Height="52" Margin="708,666,0,0" VerticalAlignment="Top" Width="186" Click="Set_Click"/>
+        <TextBox x:Name="text" HorizontalAlignment="Left" Height="234" Margin="92,272,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="1048"/>
     </Grid>
 </Page>

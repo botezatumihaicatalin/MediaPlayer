@@ -44,6 +44,9 @@ namespace MediaPlayer
         public YoutubeStats(String VideoID)
         {
             this.VideoID = VideoID;
+            mVideoTitle = "";
+            mVideoImageURL = "";
+            mVideoImage = new BitmapImage();
         }
         public YoutubeStats()
         {
@@ -58,18 +61,23 @@ namespace MediaPlayer
             {
                 response = await request.GetResponseAsync();
             }
-            catch (Exception error)
+            catch (Exception)
             {
-                new MessageDialog(error.Message).ShowAsync();
-                return;
+                throw new Exception("No internet connection or bad request!");                
             }
             String result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
             int titleStartIndex = result.IndexOf("<title>") + "<title>".Length;
             int titleEndIndex = result.IndexOf("</title>");
+
+            if (titleStartIndex == -1 || titleEndIndex == -1) throw new Exception("Cannot get video stats!");
+
             mVideoTitle = result.Substring(titleStartIndex, titleEndIndex - titleStartIndex);
 
             int durationStartIndex = result.IndexOf("duration=") + "duration=".Length + 1;
+
+            if (durationStartIndex == -1) throw new Exception("Cannot get video stats!");
+
             int durationEndIndex = durationStartIndex;
             while (result[durationEndIndex] != "' "[0])
             {

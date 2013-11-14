@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -26,33 +27,37 @@ namespace MediaPlayer
         private YoutubeStats stats;
         private YoutubeDecoder decoder;
         private DispatcherTimer timer;
+        private MediaPlayer mediaPlayer;
 
         public MainPage()
         {
             this.InitializeComponent();
             stats = new YoutubeStats();
             decoder = new YoutubeDecoder();
+            mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
         }
 
         private async void PopulateUI(string VideoID)
         {
-            stats.VideoID = VideoID;
-            decoder.VideoID = VideoID;
-            await stats.getData();
-            VideoImageHolder.Source = stats.VideoImage;
-            VideoTitleHolder.Text = stats.VideoTitle;
-            await decoder.getVideoCacheURL();
-            
-            ProgressSlider.Maximum = stats.DurationInSeconds * 4.0 / 5.0;
-            ProgressSlider.Value = 0;
+            try
+            {
+                stats.VideoID = VideoID;
+                decoder.VideoID = VideoID;
+                await stats.getData();
+                VideoImageHolder.Source = stats.VideoImage;
+                VideoTitleHolder.Text = stats.VideoTitle;
+                await decoder.getVideoCacheURL();
 
-            MusicPlayer.Source = new Uri(decoder.DirectVideoURL);
-            MusicPlayer.Play();
+                ProgressSlider.Maximum = stats.DurationInSeconds * 4.0 / 5.0;
+                ProgressSlider.Value = 0;
 
-        }
+                mediaPlayer.Source = decoder.DirectVideoURL;
+            }
+            catch (Exception er)
+            {
+                new MessageDialog("Error",er.Message).ShowAsync();
+            }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
         }
 
         private void Set_Click(object sender, RoutedEventArgs e)
@@ -60,23 +65,10 @@ namespace MediaPlayer
             PopulateUI(VideoIdTextBox.Text);
         }
 
-        private void MusicPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            timer = new DispatcherTimer();
-            timer.Tick += Tick;
-            timer.Interval = TimeSpan.FromMilliseconds(100);
-            timer.Start();
-        }
-
-        private void Tick(object sender, object e)
-        {
-            ProgressSlider.Value+= 0.1;
-        }
-
-        private void MusicPlayer_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            ProgressSlider.Value = ProgressSlider.Maximum;
-            timer.Stop();
+            text.Text = mediaPlayer.Source;
+            mediaPlayer.playPause();
         } 
     }
 }
