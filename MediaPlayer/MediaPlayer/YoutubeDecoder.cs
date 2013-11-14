@@ -93,6 +93,19 @@ namespace MediaPlayer
 
             int finalIndex = result.IndexOf("\\u0026");
             result = result.Substring(0, finalIndex);
+
+
+            string[] remaining = { ",init=", ",type=", ",index=" , ",bitrate=" , ",itag="};
+
+            foreach (string str in remaining)
+            {
+                int position = result.IndexOf(str);
+                if (position != -1)
+                {
+                    result = result.Substring(0, position);
+                }
+            }
+
             return result;
         }
 

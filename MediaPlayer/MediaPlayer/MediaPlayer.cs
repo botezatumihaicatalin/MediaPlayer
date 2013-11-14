@@ -90,6 +90,9 @@ namespace MediaPlayer
             {
                 mMedia.Source = new Uri(mSource);
             }
+            if (mSlider.Value == mSlider.Maximum)
+                mSlider.Value = 0;
+
             mMedia.Play();
             mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");            
         }

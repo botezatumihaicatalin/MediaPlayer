@@ -100,9 +100,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -121,12 +118,16 @@
     <None Include="MediaPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\fast_forward.png" />
+    <Content Include="Assets\fast_backward_147x147.png" />
+    <Content Include="Assets\fast_forward_147x147.png" />
+    <Content Include="Assets\fast_forward_2100x2100.png" />
     <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\next_track_147x147.png" />
     <Content Include="Assets\pause_147x147.png" />
     <Content Include="Assets\pause_2100x2100.png" />
     <Content Include="Assets\play_147x147.png" />
     <Content Include="Assets\play_2100x2100.png" />
+    <Content Include="Assets\prev_track_147x147.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />

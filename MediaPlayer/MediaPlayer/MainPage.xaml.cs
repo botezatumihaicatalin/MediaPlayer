@@ -96,7 +96,7 @@ namespace MediaPlayer
             }
         }
 
-        private async void PopulateUI(string VideoID)
+        private async Task PopulateUI(string VideoID)
         {
             try
             {
