@@ -22,11 +22,11 @@
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-14T20:04:15.828</Modified>
+      <Modified>2013-11-15T10:41:55.401</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-14T20:04:15.804</Modified>
+      <Modified>2013-11-15T10:41:55.376</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
@@ -94,7 +94,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-      <Modified>2013-11-14T13:14:02.963</Modified>
+      <Modified>2013-11-15T08:27:16.210</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>

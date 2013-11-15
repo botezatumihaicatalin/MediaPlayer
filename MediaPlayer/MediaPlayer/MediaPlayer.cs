@@ -20,6 +20,7 @@ namespace MediaPlayer
         private DispatcherTimer mTimer = null;
         private bool mMediaWasOpened = false;
         private bool mMediaIsPlaying = false;
+        private bool mPlayPause = false;
         private FrameworkElement mFrameWorkElement = null;
         private string mSource;
 
@@ -37,11 +38,15 @@ namespace MediaPlayer
             mMedia = mediaPlayer;
             mMedia.MediaOpened += mMedia_MediaOpened;
             mMedia.MediaEnded += mMedia_MediaEnded;
-
+            mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
+            
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
+            MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
+            MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
             MediaControl.StopPressed += MediaControl_StopPressed;
+           
 
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
@@ -58,13 +63,9 @@ namespace MediaPlayer
 
         }
 
-        public static BitmapImage ImageFromRelativePath(FrameworkElement parent, string path)
-        {
-            var uri = new Uri(parent.BaseUri, path);
-            BitmapImage result = new BitmapImage();
-            result.UriSource = uri;
-            return result;
-        }
+        // -------------------
+        // Media player events
+        // -------------------
 
         private void mMedia_MediaOpened(object sender, RoutedEventArgs e)
         {
@@ -77,15 +78,57 @@ namespace MediaPlayer
             stop();
             mSlider.Value = mSlider.Maximum;
         }
+
+        private void mMedia_BufferingProgressChanged(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            if (mMedia.CurrentState == MediaElementState.Buffering)
+            {
+                mMediaIsPlaying = false;
+            }
+            if (mMedia.CurrentState == MediaElementState.Playing)
+            {
+                mMediaIsPlaying = true;
+            }
+            if (mMedia.CurrentState == MediaElementState.Paused)
+            {
+                mMediaIsPlaying = false;
+            }
+            if (mMedia.CurrentState == MediaElementState.Opening)
+            {
+                mMediaWasOpened = false;
+            }
+            if (mMedia.CurrentState == MediaElementState.Stopped)
+            {
+                mMediaIsPlaying = false;
+            }
+        }
+
+        // ----------------------------
+        // Media player events end here
+        // ----------------------------
+
+        public static BitmapImage ImageFromRelativePath(FrameworkElement parent, string path)
+        {
+            var uri = new Uri(parent.BaseUri, path);
+            BitmapImage result = new BitmapImage();
+            result.UriSource = uri;
+            return result;
+        } 
       
         private void Tick(object sender, object e)
         {
-            if (mMediaIsPlaying && mMediaWasOpened) mSlider.Value+= 0.1;
+            if (mMediaIsPlaying && mMediaWasOpened && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress) 
+                mSlider.Value += 0.1;
+            
         }
 
         public void play()
         {
-            mMediaIsPlaying = true;
             if (mMedia.Source != new Uri(mSource))
             {
                 mMedia.Source = new Uri(mSource);
@@ -93,29 +136,33 @@ namespace MediaPlayer
             if (mSlider.Value == mSlider.Maximum)
                 mSlider.Value = 0;
 
+            mPlayPause = !mPlayPause;
             mMedia.Play();
             mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");            
         }
 
         public void pause()
         {
-            mMediaIsPlaying = false;
+            mPlayPause = !mPlayPause;
             mMedia.Pause();
             mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
         }
 
         public void stop()
         {
-            mMediaIsPlaying = false;
             mMedia.Stop();
             mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
         }
 
         public void playPause()
         {
-            if (mMediaIsPlaying) pause();
+            if (mPlayPause) pause();
             else play();
         }
+
+        // --------------------
+        // Media control events
+        // --------------------
 
         private async void MediaControl_StopPressed(object sender, object e)
         {
@@ -140,5 +187,18 @@ namespace MediaPlayer
             await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
         }
 
+        private void MediaControl_PreviousTrackPressed(object sender, object e)
+        {
+
+        }
+
+        private void MediaControl_NextTrackPressed(object sender, object e)
+        {
+
+        }
+
+        // -----------------------------
+        // Media control events end here
+        // -----------------------------
     }
 }
