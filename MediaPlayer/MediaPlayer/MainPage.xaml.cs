@@ -106,7 +106,6 @@ namespace MediaPlayer
                 VideoImageHolder.Source = stats.VideoImage;
                 VideoTitleHolder.Text = stats.VideoTitle;
                 await decoder.getVideoCacheURL();
-                
 
                 ProgressSlider.Maximum = stats.DurationInSeconds * 4.0 / 5.0;
                 ProgressSlider.Value = 0;
@@ -116,6 +115,7 @@ namespace MediaPlayer
                 MediaControl.AlbumArt = new Uri("ms-appdata:///local/thumbnail.jpg");
 
                 mediaPlayer.Source = decoder.DirectVideoURL;
+                text.Text = decoder.DirectVideoURL;
 
             }
             catch (Exception er)
@@ -133,11 +133,10 @@ namespace MediaPlayer
             return result;
         } 
 
-        private void Set_Click(object sender, RoutedEventArgs e)
+        private async void Set_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.stop();
-            TopTrackByTag t = new TopTrackByTag();
-            t.get(VideoIdTextBox.Text);
+            TopTrackByTag t = new TopTrackByTag(VideoIdTextBox.Text);
+            await t.get();
         }
 
 
