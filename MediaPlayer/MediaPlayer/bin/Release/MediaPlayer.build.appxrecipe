@@ -47,6 +47,12 @@
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
       <PackagePath>Assets\play_2100x2100.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
+      <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
+      <PackagePath>Assets\play_entered_147x147.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
       <PackagePath>Assets\prev_track_147x147.png</PackagePath>
     </AppxPackagedFile>

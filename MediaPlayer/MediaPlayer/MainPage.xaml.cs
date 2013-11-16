@@ -31,7 +31,6 @@ namespace MediaPlayer
     {
         private YoutubeStats stats;
         private YoutubeDecoder decoder;
-        private DispatcherTimer timer;
         private MediaPlayer mediaPlayer;
 
         public MainPage()
@@ -125,6 +124,14 @@ namespace MediaPlayer
 
         }
 
+        public static BitmapImage ImageFromRelativePath(FrameworkElement parent, string path)
+        {
+            var uri = new Uri(parent.BaseUri, path);
+            BitmapImage result = new BitmapImage();
+            result.UriSource = uri;
+            return result;
+        } 
+
         private void Set_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.stop();
@@ -135,6 +142,22 @@ namespace MediaPlayer
         {
             text.Text = mediaPlayer.Source;
             mediaPlayer.playPause();
-        } 
+        }
+
+        private void PlayPause_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_entered_147x147.png"));
+        }
+
+        private void PlayPause_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+        }
+
+        private void PlayPause_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_clicked_147x147.png"));
+        }
+
     }
 }

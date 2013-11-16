@@ -127,6 +127,8 @@
     <Content Include="Assets\pause_2100x2100.png" />
     <Content Include="Assets\play_147x147.png" />
     <Content Include="Assets\play_2100x2100.png" />
+    <Content Include="Assets\play_clicked_147x147.png" />
+    <Content Include="Assets\play_entered_147x147.png" />
     <Content Include="Assets\prev_track_147x147.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />

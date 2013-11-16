@@ -17,7 +17,7 @@
             <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="789" FontSize="36" Canvas.Left="528" Canvas.Top="10"/>
             <MediaElement x:Name="MusicPlayer" Height="136" Canvas.Left="10" Canvas.Top="602" Width="190" Visibility="Collapsed"/>
             <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="909" Canvas.Left="427" Canvas.Top="62" StepFrequency="0.1" Foreground="#FFB41D1D" Background="#29FFFFFF" BorderBrush="{x:Null}" Orientation="Horizontal"/>
-            <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="106" VerticalAlignment="Top" Width="112" Canvas.Left="150" Source="Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10"/>
+            <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="106" VerticalAlignment="Top" Width="112" Canvas.Left="150" Source="Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10" PointerEntered="PlayPause_PointerEntered" PointerExited="PlayPause_PointerExited" PointerPressed="PlayPause_PointerPressed"/>
             <Image x:Name="Next_track" Height="106" Canvas.Left="290" Canvas.Top="10" Width="112" Source="Assets/next_track_147x147.png"/>
             <Image x:Name="Prev_track" Height="106" Canvas.Left="10" Canvas.Top="10" Width="112" Source="Assets/prev_track_147x147.png"/>
         </Canvas>
