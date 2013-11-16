@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MediaPlayer
@@ -135,8 +136,11 @@ namespace MediaPlayer
         private void Set_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.stop();
-            PopulateUI(VideoIdTextBox.Text);
+            //PopulateUI(VideoIdTextBox.Text);
+            TopTrackByTag t = new TopTrackByTag();
+            t.get("love");
         }
+
 
         private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
