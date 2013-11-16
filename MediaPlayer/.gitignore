@@ -19,3 +19,8 @@
 *.exe
 *.out
 *.app
+
+.exe
+.g
+bin/
+obj/
