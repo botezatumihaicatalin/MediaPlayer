@@ -16,29 +16,17 @@
     <AppXManifest Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:15.615</Modified>
-=======
-      <Modified>2013-11-16T21:32:40.462</Modified>
->>>>>>> TopTrackByTag first implementation
+      <Modified>2013-11-16T23:26:58.954</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:15.407</Modified>
-=======
-      <Modified>2013-11-16T22:47:18.653</Modified>
->>>>>>> TopTrackByTag first implementation
+      <Modified>2013-11-16T23:29:27.737</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:15.383</Modified>
-=======
-      <Modified>2013-11-16T22:47:18.627</Modified>
->>>>>>> TopTrackByTag first implementation
+      <Modified>2013-11-16T23:29:27.708</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
@@ -77,19 +65,15 @@
       <PackagePath>Assets\play_2100x2100.png</PackagePath>
       <Modified>2013-11-16T19:58:27.045</Modified>
     </AppxPackagedFile>
-<<<<<<< HEAD
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
       <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
-      <Modified>2013-11-16T09:57:14.833</Modified>
+      <Modified>2013-11-16T23:25:19.357</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
       <PackagePath>Assets\play_entered_147x147.png</PackagePath>
-      <Modified>2013-11-16T08:56:08.559</Modified>
+      <Modified>2013-11-16T23:25:19.360</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
-=======
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
->>>>>>> TopTrackByTag first implementation
       <PackagePath>Assets\prev_track_147x147.png</PackagePath>
       <Modified>2013-11-16T19:58:27.047</Modified>
     </AppxPackagedFile>
@@ -118,11 +102,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:14.297</Modified>
-=======
-      <Modified>2013-11-16T19:58:27.078</Modified>
->>>>>>> TopTrackByTag first implementation
+      <Modified>2013-11-16T23:25:19.365</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
@@ -130,11 +110,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:15.525</Modified>
-=======
-      <Modified>2013-11-16T20:05:37.923</Modified>
->>>>>>> TopTrackByTag first implementation
+      <Modified>2013-11-16T23:26:58.400</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
