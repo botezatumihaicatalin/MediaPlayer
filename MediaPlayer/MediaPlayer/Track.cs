@@ -26,11 +26,8 @@ namespace MediaPlayer.Common
             set;
         }
 
-<<<<<<< HEAD
+
         public String link
-=======
-        public String url
->>>>>>> 1b01e47b7dd6b0aa1182cf7a2189d6d6c8c4da83
         {
             get;
             set;

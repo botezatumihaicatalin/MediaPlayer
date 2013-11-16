@@ -53,6 +53,7 @@ namespace MediaPlayer
                 String trackName = itemNodes[i].InnerText;
                 String artisName = itemNodes[i + 1].InnerText;
                 String ursl = urlNodes[i].InnerText;
+                await new MessageDialog(trackName + "\n" + artisName + "\n" + ursl).ShowAsync();
                 list.Add(new Track(artisName, trackName, ursl));
             }
 
