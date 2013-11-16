@@ -16,41 +16,17 @@
     <AppXManifest Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-<<<<<<< HEAD
-      <Modified>2013-11-16T12:20:32.976</Modified>
-=======
-<<<<<<< HEAD
-      <Modified>2013-11-16T21:32:40.462</Modified>
-=======
-      <Modified>2013-11-16T12:20:32.976</Modified>
->>>>>>> Now we can get youtube from LastFM
->>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
+      <Modified>2013-11-16T23:41:03.525</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T12:45:10.776</Modified>
-=======
-<<<<<<< HEAD
-      <Modified>2013-11-16T22:47:18.653</Modified>
-=======
-      <Modified>2013-11-16T12:45:10.776</Modified>
->>>>>>> Now we can get youtube from LastFM
->>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
+      <Modified>2013-11-16T23:41:03.399</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T12:45:10.750</Modified>
-=======
-<<<<<<< HEAD
-      <Modified>2013-11-16T22:47:18.627</Modified>
-=======
-      <Modified>2013-11-16T12:45:10.750</Modified>
->>>>>>> Now we can get youtube from LastFM
->>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
+      <Modified>2013-11-16T23:41:03.373</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
@@ -89,27 +65,15 @@
       <PackagePath>Assets\play_2100x2100.png</PackagePath>
       <Modified>2013-11-16T19:58:27.045</Modified>
     </AppxPackagedFile>
-<<<<<<< HEAD
+    <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
+      <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
+      <Modified>2013-11-16T23:36:08.020</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
+      <PackagePath>Assets\play_entered_147x147.png</PackagePath>
+      <Modified>2013-11-16T23:36:08.022</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
-=======
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
-      <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
-      <Modified>2013-11-16T12:02:22.983</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
-      <PackagePath>Assets\play_entered_147x147.png</PackagePath>
-      <Modified>2013-11-16T12:00:24.672</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
-      <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
-      <Modified>2013-11-16T12:02:22.983</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
-      <PackagePath>Assets\play_entered_147x147.png</PackagePath>
-      <Modified>2013-11-16T12:00:24.672</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
->>>>>>> Now we can get youtube from LastFM
       <PackagePath>Assets\prev_track_147x147.png</PackagePath>
       <Modified>2013-11-16T19:58:27.047</Modified>
     </AppxPackagedFile>
@@ -138,15 +102,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T11:21:28.718</Modified>
-=======
-<<<<<<< HEAD
-      <Modified>2013-11-16T19:58:27.078</Modified>
-=======
-      <Modified>2013-11-16T11:21:28.718</Modified>
->>>>>>> Now we can get youtube from LastFM
->>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
+      <Modified>2013-11-16T23:25:19.365</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
@@ -154,11 +110,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-<<<<<<< HEAD
-      <Modified>2013-11-16T10:01:15.525</Modified>
-=======
-      <Modified>2013-11-16T20:05:37.923</Modified>
->>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
+      <Modified>2013-11-16T23:26:58.400</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

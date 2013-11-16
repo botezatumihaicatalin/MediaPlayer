@@ -136,6 +136,7 @@ namespace MediaPlayer
         private void Set_Click(object sender, RoutedEventArgs e)
         {
             mediaPlayer.stop();
+
             //PopulateUI(VideoIdTextBox.Text);
             TopTrackByTag t = new TopTrackByTag();
             t.get("love");

@@ -25,6 +25,10 @@ namespace MediaPlayer
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
 
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2f3ab2b52bfab936cc28968f422a88ac74e564b
             System.Net.WebResponse response;
             try
             {
