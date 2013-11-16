@@ -16,17 +16,17 @@
     <AppXManifest Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-11-16T23:34:32.898</Modified>
+      <Modified>2013-11-16T23:41:03.525</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-16T23:34:32.814</Modified>
+      <Modified>2013-11-16T23:41:03.399</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-16T23:34:32.789</Modified>
+      <Modified>2013-11-16T23:41:03.373</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
@@ -67,11 +67,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
       <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
-      <Modified>2013-11-16T23:25:19.357</Modified>
+      <Modified>2013-11-16T23:36:08.020</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
       <PackagePath>Assets\play_entered_147x147.png</PackagePath>
-      <Modified>2013-11-16T23:25:19.360</Modified>
+      <Modified>2013-11-16T23:36:08.022</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
       <PackagePath>Assets\prev_track_147x147.png</PackagePath>
