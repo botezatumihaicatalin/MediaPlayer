@@ -25,6 +25,13 @@ namespace MediaPlayer
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
 
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            request.Timeout = 10;
+=======
+>>>>>>> Now we can get youtube from LastFM
+>>>>>>> 9fc57ed9f3849e6019e8c0c8d97d1259f4cd879b
             System.Net.WebResponse response;
             try
             {
