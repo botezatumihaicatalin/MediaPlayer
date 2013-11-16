@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaPlayer.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,11 +44,16 @@ namespace MediaPlayer
             fullXML.LoadXml(resp);
 
             XmlNodeList itemNodes = fullXML.GetElementsByTagName("name");
+            XmlNodeList urlNodes = fullXML.GetElementsByTagName("url");
 
-            foreach (XmlElement item in itemNodes)
+            List<Track> list = new List<Track>();
+
+            for (int i = 0;i < itemNodes.Length ; i+=2)
             {
-                String pageUrl = item.InnerText;
-                await new MessageDialog(pageUrl).ShowAsync();
+                String trackName = itemNodes[i].InnerText;
+                String artisName = itemNodes[i + 1].InnerText;
+                String ursl = urlNodes[i].InnerText;
+                list.Add(new Track(artisName, trackName, ursl));
             }
 
 

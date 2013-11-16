@@ -38,6 +38,13 @@ namespace MediaPlayer
             string page_source = new StreamReader(response.GetResponseStream()).ReadToEnd();
             string search_string = "<embed src=\"http://www.youtube.com/v/";
             int index = page_source.IndexOf(search_string) + search_string.Length;
+
+            if (index == -1)
+            {
+                throw new Exception("Cannot obtain youtube link");
+            }
+               
+
             int end = index;
             while (page_source[end] != '?')
             {

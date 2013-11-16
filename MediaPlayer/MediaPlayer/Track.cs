@@ -8,6 +8,12 @@ namespace MediaPlayer.Common
 {
     class Track
     {
+        public Track(String artist, String name, String link)
+        {
+            this.artist = artist;
+            this.name = name;
+            this.link = link;
+        }
         public String artist
         {
             get;
@@ -20,7 +26,7 @@ namespace MediaPlayer.Common
             set;
         }
 
-        public String shit
+        public String link
         {
             get;
             set;
