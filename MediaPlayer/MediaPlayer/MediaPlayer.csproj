@@ -103,6 +103,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SimilarTags.cs" />
     <Compile Include="DataLayer.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="LastFMPageScrapper.cs" />

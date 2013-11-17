@@ -16,17 +16,17 @@
     <AppXManifest Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-11-17T04:17:24.341</Modified>
+      <Modified>2013-11-17T05:06:41.683</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-17T04:17:24.144</Modified>
+      <Modified>2013-11-17T05:08:50.337</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-17T04:17:24.117</Modified>
+      <Modified>2013-11-17T05:08:50.310</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Arthur\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>

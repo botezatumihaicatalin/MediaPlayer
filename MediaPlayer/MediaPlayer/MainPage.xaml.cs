@@ -138,8 +138,8 @@ namespace MediaPlayer
 
         private async void Set_Click(object sender, RoutedEventArgs e)
         {
-            TopTrackByTag t = new TopTrackByTag(VideoIdTextBox.Text);
-            List<Track> b = await t.get();
+            DataLayer t = new DataLayer();
+            List<Track> b = await t.getTrackByTag(VideoIdTextBox.Text);
             for (int i = 0; i < b.Count; i++)
                 list.Items.Add(b[i]);
         }
