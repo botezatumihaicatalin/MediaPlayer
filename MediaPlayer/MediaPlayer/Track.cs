@@ -8,29 +8,49 @@ namespace MediaPlayer.Common
 {
     class Track
     {
-        public Track(String artist, String name, String link)
+        
+        public Track(String artist = null , String name = null , String link = null , Int32 duration = 0 , Uri imageUri = null , String videoID = null)
         {
-            this.artist = artist;
-            this.name = name;
-            this.link = link;
+            this.Artist = artist;
+            this.Name = name;
+            this.LastFMLink = link;
+            Duration = duration;
+            ImageUri = imageUri;
+            VideoID = videoID;
         }
-        public String artist
+        public Uri ImageUri
         {
             get;
             set;
         }
-
-        public String name
+        public String Artist
         {
             get;
             set;
         }
-
-
-        public String link
+        public String Name
         {
             get;
             set;
+        }
+        public String LastFMLink
+        {
+            get;
+            set;
+        }
+        public int Duration
+        {
+            get;
+            set;
+        }
+        public string VideoID
+        {
+            get;
+            set;
+        }
+        public String toString()
+        {
+            return Name + "\n" + Artist + "\n" + Duration + "\n" + LastFMLink + "\n" + ImageUri.AbsoluteUri + "\n" + VideoID;
         }
     }
 }
