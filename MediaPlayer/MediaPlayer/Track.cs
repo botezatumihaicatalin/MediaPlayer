@@ -20,7 +20,7 @@ namespace MediaPlayer.Common
             set;
         }
 
-        public String shit
+        public String url
         {
             get;
             set;
