@@ -138,10 +138,17 @@ namespace MediaPlayer
 
         private async void Set_Click(object sender, RoutedEventArgs e)
         {
-            DataLayer t = new DataLayer();
-            List<Track> b = await t.getTrackByTag(VideoIdTextBox.Text);
-            for (int i = 0; i < b.Count; i++)
-                list.Items.Add(b[i]);
+            try
+            {
+                DataLayer t = new DataLayer();
+                List<Track> b = await t.getTrackByTag(VideoIdTextBox.Text);
+                for (int i = 0; i < b.Count; i++)
+                    list.Items.Add(b[i]);
+            }
+            catch (Exception exp)
+            {
+               new MessageDialog("Errpr",exp.Message).ShowAsync();
+            }
         }
 
 
