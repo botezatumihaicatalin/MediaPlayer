@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace MediaPlayer
 {
@@ -22,12 +24,13 @@ namespace MediaPlayer
         {
             Tag = tag;
         }
-
-        public async Task<List<Track>> get()
+        public async Task get(FrameworkElement frameElement , GridView contentHolder , int no = 50)
         {
 
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag + 
+             "&limit=" + 
+             no + 
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
 
             String urlEncoded = Uri.EscapeUriString(url);
@@ -41,7 +44,7 @@ namespace MediaPlayer
             }
             catch
             {
-                throw new Exception("No internet connection or bad request!");
+                throw new Exception("No internet connection or bad request! in getTopTrackByTag");
             }
 
             String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
@@ -50,14 +53,13 @@ namespace MediaPlayer
             XmlDocument fullXML = new XmlDocument();
             fullXML.LoadXml(resp);            
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
-            List<Track> list = new List<Track>();
-            XmlDocument new_xml = new XmlDocument();
 
-            await new MessageDialog(tracks.Length+"").ShowAsync();
 
             for (int i = 0; i < tracks.Length; i++)
             {
-                new_xml.LoadXml(tracks[i].GetXml());
+                String xml = tracks[i].GetXml();
+                XmlDocument new_xml = new XmlDocument();
+                new_xml.LoadXml(xml);
                 XmlNodeList names = new_xml.GetElementsByTagName("name");
                 XmlNodeList duration = new_xml.GetElementsByTagName("duration");
                 XmlNodeList music_url = new_xml.GetElementsByTagName("url");
@@ -65,52 +67,49 @@ namespace MediaPlayer
                 String trackName = names[0].InnerText;
                 String artistName = names[1].InnerText;
                 String musicLink = music_url[0].InnerText;
-                
-                Uri imageUri = null;
+
+                Uri imageUri = new Uri("ms-appx:///Assets/blue.png");
                 bool gotImageUri = false;
                 String videoID = "NONE";
                 Int32 durationNumber = 0;
+                YoutubeStats stats = null;
 
-                try
+                LastFMPageScrapper scpr = new LastFMPageScrapper(new Uri(musicLink));
+                videoID = await scpr.getYoutubeId();
+
+                if (videoID == "" || videoID == "s=") continue;
+
+                stats = new YoutubeStats(videoID);
+
+                var length = Convert.ToInt32(images.Length) - 1;
+                if (length > 0)
                 {
                     imageUri = new Uri(images[Convert.ToInt32(images.Length - 1)].InnerText);
                     gotImageUri = true;
                 }
-                catch (Exception er)
-                {
-                    gotImageUri = false;   
-                }
-                YoutubeStats stats = null;
 
-                if (!gotImageUri)
+                durationNumber = Math.Max(stats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
+
+                try
                 {
-                    stats = new YoutubeStats(await new LastFMPageScrapper(new Uri(musicLink)).getYoutubeId());
-                    try
+                    if (!gotImageUri)
                     {
                         await stats.getData();
                         imageUri = new Uri(stats.VideoImageURL);
                     }
-                    catch (Exception er)
-                    {
-                        throw er;
-                    }
-                }
-
-                try
-                {
-                    durationNumber = Convert.ToInt32(duration[0].InnerText);
                 }
                 catch (Exception er)
                 {
-                    if (stats != null) durationNumber = stats.DurationInSeconds;
+                    new MessageDialog("A");
                 }
 
-                if (stats != null)
-                    videoID = stats.VideoID;
-
-                list.Add(new Track(artistName, trackName, musicLink , durationNumber , imageUri , videoID));
+                videoID = stats.VideoID;
+                frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                {
+                    Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID);
+                    contentHolder.Items.Add(new_track);
+                });
             }
-            return list;
 
         }
     }

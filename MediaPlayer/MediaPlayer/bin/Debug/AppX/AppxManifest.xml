@@ -22,7 +22,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="MediaPlayer.exe" EntryPoint="MediaPlayer.App">
-      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>
@@ -43,10 +43,11 @@
   </Capabilities>
   <build:Metadata>
     <build:Item Name="TargetFrameworkMoniker" Value=".NETCore,Version=v4.5" />
-    <build:Item Name="VisualStudio" Version="11.0" />
+    <build:Item Name="VisualStudio" Version="12.0" />
+    <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Ultimate 2013 RC" />
     <build:Item Name="OperatingSystem" Version="6.3.9600.16384 (winblue_rtm.130821-1623)" />
-    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="11.0.50727.1" />
-    <build:Item Name="Microsoft.Windows.UI.Xaml.Build.Tasks.dll" Version="11.0.50727.1" />
-    <build:Item Name="MakePri.exe" Version="6.2.9200.16384 (win8_rtm.120725-1247)" />
+    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="12.0.20827.3" />
+    <build:Item Name="Microsoft.Windows.UI.Xaml.80.Build.Tasks.dll" Version="12.0.20827.3" />
+    <build:Item Name="MakePri.exe" Version="6.2.9200.20789 (win8_ldr.130802-1617)" />
   </build:Metadata>
 </Package>

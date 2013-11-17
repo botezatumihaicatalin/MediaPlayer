@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MediaPlayer.App">
-      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>

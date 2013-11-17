@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MediaPlayer
 {
+    public delegate void OnMediaEndHandler(object sender, EventArgs e);
+    public delegate void OnMediaFailedHandler(object sender, EventArgs e);
     class MediaPlayer
     {
         private MediaElement mMedia;
@@ -30,6 +32,19 @@ namespace MediaPlayer
             set { mSource = value; mMediaWasOpened = false; }
         }
 
+        public bool PlayButtonState
+        {
+            get { return mPlayPause; }
+        }
+        public int MediaIndex
+        {
+            get;
+            set;
+        }
+
+        public event OnMediaEndHandler OnMediaEnded;
+        public event OnMediaFailedHandler OnMediaFailed;
+
         public MediaPlayer(FrameworkElement frameworkElement , MediaElement mediaPlayer, Image playPauseButton, Slider progressSlider)
         {
             if (frameworkElement == null) throw new Exception("FrameworkElement cannot be null");
@@ -39,6 +54,7 @@ namespace MediaPlayer
             mMedia.MediaOpened += mMedia_MediaOpened;
             mMedia.MediaEnded += mMedia_MediaEnded;
             mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
+            mMedia.MediaFailed += mMedia_MediaFailed;
             
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
@@ -63,6 +79,11 @@ namespace MediaPlayer
 
         }
 
+        private void mMedia_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            if (OnMediaFailed != null) OnMediaFailed(this, EventArgs.Empty);
+        }
+
         // -------------------
         // Media player events
         // -------------------
@@ -77,6 +98,7 @@ namespace MediaPlayer
         {
             stop();
             mSlider.Value = mSlider.Maximum;
+            if (OnMediaEnded != null) OnMediaEnded(this, EventArgs.Empty);
         }
 
         private void mMedia_BufferingProgressChanged(object sender, RoutedEventArgs e)

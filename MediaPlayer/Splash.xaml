@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="MediaPlayer.Splash"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaPlayer" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Canvas Background="#464646">
+
+        <Image x:Name="SplashScreenImage" Source="Assets/SplashScreen.png" Width="620"  Height="300" Visibility="Collapsed"/>
+        <Image x:Name="ProgressRingImage" Source="Assets/progressRing.png" Width="620" Height="100" Visibility="Collapsed"/>
+        <ProgressRing x:Name="ProgressRing" Foreground="White" IsActive="True" MaxHeight="50" MinHeight="50" MaxWidth="80" MinWidth="30" Width="78" Height="74" Canvas.Left="650" Canvas.Top="600" VerticalContentAlignment="Bottom"/>
+
+    </Canvas>
+</Page>
