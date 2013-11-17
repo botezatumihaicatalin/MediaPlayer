@@ -23,7 +23,23 @@
         </Canvas>
         <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Margin="234,666,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" ToolTipService.ToolTip="Enter the Video ID"/>
         <Button x:ConnectionId='1' x:Name="Set" Content="Play It!" HorizontalAlignment="Left" Height="52" Margin="708,666,0,0" VerticalAlignment="Top" Width="186"                  />
-        <TextBox x:Name="text" HorizontalAlignment="Left" Height="252" Margin="40,246,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="192"/>
+        <TextBox x:Name="text" HorizontalAlignment="Left" Height="252" Margin="948,248,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="192"/>
+        
+        <ListBox x:Name="list" HorizontalAlignment="Left" Height="494" Margin="10,151,0,0" VerticalAlignment="Top" Width="822" ItemsSource="{Binding Track}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="132">                        
+                        <StackPanel Width="370">
+                            <TextBlock Text="{Binding Artist}"
+                               Foreground="#FFC8AB14" FontSize="28" />
+                            <TextBlock Text="{Binding Name}"
+                               TextWrapping="Wrap" FontSize="24" />
+                            <Image Source="{Binding ImageUri}" Stretch="Fill" Width="100" Height="100" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
 

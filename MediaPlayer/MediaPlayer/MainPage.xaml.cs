@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaPlayer.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace MediaPlayer
         public MainPage()
         {
             this.InitializeComponent();
+
+         
             stats = new YoutubeStats();
             decoder = new YoutubeDecoder();
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
@@ -136,7 +139,9 @@ namespace MediaPlayer
         private async void Set_Click(object sender, RoutedEventArgs e)
         {
             TopTrackByTag t = new TopTrackByTag(VideoIdTextBox.Text);
-            await t.get();
+            List<Track> b = await t.get();
+            for (int i = 0; i < b.Count; i++)
+                list.Items.Add(b[i]);
         }
 
 

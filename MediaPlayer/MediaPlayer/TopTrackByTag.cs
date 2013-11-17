@@ -108,7 +108,6 @@ namespace MediaPlayer
 
                 list.Add(new Track(artistName, trackName, musicLink , durationNumber , imageUri , videoID));
             }
-            await new MessageDialog(list[list.Count - 1].toString()).ShowAsync();
             return list;
 
         }
