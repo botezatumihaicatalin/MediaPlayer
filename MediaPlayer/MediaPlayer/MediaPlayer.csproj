@@ -103,6 +103,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataLayer.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="LastFMPageScrapper.cs" />
     <Compile Include="MainPage.xaml.cs">
