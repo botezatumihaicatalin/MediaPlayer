@@ -19,5 +19,11 @@ namespace MediaPlayer.Common
             get;
             set;
         }
+
+        public String shit
+        {
+            get;
+            set;
+        }
     }
 }
