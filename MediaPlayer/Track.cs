@@ -17,10 +17,18 @@ namespace MediaPlayer.Common
             Duration = duration;
             ImageUri = imageUri;
             VideoID = videoID;
-            CacheUri = cacheUri;
+
+            if (cacheUri != null)
+            {
+                CacheUriString = cacheUri;
+            }
+            else
+            {
+                CacheUriString = "http://127.0.0.1";
+            }
         }
 
-        public String CacheUri
+        public String CacheUriString
         {
             get;
             set;
@@ -59,6 +67,25 @@ namespace MediaPlayer.Common
         public String toString()
         {
             return Name + "\n" + Artist + "\n" + Duration + "\n" + LastFMLink + "\n" + ImageUri.AbsoluteUri + "\n" + VideoID;
+        }
+
+        public async Task getYoutubeUri()
+        {
+            if (VideoID != null)
+            {
+                LastFMPageScrapper scrapper = new LastFMPageScrapper(new Uri(LastFMLink));
+                try
+                {
+                    VideoID = await scrapper.getYoutubeId();
+                }
+                catch (Exception er)
+                {
+
+                }
+            }
+            YoutubeDecoder decoder = new YoutubeDecoder();
+            await decoder.getVideoCacheURL();
+            CacheUriString = decoder.DirectVideoURL;
         }
     }
 }

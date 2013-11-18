@@ -11,11 +11,18 @@ namespace MediaPlayer
 {
     class YoutubeDecoder
     {
+        private static Dictionary<string, string> chars = new Dictionary<string, string>(){
+            {"24","$"},{"26","&"},{"2B","+"},{"2C",","},{"2F","/"},
+            {"3A",":"},{"3B",";"},{"3D","="},{"3F","?"},{"40","@"},
+            {"20"," "},{"3C","<"},{"3E",">"},{"23","#"},{"7B","{"},
+            {"7D","}"},{"7C","|"},{"5C","\\"},{"5E","^"},{"7E","~"},
+            {"5B","["},{"5D","]"},{"60","`"},{"25","%"}};
+
         public string VideoID
         {
             get;
             set;
-        }
+        }    
 
         private string mDirectVideoURL;
         public string DirectVideoURL
@@ -31,20 +38,12 @@ namespace MediaPlayer
             this.VideoID = VideoID;
         }
 
-        private string decodeURL(ref string content)
+        private void decodeURL(ref string content)
         {
-            Dictionary<string, string> chars = new Dictionary<string, string>(){
-            {"24","$"},{"26","&"},{"2B","+"},{"2C",","},{"2F","/"},
-            {"3A",":"},{"3B",";"},{"3D","="},{"3F","?"},{"40","@"},
-            {"20"," "},{"3C","<"},{"3E",">"},{"23","#"},{"7B","{"},
-            {"7D","}"},{"7C","|"},{"5C","\\"},{"5E","^"},{"7E","~"},
-            {"5B","["},{"5D","]"},{"60","`"},{"25","%"}};
-            string new_content = content;
             foreach (string key in chars.Keys)
-                new_content = new_content.Replace("%" + key, chars[key]);
+                content = content.Replace("%" + key, chars[key]);
 
-            new_content = new_content.Replace("%2C", ",");
-            return new_content;
+            content = content.Replace("%2C", ",");
         }
 
         private async Task<string> fetchURL()
@@ -57,37 +56,34 @@ namespace MediaPlayer
             }
             catch
             {
-                throw new Exception("No internet connection or bad request!"); 
+                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
             string result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
             string startSearchString = "adaptive_fmts";
-            int startIndex = result.IndexOf(startSearchString) + startSearchString.Length;
+            int startIndex = result.IndexOf(startSearchString);
         
             if (startIndex == -1)
             {
-                throw new Exception("Failed to find URL");
+                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
 
             result = result.Substring(startIndex, result.Length - startIndex);
-            result = decodeURL(ref result);
-
-            int audioIndex = result.IndexOf("type=audio") + "type=audio".Length;
-
+            decodeURL(ref result);
+            int audioIndex = result.IndexOf("type=audio");
             if (audioIndex == -1)
             {
-                throw new Exception("Failed to find URL");
+                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
+            audioIndex += "type=audio".Length;
             result = result.Substring(audioIndex, result.Length - audioIndex);
-
-
-
-            int urlIndex = result.IndexOf("url=") + "url=".Length;
+            int urlIndex = result.IndexOf("url=");
 
             if (urlIndex == -1)
             {
-                throw new Exception("Failed to find URL");
+                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
+            urlIndex += "url=".Length;
 
             result = result.Substring(urlIndex, result.Length - urlIndex);
 
@@ -121,7 +117,8 @@ namespace MediaPlayer
                 }
                 catch (Exception er)
                 {
-
+                    if (er.Message == ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND)
+                        is_good = false;
                 }
                 
             }while (!is_good);

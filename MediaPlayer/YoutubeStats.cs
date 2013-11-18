@@ -48,6 +48,7 @@ namespace MediaPlayer
             mVideoTitle = "";
             mVideoImageURL = "";
             mVideoImage = null;
+            mDurationInSeconds = 0;
         }
         public YoutubeStats()
         {

@@ -50,9 +50,7 @@ namespace MediaPlayer
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
 
-            list.ItemClick += Grid_ItemClick;
-
-            
+            list.ItemClick += Grid_ItemClick;   
             
         }
 
@@ -132,13 +130,13 @@ namespace MediaPlayer
                 BitmapImage bitmapImage = new BitmapImage(track.ImageUri);
 
 
-                if (track.CacheUri == null)
+                if (track.CacheUriString == null)
                 {
                     await decoder.getVideoCacheURL();
-                    track.CacheUri = decoder.DirectVideoURL;
+                    track.CacheUriString = decoder.DirectVideoURL;
                 }
 
-                mediaPlayer.Source = track.CacheUri;
+                mediaPlayer.Source = track.CacheUriString;
                 
                 MediaControl.TrackName = track.Name;
                 MediaControl.ArtistName = track.Artist;
@@ -190,7 +188,7 @@ namespace MediaPlayer
 
             ProgressSlider.Value = 0;
             ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
-            mediaPlayer.Source = new_item.CacheUri;
+            mediaPlayer.Source = new_item.CacheUriString;
             mediaPlayer.play();
            
         }
@@ -211,7 +209,7 @@ namespace MediaPlayer
 
             ProgressSlider.Value = 0;
             ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
-            mediaPlayer.Source = new_item.CacheUri;
+            mediaPlayer.Source = new_item.CacheUriString;
             mediaPlayer.play();
             
         }
@@ -233,7 +231,7 @@ namespace MediaPlayer
             ProgressSlider.Value = 0;
             ProgressSlider.Maximum = track.Duration * 4.0 / 5.0;
 
-            mediaPlayer.Source = track.CacheUri;
+            mediaPlayer.Source = track.CacheUriString;
             mediaPlayer.play();
 
             ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
@@ -283,40 +281,7 @@ namespace MediaPlayer
                 PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_clicked_147x147.png"));
             }
         }
-
-        /*private void LiveTileOff(String[] artists, String[] tracks, String[] images)
-        {
-            string tileXmlString =
-               "<tile>"
-               + "<visual version='2'>"
-               + "<binding template='TileSquare310x310SmallImagesAndTextList01' branding='None'>"
-               + "<image id='1' " + "src='" + images[0] + "' />"
-               + "<text id='1'>" + artists[0] + "</text>"
-               + "<text id='2'>" + tracks[0] + "</text>"
-               + "<image id='2' " + "src='" + images[1] + "' />"
-               + "<text id='3'>" + artists[1] + "</text>"
-               + "<text id='4'>" + tracks[1] + "</text>"
-               + "<image id='3' " + "src='" + images[2] + "' />"
-               + "<text id='5'>" + artists[2] + "</text>"
-               + "<text id='6'>" + tracks[2] + "</text>"
-               + "</binding>"
-               + "</visual>"
-               + "</tile>";
-
-            XmlDocument tileDOM = new XmlDocument();
-
-
-            // Load the xml string into the DOM, catching any invalid xml characters.
-            tileDOM.LoadXml(tileXmlString);
-
-            // Create a tile notification.
-
-            TileNotification tile = new TileNotification(tileDOM);
-
-            // Send the notification to the application’s tile.
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tile);
-
-        }*/
+     
         private void LiveTileOn(String artists, String tracks, String images)
         {
             string tileXmlString =

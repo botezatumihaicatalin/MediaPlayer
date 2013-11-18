@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="fbfa820c-ba87-4e49-802a-f2a555208d0a" Publisher="CN=Diana" Version="1.0.0.0" />
+  <Identity Name="fbfa820c-ba87-4e49-802a-f2a555208d0a" Publisher="CN=Diana" Version="1.0.0.2" />
   <Properties>
     <DisplayName>MediaPlayer</DisplayName>
     <PublisherDisplayName>Diana</PublisherDisplayName>
