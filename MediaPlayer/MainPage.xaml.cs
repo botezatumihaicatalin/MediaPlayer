@@ -69,7 +69,7 @@ namespace MediaPlayer
             nextTrack();
         }
 
-        private async Task<string> saveImageToFile(BitmapImage image)
+        private async Task<string> saveImageToFile(Uri path)
         {
             HttpWebRequest request;
             WebResponse response;
@@ -90,10 +90,10 @@ namespace MediaPlayer
 
             if (!found) storageFile = await storageFolder.CreateFileAsync("thumbnail.jpg");
 
-            request = (HttpWebRequest)WebRequest.Create(image.UriSource);
+            request = (HttpWebRequest)WebRequest.Create(path);
             try
             {
-                request = (HttpWebRequest)WebRequest.Create(image.UriSource);
+                request = (HttpWebRequest)WebRequest.Create(path);
                 response = await request.GetResponseAsync();
                 stream = response.GetResponseStream();
 
@@ -124,24 +124,12 @@ namespace MediaPlayer
         private async Task LoadTrack(Track track)
         {
             try
-            {                
-                YoutubeDecoder decoder = new YoutubeDecoder();       
-                decoder.VideoID = track.VideoID;
-                BitmapImage bitmapImage = new BitmapImage(track.ImageUri);
-
-
-                if (track.CacheUriString == null)
-                {
-                    await decoder.getVideoCacheURL();
-                    track.CacheUriString = decoder.DirectVideoURL;
-                }
-
-                mediaPlayer.Source = track.CacheUriString;
-                
+            {
+                await track.getYoutubeUri();                
                 MediaControl.TrackName = track.Name;
                 MediaControl.ArtistName = track.Artist;
-                String t = await saveImageToFile(bitmapImage);
-                MediaControl.AlbumArt = new Uri("ms-appdata:///local/thumbnail.jpg");
+                String t = await saveImageToFile(track.ImageUri);
+                MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
             }
             catch (Exception er)
             {
@@ -181,6 +169,7 @@ namespace MediaPlayer
             Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
             ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
             LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
+            
             await LoadTrack(new_item);
 
             VideoTitleHolder.Text = new_item.Name + " - " + new_item.Artist;
@@ -190,6 +179,7 @@ namespace MediaPlayer
             ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
             mediaPlayer.Source = new_item.CacheUriString;
             mediaPlayer.play();
+
            
         }
 

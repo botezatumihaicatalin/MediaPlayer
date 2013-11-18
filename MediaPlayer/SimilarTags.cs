@@ -40,7 +40,7 @@ namespace MediaPlayer
             }
             catch
             {
-                throw new Exception("No similar tags here!");
+                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
 
             String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();

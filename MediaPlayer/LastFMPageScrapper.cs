@@ -50,10 +50,12 @@ namespace MediaPlayer
                 end++;
             }
             ID = page_source.Substring(index, end - index);
-            //if (ID.Length <= 3)
-            //{
-                //throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_ID_NOT_FOUND);
-            //}
+
+            if (ID.Length <= 3)
+            {
+                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_ID_NOT_FOUND);
+            }
+
             return ID;
         }
     }

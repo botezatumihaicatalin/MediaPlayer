@@ -17,15 +17,7 @@ namespace MediaPlayer.Common
             Duration = duration;
             ImageUri = imageUri;
             VideoID = videoID;
-
-            if (cacheUri != null)
-            {
-                CacheUriString = cacheUri;
-            }
-            else
-            {
-                CacheUriString = "http://127.0.0.1";
-            }
+            CacheUriString = "http://127.0.0.1";
         }
 
         public String CacheUriString
@@ -71,7 +63,7 @@ namespace MediaPlayer.Common
 
         public async Task getYoutubeUri()
         {
-            if (VideoID != null)
+            if (VideoID == null)
             {
                 LastFMPageScrapper scrapper = new LastFMPageScrapper(new Uri(LastFMLink));
                 try
@@ -83,9 +75,12 @@ namespace MediaPlayer.Common
 
                 }
             }
-            YoutubeDecoder decoder = new YoutubeDecoder();
-            await decoder.getVideoCacheURL();
-            CacheUriString = decoder.DirectVideoURL;
+            if (CacheUriString == "http://127.0.0.1")
+            {
+                YoutubeDecoder decoder = new YoutubeDecoder(VideoID);
+                await decoder.getVideoCacheURL();
+                CacheUriString = decoder.DirectVideoURL;
+            }
         }
     }
 }

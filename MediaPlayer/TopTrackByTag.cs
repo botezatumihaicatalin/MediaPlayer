@@ -69,6 +69,7 @@ namespace MediaPlayer
                 }
                 catch (Exception er)
                 {
+                    imageUri = new Uri("ms-appx:///Assets/blue.png");
                 }
             }
 

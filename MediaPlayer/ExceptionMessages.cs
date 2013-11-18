@@ -12,5 +12,6 @@ namespace MediaPlayer
         public static string YOUTUBE_VIDEO_ID_NOT_FOUND = "Youtube video id was not found!";
         public static string CONNECTION_FAILED = "Connection failed!";
         public static string YOUTUBE_VIDEO_URL_NOT_FOUND = "Youtube video URL was not found!";
+        public static string NO_SIMILAR_TAGS_FOUND = "No similar tags were found!";
     }
 }
