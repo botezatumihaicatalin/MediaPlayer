@@ -1826,4 +1826,78 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <ControlTemplate x:Key="NextButtonTemplate" TargetType="Button">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/next_track_clicked_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/next_track_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled"/>
+                    <VisualState x:Name="PointerOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/next_track_entered_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused"/>
+                    <VisualState x:Name="PointerFocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Grid.Background>
+                <ImageBrush x:Name="ButtonBrush" ImageSource="Assets/next_track_147x147.png"/>
+            </Grid.Background>
+        </Grid>
+    </ControlTemplate>
+    <ControlTemplate x:Key="PrevButtonTemplate" TargetType="Button">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/prev_track_clicked_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/prev_track_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled"/>
+                    <VisualState x:Name="PointerOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/prev_track_entered_147x147.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused"/>
+                    <VisualState x:Name="PointerFocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Grid.Background>
+                <ImageBrush x:Name="ButtonBrush" ImageSource="Assets/prev_track_147x147.png"/>
+            </Grid.Background>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

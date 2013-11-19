@@ -238,42 +238,6 @@ namespace MediaPlayer
             text.Text = mediaPlayer.Source;
             mediaPlayer.playPause();
         }
-
-        private void PlayPause_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_entered_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_entered_147x147.png"));
-            }
-        }
-
-        private void PlayPause_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
-            }
-        }
-
-        private void PlayPause_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_clicked_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_clicked_147x147.png"));
-            }
-        }
      
         private void LiveTileOn(String artists, String tracks, String images)
         {
@@ -369,40 +333,10 @@ namespace MediaPlayer
         {
         }
 
-        private void Next_track_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source  = new BitmapImage(new Uri("ms-appx:///Assets/next_track__entered_147x147.png"));
-        }
-
-        private void Next_track_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/next_track_147x147.png"));
-        }
-
-        private void Next_track_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/next_track_clicked_147x147.png"));
-        }     
-
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
             prevTrack();
-        }
-
-        private void Prev_track_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_entered_147x147.png"));
-        }
-
-        private void Prev_track_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_147x147.png"));
-        }
-
-        private void Prev_track_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_clicked_147x147.png"));
-        }       
+        }      
 
         private void Next_track_Tapped(object sender, TappedRoutedEventArgs e)
         {

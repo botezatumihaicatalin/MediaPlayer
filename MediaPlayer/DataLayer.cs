@@ -22,7 +22,9 @@ namespace MediaPlayer
                     TopTrackByTag similarTracks = new TopTrackByTag(tags[i]); 
                     similarTracks.get(frameElement, contentHolder, (int)100/n); 
                 } 
-                catch (Exception e) { } 
+                catch (Exception e) 
+                { 
+                } 
             } 
         }
 

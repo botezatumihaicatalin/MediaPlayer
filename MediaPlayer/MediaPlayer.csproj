@@ -136,12 +136,12 @@
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\next_track_147x147.png" />
     <Content Include="Assets\next_track_clicked_147x147.png" />
-    <Content Include="Assets\next_track__entered_147x147.png" />
+    <Content Include="Assets\next_track_entered_147x147.png" />
     <Content Include="Assets\pause_147x147.png" />
     <Content Include="Assets\pause_2100x2100.png" />
     <Content Include="Assets\pause_clicked_147x147.png" />
     <Content Include="Assets\pause_entered_147x147.png" />
-    <Content Include="Assets\play_147x147.scale-100.png" />
+    <Content Include="Assets\play_147x147.png" />
     <Content Include="Assets\play_2100x2100.png" />
     <Content Include="Assets\play_clicked_147x147.png" />
     <Content Include="Assets\play_entered_147x147.png" />
