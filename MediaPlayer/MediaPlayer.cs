@@ -27,7 +27,6 @@ namespace MediaPlayer
         private bool mPlayPause = false;
         private FrameworkElement mFrameWorkElement = null;
         private string mSource;
-        private GridView mGrid;
 
         public string Source
         {

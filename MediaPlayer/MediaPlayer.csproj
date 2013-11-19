@@ -107,6 +107,7 @@
     <Compile Include="DataLayer.cs" />
     <Compile Include="ExceptionMessages.cs" />
     <Compile Include="GlobalArray.cs" />
+    <Compile Include="Pair.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="SimilarTags.cs" />
     <Compile Include="Splash.xaml.cs" />

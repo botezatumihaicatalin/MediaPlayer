@@ -13,14 +13,14 @@ namespace MediaPlayer
     {
         public async Task getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder) 
         { 
-            List<String> tags = Preferences.getTags(); 
+            List<String> tags = await Preferences.getTopTags(); 
             int n = tags.Count; 
             for (int i = 0; i < n; i++) 
             { 
                 try 
                 { 
                     TopTrackByTag similarTracks = new TopTrackByTag(tags[i]); 
-                    await similarTracks.get(frameElement, contentHolder, (int)60 / n); 
+                    similarTracks.get(frameElement, contentHolder, (int)100/n); 
                 } 
                 catch (Exception e) { } 
             } 

@@ -37,21 +37,23 @@ namespace MediaPlayer
 
         public MainPage()
         {
-            this.InitializeComponent();        
-           
+            this.InitializeComponent();
+            this.Loaded += new RoutedEventHandler(Page_Loaded);
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
             mediaPlayer.OnMediaFailed += MediaEnds;
-            mediaPlayer.OnMediaEnded += MediaEnds;
-
-            Preferences.readTagsFromFile();
-            new DataLayer().getTracksByPreferences(this, list);
+            mediaPlayer.OnMediaEnded += MediaEnds;            
 
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
 
             list.ItemClick += Grid_ItemClick;   
             
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await new DataLayer().getTracksByPreferences(this, list);
         }
 
         private async void MediaControl_PreviousTrackPressed(object sender, object e)
@@ -151,6 +153,7 @@ namespace MediaPlayer
             try
             {
                 DataLayer t = new DataLayer();
+                Preferences.addTag(VideoIdTextBox.Text);
                 string txt = VideoIdTextBox.Text;
                 Task.Run(()=>t.getTrackByTag(this , list , txt));
             }
@@ -305,9 +308,9 @@ namespace MediaPlayer
             TileUpdateManager.CreateTileUpdaterForApplication().Update(tile);
 
         }
-        private async void ToastNotifications(String artists, String tracks, String images)
-        {
-            ;
+        private async void ToastNotifications(string artists, string tracks, string images)
+        {      
+      
             string toastXmlString = "<toast>"
                             + "<visual version='2'>"
                             + "<binding template='ToastImageAndText04'>"
@@ -323,17 +326,33 @@ namespace MediaPlayer
 
             // Create a toast, then create a ToastNotifier object to show
             // the toast
-            ToastNotification toast = new ToastNotification(toastDOM);
-
+            try
+            {
+                ToastNotification toast = new ToastNotification(toastDOM);
+                ToastNotificationManager.CreateToastNotifier().Show(toast);
+            }
+            catch (Exception er)
+            {
+                toastXmlString = "<toast>"
+                            + "<visual version='2'>"
+                            + "<binding template='ToastImageAndText04'>"
+                            + "<text id='1'>" + artists + "</text>"
+                            + "<text id='2'>" + tracks + "</text>"
+                            + "</binding>"
+                            + "</visual>"
+                            + "</toast>";
+                ToastNotification toast = new ToastNotification(toastDOM);
+                ToastNotificationManager.CreateToastNotifier().Show(toast);
+            }
 
             // If you have other applications in your package, you can specify the AppId of
             // the app to create a ToastNotifier for that application
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
         private void FeelLucky_Tapped(object sender, TappedRoutedEventArgs e)
         {
             list.Items.Clear();
+            GlobalArray.list.Clear();
             new DataLayer().getTracksByPreferences(this, list);
         }
 

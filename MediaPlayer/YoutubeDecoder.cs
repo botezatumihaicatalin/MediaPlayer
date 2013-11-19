@@ -68,14 +68,17 @@ namespace MediaPlayer
                 throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
 
+            startIndex += "adaptive_fmts".Length;
             result = result.Substring(startIndex, result.Length - startIndex);
             decodeURL(ref result);
+
             int audioIndex = result.IndexOf("type=audio");
             if (audioIndex == -1)
             {
                 throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
             audioIndex += "type=audio".Length;
+            
             result = result.Substring(audioIndex, result.Length - audioIndex);
             int urlIndex = result.IndexOf("url=");
 
