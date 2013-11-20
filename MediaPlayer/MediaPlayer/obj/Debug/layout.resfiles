@@ -18,8 +18,10 @@ Assets\prev_track_clicked_147x147.png
 Assets\prev_track_entered_147x147.png
 Assets\SmallLogo.png
 Assets\SplashScreen.png
+Assets\Stars.png
 Assets\StoreLogo.png
 App.xaml
 Common\StandardStyles.xaml
 MainPage.xaml
 Themes\Generic.xaml
+Stars.png

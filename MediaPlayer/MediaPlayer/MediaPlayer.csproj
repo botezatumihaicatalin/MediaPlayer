@@ -145,7 +145,9 @@
     <Content Include="Assets\prev_track_entered_147x147.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\Stars.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Stars.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

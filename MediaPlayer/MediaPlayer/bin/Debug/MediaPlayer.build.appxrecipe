@@ -82,9 +82,15 @@
       <PackagePath>Assets\SplashScreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Stars.png">
+      <PackagePath>Assets\Stars.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Stars.png">
+      <PackagePath>Stars.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\App.xaml">
       <PackagePath>App.xaml</PackagePath>
