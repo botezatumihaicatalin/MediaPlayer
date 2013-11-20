@@ -176,13 +176,8 @@ namespace MediaPlayer
             }
         }
 
-        public async void nextTrack()
+        private async Task playTrack(Track new_item)
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex += 1;
-            mediaPlayer.MediaIndex %= GlobalArray.list.Count;
-
-            Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
             ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
             LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
             await LoadTrack(new_item);
@@ -194,53 +189,41 @@ namespace MediaPlayer
             ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
             mediaPlayer.Source = new_item.CacheUri;
             mediaPlayer.play();
+        }
+
+        public async void nextTrack()
+        {
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex += 1;
+                mediaPlayer.MediaIndex %= GlobalArray.list.Count;
+                playTrack(GlobalArray.list[mediaPlayer.MediaIndex]);
+            }
            
         }
 
         public async void prevTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex -= 1;
-            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count-1;
-
-            Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-            ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            await LoadTrack(new_item);
-
-            VideoTitleHolder.Text = new_item.Name;
-            VideoImageHolder.Source = new BitmapImage(new_item.ImageUri);
-
-            ProgressSlider.Value = 0;
-            ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
-            mediaPlayer.Source = new_item.CacheUri;
-            mediaPlayer.play();
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex -= 1;
+                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
+                playTrack(GlobalArray.list[mediaPlayer.MediaIndex]);
+            }
             
         }
 
         public async void Grid_ItemClick(object sender, ItemClickEventArgs e)
         {
-            // Navigate to the appropriate destination page, configuring the new page
-            // by passing required information as a navigation parameter
-            mediaPlayer.stop();
-            Track track = ((Track)e.ClickedItem);
-
-            mediaPlayer.MediaIndex = list.Items.IndexOf(track);
-
-            await LoadTrack(track);
-
-            VideoTitleHolder.Text = track.Name;
-            VideoImageHolder.Source = new BitmapImage(track.ImageUri);
-
-            ProgressSlider.Value = 0;
-            ProgressSlider.Maximum = track.Duration * 4.0 / 5.0;
-
-            mediaPlayer.Source = track.CacheUri;
-            mediaPlayer.play();
-
-            ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
-            LiveTileOn(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
-            return;
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                Track track = ((Track)e.ClickedItem);
+                mediaPlayer.MediaIndex = list.Items.IndexOf(track);
+                playTrack(track);
+            }
         }
 
 
@@ -248,77 +231,9 @@ namespace MediaPlayer
         {
             text.Text = mediaPlayer.Source;
             mediaPlayer.playPause();
-        }
+        }       
 
-        private void PlayPause_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_entered_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_entered_147x147.png"));
-            }
-        }
-
-        private void PlayPause_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
-            }
-        }
-
-        private void PlayPause_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (!mediaPlayer.PlayButtonState)
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_clicked_147x147.png"));
-            }
-            else
-            {
-                PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_clicked_147x147.png"));
-            }
-        }
-
-        /*private void LiveTileOff(String[] artists, String[] tracks, String[] images)
-        {
-            string tileXmlString =
-               "<tile>"
-               + "<visual version='2'>"
-               + "<binding template='TileSquare310x310SmallImagesAndTextList01' branding='None'>"
-               + "<image id='1' " + "src='" + images[0] + "' />"
-               + "<text id='1'>" + artists[0] + "</text>"
-               + "<text id='2'>" + tracks[0] + "</text>"
-               + "<image id='2' " + "src='" + images[1] + "' />"
-               + "<text id='3'>" + artists[1] + "</text>"
-               + "<text id='4'>" + tracks[1] + "</text>"
-               + "<image id='3' " + "src='" + images[2] + "' />"
-               + "<text id='5'>" + artists[2] + "</text>"
-               + "<text id='6'>" + tracks[2] + "</text>"
-               + "</binding>"
-               + "</visual>"
-               + "</tile>";
-
-            XmlDocument tileDOM = new XmlDocument();
-
-
-            // Load the xml string into the DOM, catching any invalid xml characters.
-            tileDOM.LoadXml(tileXmlString);
-
-            // Create a tile notification.
-
-            TileNotification tile = new TileNotification(tileDOM);
-
-            // Send the notification to the application’s tile.
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tile);
-
-        }*/
+        
         private void LiveTileOn(String artists, String tracks, String images)
         {
             string tileXmlString =
@@ -384,53 +299,10 @@ namespace MediaPlayer
             new DataLayer().getTracksByPreferences(this, list);
         }
 
-        private void FeelLucky_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void FeelLucky_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-        }
-
-        private void FeelLucky_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-        }
-
-        private void Next_track_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source  = new BitmapImage(new Uri("ms-appx:///Assets/next_track__entered_147x147.png"));
-        }
-
-        private void Next_track_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/next_track_147x147.png"));
-        }
-
-        private void Next_track_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            Next_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/next_track_clicked_147x147.png"));
-        }     
-
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
             prevTrack();
         }
-
-        private void Prev_track_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_entered_147x147.png"));
-        }
-
-        private void Prev_track_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_147x147.png"));
-        }
-
-        private void Prev_track_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            Prev_track.Source = new BitmapImage(new Uri("ms-appx:///Assets/prev_track_clicked_147x147.png"));
-        }       
 
         private void Next_track_Tapped(object sender, TappedRoutedEventArgs e)
         {

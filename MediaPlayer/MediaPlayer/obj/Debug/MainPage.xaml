@@ -72,13 +72,15 @@
     <Page.BottomAppBar>
         <AppBar Margin="0,-80,0,0">
             <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
-                <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="427" Canvas.Top="10" Stretch="UniformToFill"/>
-                <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="789" FontSize="36" Canvas.Left="528" Canvas.Top="10"/>
+                <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="73" VerticalAlignment="Top" Width="76" Canvas.Left="347" Canvas.Top="42" Stretch="UniformToFill"/>
+                <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="887.286" FontSize="36" Canvas.Left="429.714" Canvas.Top="45" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+              
+                </TextBlock>
                 <MediaElement x:Name="MusicPlayer" Height="136" Canvas.Left="10" Canvas.Top="602" Width="190" Visibility="Collapsed" />
-                <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="909" Canvas.Left="427" Canvas.Top="62" StepFrequency="0.1" Foreground="#FFB41D1D" Background="#29FFFFFF" BorderBrush="{x:Null}" Orientation="Horizontal"/>
-                <Image x:ConnectionId='2' x:Name="PlayPause" HorizontalAlignment="Left"  Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="90" Source="Assets/play_147x147.png"                           Stretch="Fill" Canvas.Top="47"                                                                                                                            />
-                <Image x:Name="Next_track" Height="69" Canvas.Left="170" Canvas.Top="47" Width="75" Source="Assets/next_track_147x147.png"/>
-                <Image x:Name="Prev_track" Height="69" Canvas.Left="5" Canvas.Top="47" Width="75" Source="Assets/prev_track_147x147.png"/>
+                <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="909" Canvas.Left="427" Canvas.Top="81" StepFrequency="0.1" Foreground="#FFB41D1D" Background="#29FFFFFF" BorderBrush="{x:Null}" Orientation="Horizontal"/>
+                <Image x:ConnectionId='2' x:Name="PlayPause" HorizontalAlignment="Left"  Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="90" Source="Assets/play_147x147.png"                           Stretch="Fill" Canvas.Top="47"/>
+                <Button x:ConnectionId='3' x:Name="Next_track" Height="69" Canvas.Left="170" Canvas.Top="47" Width="75"                            Template="{StaticResource NextButtonTemplate}"/>
+                <Button x:ConnectionId='4' x:Name="Prev_track" Height="69" Canvas.Left="5" Canvas.Top="47" Width="75"                            Template="{StaticResource PreviousButtonTemplate}"/>
             </Canvas>
         </AppBar>
     </Page.BottomAppBar>

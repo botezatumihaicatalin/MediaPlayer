@@ -319,20 +319,6 @@ namespace MediaPlayer
             GlobalArray.list.Clear();
             new DataLayer().getTracksByPreferences(this, list);
         }
-
-        private void FeelLucky_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void FeelLucky_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-        }
-
-        private void FeelLucky_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-        }
-
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
             prevTrack();

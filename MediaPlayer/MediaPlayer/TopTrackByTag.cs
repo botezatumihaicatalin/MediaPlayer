@@ -108,6 +108,7 @@ namespace MediaPlayer
                 {
                     Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID);
                     contentHolder.Items.Add(new_track);
+                    GlobalArray.list.Add(new_track);
                 });
             }
 

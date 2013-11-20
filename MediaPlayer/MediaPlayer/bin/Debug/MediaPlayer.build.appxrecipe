@@ -1,90 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>MIHAI</Machine>
-    <WindowsUser>MihaiS</WindowsUser>
+    <Machine>MIHAI-PC</Machine>
+    <WindowsUser>Mihai</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <PackageIdentityName>fbfa820c-ba87-4e49-802a-f2a555208d0a</PackageIdentityName>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.exe">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.pdb">
+      <PackagePath>MediaPlayer.pdb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
       <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_147x147.png">
       <PackagePath>Assets\fast_forward_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_2100x2100.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_2100x2100.png">
       <PackagePath>Assets\fast_forward_2100x2100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Logo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Logo.png">
       <PackagePath>Assets\Logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_147x147.png">
       <PackagePath>Assets\next_track_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_clicked_147x147.png">
+      <PackagePath>Assets\next_track_clicked_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_entered_147x147.png">
+      <PackagePath>Assets\next_track_entered_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_147x147.png">
       <PackagePath>Assets\pause_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_2100x2100.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_2100x2100.png">
       <PackagePath>Assets\pause_2100x2100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_clicked_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_clicked_147x147.png">
       <PackagePath>Assets\pause_clicked_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_entered_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_entered_147x147.png">
       <PackagePath>Assets\pause_entered_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_147x147.png">
       <PackagePath>Assets\play_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
       <PackagePath>Assets\play_2100x2100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
       <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
       <PackagePath>Assets\play_entered_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
       <PackagePath>Assets\prev_track_147x147.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_clicked_147x147.png">
+      <PackagePath>Assets\prev_track_clicked_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_entered_147x147.png">
+      <PackagePath>Assets\prev_track_entered_147x147.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
       <PackagePath>Assets\SmallLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
       <PackagePath>Assets\SplashScreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\App.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\App.xaml">
       <PackagePath>App.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Common\StandardStyles.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Common\StandardStyles.xaml">
       <PackagePath>Common\StandardStyles.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MainPage.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Themes\Generic.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Themes\Generic.xaml">
       <PackagePath>Themes\Generic.xaml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mihaita\Desktop\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>
