@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -46,7 +47,7 @@ namespace MediaPlayer
             this.VideoID = VideoID;
             mVideoTitle = "";
             mVideoImageURL = "";
-            mVideoImage = new BitmapImage();
+            mVideoImage = null;
         }
         public YoutubeStats()
         {
@@ -62,35 +63,38 @@ namespace MediaPlayer
                 response = await request.GetResponseAsync();
             }
             catch (Exception)
-            {
+            {                
                 throw new Exception("No internet connection or bad request!");                
             }
             String result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-            int titleStartIndex = result.IndexOf("<title>") + "<title>".Length;
-            int titleEndIndex = result.IndexOf("</title>");
+            XmlDocument Xml = new XmlDocument();
+            Xml.LoadXml(result);
 
-            if (titleStartIndex == -1 || titleEndIndex == -1) throw new Exception("Cannot get video stats!");
+            XmlNodeList titleList = Xml.GetElementsByTagName("title");
+            
+            mVideoTitle = titleList[0].InnerText;
 
-            mVideoTitle = result.Substring(titleStartIndex, titleEndIndex - titleStartIndex);
+            XmlNamedNodeMap durationAttr = Xml.GetElementsByTagName("media:content")[0].Attributes;
+            mDurationInSeconds = Convert.ToInt32(durationAttr.GetNamedItem("duration").InnerText);
 
-            int durationStartIndex = result.IndexOf("duration=") + "duration=".Length + 1;
+            XmlNodeList images = Xml.GetElementsByTagName("media:thumbnail");
 
-            if (durationStartIndex == -1) throw new Exception("Cannot get video stats!");
-
-            int durationEndIndex = durationStartIndex;
-            while (result[durationEndIndex] != "' "[0])
+            for (int i = 0; i < 4; i++)
             {
-                durationEndIndex++;
+                try
+                {
+                    XmlNamedNodeMap attrs = images[i].Attributes;
+                    if (attrs.GetNamedItem("url").InnerText.Contains("default.jpg"))
+                    {
+                        mVideoImageURL = attrs.GetNamedItem("url").InnerText;
+                    }
+                }
+                catch(Exception er)
+                {
+
+                }
             }
-            mDurationInSeconds = Convert.ToInt32(result.Substring(durationStartIndex, durationEndIndex - durationStartIndex));
-
-            string startString = "<media:thumbnail url='";
-            int imageStartIndex = result.IndexOf(startString) + startString.Length;
-            int imageEndIndex = result.IndexOf("default.jpg") + "default.jpg".Length;
-
-            mVideoImageURL = result.Substring(imageStartIndex, imageEndIndex - imageStartIndex);
-            mVideoImage = new BitmapImage(new Uri(mVideoImageURL));
 
         }
 

@@ -7,10 +7,10 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="fbfa820c-ba87-4e49-802a-f2a555208d0a" Publisher="CN=Diana" Version="1.0.0.0" ProcessorArchitecture="neutral" />
+  <Identity Name="SoulPlayer" Publisher="CN=Diana" Version="1.0.0.0" ProcessorArchitecture="neutral" />
   <Properties>
     <DisplayName>MediaPlayer</DisplayName>
-    <PublisherDisplayName>Diana</PublisherDisplayName>
+    <PublisherDisplayName>SoulPlayer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -22,10 +22,20 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="MediaPlayer.exe" EntryPoint="MediaPlayer.App">
-      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="MediaPlayer" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MediaPlayer" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+        </InitialRotationPreference>
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" StartPage="MainPage.xaml">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

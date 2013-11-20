@@ -1,15 +1,18 @@
-﻿using System;
+﻿using MediaPlayer.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,20 +31,46 @@ namespace MediaPlayer
     //https://www.youtube.com/embed/1VnSzOzL0UM?autoplay=1
     //https://gdata.youtube.com/feeds/api/videos/-biwNmWLFa5Q?v=2
 
+    
+
     public sealed partial class MainPage : Page
     {
-        private YoutubeStats stats;
-        private YoutubeDecoder decoder;
         private MediaPlayer mediaPlayer;
 
         public MainPage()
         {
-            this.InitializeComponent();
-            stats = new YoutubeStats();
-            decoder = new YoutubeDecoder();
+            this.InitializeComponent();        
+           
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
+            mediaPlayer.OnMediaFailed += MediaEnds;
+            mediaPlayer.OnMediaEnded += MediaEnds;
+
+            Preferences.readTagsFromFile();
+            new DataLayer().getTracksByPreferences(this, list);
+
+            MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
+            MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
+
+            list.ItemClick += Grid_ItemClick;
+
             
+            
+        }
+
+        private async void MediaControl_PreviousTrackPressed(object sender, object e)
+        {
+             await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => prevTrack());
+        }
+
+        private async void MediaControl_NextTrackPressed(object sender, object e)
+        {
+             await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
+        }
+
+        private void MediaEnds(object sender , object e)
+        {
+            nextTrack();
         }
 
         private async Task<string> saveImageToFile(BitmapImage image)
@@ -96,31 +125,31 @@ namespace MediaPlayer
             }
         }
 
-        private async Task PopulateUI(string VideoID)
+        private async Task LoadTrack(Track track)
         {
             try
-            {
-                stats.VideoID = VideoID;
-                decoder.VideoID = VideoID;
-                await stats.getData();
-                VideoImageHolder.Source = stats.VideoImage;
-                VideoTitleHolder.Text = stats.VideoTitle;
-                await decoder.getVideoCacheURL();
+            {                
+                YoutubeDecoder decoder = new YoutubeDecoder();       
+                decoder.VideoID = track.VideoID;
+                BitmapImage bitmapImage = new BitmapImage(track.ImageUri);
+
+
+                if (track.CacheUri == null)
+                {
+                    await decoder.getVideoCacheURL();
+                    track.CacheUri = decoder.DirectVideoURL;
+                }
+
+                mediaPlayer.Source = track.CacheUri;
                 
-
-                ProgressSlider.Maximum = stats.DurationInSeconds * 4.0 / 5.0;
-                ProgressSlider.Value = 0;
-
-                MediaControl.TrackName = stats.VideoTitle;
-                String t = await saveImageToFile(stats.VideoImage);
+                MediaControl.TrackName = track.Name;
+                MediaControl.ArtistName = track.Artist;
+                String t = await saveImageToFile(bitmapImage);
                 MediaControl.AlbumArt = new Uri("ms-appdata:///local/thumbnail.jpg");
-
-                mediaPlayer.Source = decoder.DirectVideoURL;
-
             }
             catch (Exception er)
             {
-                new MessageDialog("Error",er.Message).ShowAsync();
+                new MessageDialog("Error", er.Message).ShowAsync();
             }
 
         }
@@ -133,12 +162,68 @@ namespace MediaPlayer
             return result;
         } 
 
-        private void Set_Click(object sender, RoutedEventArgs e)
+        private async void Set_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.stop();
-            //PopulateUI(VideoIdTextBox.Text);
-            TopTrackByTag t = new TopTrackByTag();
-            t.get("love");
+            try
+            {
+                DataLayer t = new DataLayer();
+                string txt = VideoIdTextBox.Text;
+                Task.Run(()=>t.getTrackByTag(this , list , txt));
+            }
+            catch (Exception exp)
+            {
+               new MessageDialog("Error",exp.Message).ShowAsync();
+            }
+        }
+
+        private async Task playTrack(Track new_item)
+        {
+            ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
+            LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
+            await LoadTrack(new_item);
+
+            VideoTitleHolder.Text = new_item.Name + " - " + new_item.Artist;
+            VideoImageHolder.Source = new BitmapImage(new_item.ImageUri);
+
+            ProgressSlider.Value = 0;
+            ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
+            mediaPlayer.Source = new_item.CacheUri;
+            mediaPlayer.play();
+        }
+
+        public async void nextTrack()
+        {
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex += 1;
+                mediaPlayer.MediaIndex %= GlobalArray.list.Count;
+                playTrack(GlobalArray.list[mediaPlayer.MediaIndex]);
+            }
+           
+        }
+
+        public async void prevTrack()
+        {
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex -= 1;
+                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
+                playTrack(GlobalArray.list[mediaPlayer.MediaIndex]);
+            }
+            
+        }
+
+        public async void Grid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                Track track = ((Track)e.ClickedItem);
+                mediaPlayer.MediaIndex = list.Items.IndexOf(track);
+                playTrack(track);
+            }
         }
 
 
@@ -146,22 +231,88 @@ namespace MediaPlayer
         {
             text.Text = mediaPlayer.Source;
             mediaPlayer.playPause();
+        }       
+
+        
+        private void LiveTileOn(String artists, String tracks, String images)
+        {
+            string tileXmlString =
+               "<tile>"
+               + "<visual version='2'>"
+               + "<binding template='TileSquare150x150PeekImageAndText02' fallback='TileSquarePeekImageAndText02' branding='None'>"
+               + "<image id='1' " + "src='" + images + "' />"
+               + "<text id='1'>" + artists + "</text>"
+               + "<text id='2'>" + tracks + "</text>"
+               + "</binding>"
+               + "<binding template='TileWide310x150ImageAndText02' fallback='TileWide310x150ImageAndText02' branding='None'>"
+               + "<image id='1' " + "src='" + images + "' />"
+               + "<text id='1'>" + artists + "</text>"
+               + "<text id='2'>" + tracks + "</text>"
+               + "</binding>"
+               + "</visual>"
+               + "</tile>";
+
+            // Create a DOM.
+            XmlDocument tileDOM = new XmlDocument();
+
+
+            // Load the xml string into the DOM, catching any invalid xml characters.
+            tileDOM.LoadXml(tileXmlString);
+
+            // Create a tile notification.
+
+            TileNotification tile = new TileNotification(tileDOM);
+
+            // Send the notification to the application’s tile.
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(tile);
+
+        }
+        private async void ToastNotifications(String artists, String tracks, String images)
+        {
+            ;
+            string toastXmlString = "<toast>"
+                            + "<visual version='2'>"
+                            + "<binding template='ToastImageAndText04'>"
+                            + "<image id='1' " + "src='" + images + "' />"
+                            + "<text id='1'>" + artists + "</text>"
+                            + "<text id='2'>" + tracks + "</text>"
+                            + "</binding>"
+                            + "</visual>"
+                            + "</toast>";
+
+            Windows.Data.Xml.Dom.XmlDocument toastDOM = new Windows.Data.Xml.Dom.XmlDocument();
+            toastDOM.LoadXml(toastXmlString);
+
+            // Create a toast, then create a ToastNotifier object to show
+            // the toast
+            ToastNotification toast = new ToastNotification(toastDOM);
+
+
+            // If you have other applications in your package, you can specify the AppId of
+            // the app to create a ToastNotifier for that application
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
-        private void PlayPause_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void FeelLucky_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_entered_147x147.png"));
+            list.Items.Clear();
+            new DataLayer().getTracksByPreferences(this, list);
         }
 
-        private void PlayPause_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+            prevTrack();
         }
 
-        private void PlayPause_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void Next_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PlayPause.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_clicked_147x147.png"));
+            nextTrack();
         }
+
+
+
+
+        
 
     }
 }

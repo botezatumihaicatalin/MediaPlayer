@@ -103,13 +103,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataLayer.cs" />
+    <Compile Include="GlobalArray.cs" />
     <Compile Include="LastFMPageScrapper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaPlayer.cs" />
+    <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimilarTags.cs" />
     <Compile Include="TopTrackByTag.cs" />
+    <Compile Include="Track.cs" />
     <Compile Include="YoutubeDecoder.cs" />
     <Compile Include="YoutubeStats.cs" />
   </ItemGroup>
@@ -125,16 +130,24 @@
     <Content Include="Assets\fast_forward_2100x2100.png" />
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\next_track_147x147.png" />
+    <Content Include="Assets\next_track_clicked_147x147.png" />
+    <Content Include="Assets\next_track_entered_147x147.png" />
     <Content Include="Assets\pause_147x147.png" />
     <Content Include="Assets\pause_2100x2100.png" />
+    <Content Include="Assets\pause_clicked_147x147.png" />
+    <Content Include="Assets\pause_entered_147x147.png" />
     <Content Include="Assets\play_147x147.png" />
     <Content Include="Assets\play_2100x2100.png" />
     <Content Include="Assets\play_clicked_147x147.png" />
     <Content Include="Assets\play_entered_147x147.png" />
     <Content Include="Assets\prev_track_147x147.png" />
+    <Content Include="Assets\prev_track_clicked_147x147.png" />
+    <Content Include="Assets\prev_track_entered_147x147.png" />
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\Stars.png" />
     <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Stars.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

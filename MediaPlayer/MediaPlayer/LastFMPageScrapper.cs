@@ -32,14 +32,20 @@ namespace MediaPlayer
             }
             catch
             {
-                throw new Exception("No internet connection or bad URI");
+                return ID;
             }
 
             string page_source = new StreamReader(response.GetResponseStream()).ReadToEnd();
             string search_string = "<embed src=\"http://www.youtube.com/v/";
             int index = page_source.IndexOf(search_string) + search_string.Length;
+
+            if (index == -1)
+            {
+                return ID;
+            }               
+
             int end = index;
-            while (page_source[end] != '?')
+            while (page_source[end] != '?' && page_source[end] != '&' && page_source[end] != '"')
             {
                 end++;
             }

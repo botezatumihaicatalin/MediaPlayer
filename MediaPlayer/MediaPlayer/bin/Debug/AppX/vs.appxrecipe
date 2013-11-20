@@ -1,68 +1,148 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>DIANA-PC</Machine>
-    <WindowsUser>Diana</WindowsUser>
+    <Machine>MIHAI-PC</Machine>
+    <WindowsUser>Mihai</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <RegisteredManifestChecksum>7D73FB04B48514A7DDCB4AC6B373C102A5E4ABB74C4CB48E0CD17B5E0A81D2C1</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>fbfa820c-ba87-4e49-802a-f2a555208d0a_1.0.0.0_neutral__12pve03w2jdy4</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>fbfa820c-ba87-4e49-802a-f2a555208d0a_12pve03w2jdy4!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>fbfa820c-ba87-4e49-802a-f2a555208d0a</RegisteredPackageID>
+    <RegisteredManifestChecksum>9E6E711B13111819F36591C9C29730FED1A2A14073A836D9AB7E5B661F1E5EB9</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>SoulPlayer_1.0.0.0_neutral__12pve03w2jdy4</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>SoulPlayer_12pve03w2jdy4!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>SoulPlayer</RegisteredPackageID>
     <RegisteredPackagePublisher>CN=Diana</RegisteredPackagePublisher>
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2013-11-10T04:47:48.586</Modified>
+      <Modified>2013-11-20T07:21:56.006</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.exe">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.exe">
       <PackagePath>MediaPlayer.exe</PackagePath>
-      <Modified>2013-11-10T04:47:48.485</Modified>
+      <Modified>2013-11-20T07:21:55.881</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.pdb">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MediaPlayer.pdb">
       <PackagePath>MediaPlayer.pdb</PackagePath>
-      <Modified>2013-11-10T04:47:48.406</Modified>
+      <Modified>2013-11-20T07:21:55.857</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\Logo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_backward_147x147.png">
+      <PackagePath>Assets\fast_backward_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_147x147.png">
+      <PackagePath>Assets\fast_forward_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\fast_forward_2100x2100.png">
+      <PackagePath>Assets\fast_forward_2100x2100.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Logo.png">
       <PackagePath>Assets\Logo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-03-16T04:42:52.000</Modified>
+      <Modified>2013-11-16T09:58:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_147x147.png">
+      <PackagePath>Assets\next_track_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_clicked_147x147.png">
+      <PackagePath>Assets\next_track_clicked_147x147.png</PackagePath>
+      <Modified>2013-11-20T06:49:56.263</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\next_track_entered_147x147.png">
+      <PackagePath>Assets\next_track_entered_147x147.png</PackagePath>
+      <Modified>2013-11-20T06:49:56.261</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_147x147.png">
+      <PackagePath>Assets\pause_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_2100x2100.png">
+      <PackagePath>Assets\pause_2100x2100.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_clicked_147x147.png">
+      <PackagePath>Assets\pause_clicked_147x147.png</PackagePath>
+      <Modified>2013-11-17T04:04:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\pause_entered_147x147.png">
+      <PackagePath>Assets\pause_entered_147x147.png</PackagePath>
+      <Modified>2013-11-17T04:04:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_147x147.png">
+      <PackagePath>Assets\play_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_2100x2100.png">
+      <PackagePath>Assets\play_2100x2100.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_clicked_147x147.png">
+      <PackagePath>Assets\play_clicked_147x147.png</PackagePath>
+      <Modified>2013-11-16T14:40:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\play_entered_147x147.png">
+      <PackagePath>Assets\play_entered_147x147.png</PackagePath>
+      <Modified>2013-11-16T14:40:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_147x147.png">
+      <PackagePath>Assets\prev_track_147x147.png</PackagePath>
+      <Modified>2013-11-16T09:58:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_clicked_147x147.png">
+      <PackagePath>Assets\prev_track_clicked_147x147.png</PackagePath>
+      <Modified>2013-11-20T06:45:09.617</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\prev_track_entered_147x147.png">
+      <PackagePath>Assets\prev_track_entered_147x147.png</PackagePath>
+      <Modified>2013-11-20T06:45:09.620</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SmallLogo.png">
       <PackagePath>Assets\SmallLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-03-16T04:42:52.000</Modified>
+      <Modified>2013-11-16T09:58:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\SplashScreen.png">
       <PackagePath>Assets\SplashScreen.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-03-16T04:42:52.000</Modified>
+      <Modified>2013-11-16T09:58:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\Stars.png">
+      <PackagePath>Assets\Stars.png</PackagePath>
+      <Modified>2013-11-20T07:21:16.514</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2012-03-16T04:42:52.000</Modified>
+      <Modified>2013-11-16T09:58:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\App.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\Stars.png">
+      <PackagePath>Stars.png</PackagePath>
+      <Modified>2013-11-20T07:21:03.152</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\App.xaml">
       <PackagePath>App.xaml</PackagePath>
-      <Modified>2013-11-10T03:48:49.009</Modified>
+      <Modified>2013-11-16T09:58:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\Common\StandardStyles.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Common\StandardStyles.xaml">
       <PackagePath>Common\StandardStyles.xaml</PackagePath>
-      <Modified>2012-06-27T00:19:20.000</Modified>
+      <Modified>2013-11-20T06:47:49.980</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\MainPage.xaml">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\MainPage.xaml">
       <PackagePath>MainPage.xaml</PackagePath>
-      <Modified>2013-11-10T04:47:40.182</Modified>
+      <Modified>2013-11-20T07:21:40.896</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Workspace-Mihai\MediaPlayer\MediaPlayer\bin\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\Themes\Generic.xaml">
+      <PackagePath>Themes\Generic.xaml</PackagePath>
+      <Modified>2013-11-16T17:26:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\MediaPlayer\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2013-11-10T03:54:19.205</Modified>
+      <Modified>2013-11-20T07:21:55.956</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

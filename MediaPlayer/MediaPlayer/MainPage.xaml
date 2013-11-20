@@ -5,24 +5,83 @@
     xmlns:local="using:MediaPlayer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="#F1F1F1"
     mc:Ignorable="d">
-
-    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+    <Page.TopAppBar>
+        <AppBar>
+            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
+                <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Canvas.Left="120" Canvas.Top="45" TextWrapping="Wrap" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the Video ID" FontSize="25"/>
+                <Button x:Name="Set" Content="Search" HorizontalAlignment="Left" Height="52" Canvas.Left="900" Canvas.Top="45" VerticalAlignment="Top" Width="186" Click="Set_Click" CharacterSpacing="-2"/>
+                <Image x:Name="SearchIcon" Source="Assets/search.png" Height="42" Width="42" Canvas.Left="1040" Canvas.Top="50" />
+                <TextBox x:Name="text" HorizontalAlignment="Left" Height="49" Canvas.Left="1100" Canvas.Top="45" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="221"/>
+            </Canvas>
+        </AppBar>
+    </Page.TopAppBar>
+    <Grid Background="#F1F1F1">
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="126" Margin="10,10,0,0" VerticalAlignment="Top" Width="1346" Background="#FF403D3D">
-            <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="427" Canvas.Top="10" Stretch="UniformToFill"/>
-            <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="789" FontSize="36" Canvas.Left="528" Canvas.Top="10"/>
-            <MediaElement x:Name="MusicPlayer" Height="136" Canvas.Left="10" Canvas.Top="602" Width="190" Visibility="Collapsed"/>
-            <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="909" Canvas.Left="427" Canvas.Top="62" StepFrequency="0.1" Foreground="#FFB41D1D" Background="#29FFFFFF" BorderBrush="{x:Null}" Orientation="Horizontal"/>
-            <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="106" VerticalAlignment="Top" Width="112" Canvas.Left="150" Source="Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10" PointerEntered="PlayPause_PointerEntered" PointerExited="PlayPause_PointerExited" PointerPressed="PlayPause_PointerPressed"/>
-            <Image x:Name="Next_track" Height="106" Canvas.Left="290" Canvas.Top="10" Width="112" Source="Assets/next_track_147x147.png"/>
-            <Image x:Name="Prev_track" Height="106" Canvas.Left="10" Canvas.Top="10" Width="112" Source="Assets/prev_track_147x147.png"/>
-        </Canvas>
-        <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Margin="234,666,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" ToolTipService.ToolTip="Enter the Video ID"/>
-        <Button x:Name="Set" Content="Play It!" HorizontalAlignment="Left" Height="52" Margin="708,666,0,0" VerticalAlignment="Top" Width="186" Click="Set_Click"/>
-        <TextBox x:Name="text" HorizontalAlignment="Left" Height="252" Margin="40,246,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="192"/>
+
+
+        <GridView
+            x:Name="list"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Width="1366"
+            Height="768"
+            AutomationProperties.AutomationId="ItemsGridView"
+            AutomationProperties.Name="Items"
+            ItemsSource="{Binding Task}"
+            SelectionMode="None"
+            IsSwipeEnabled="True"
+            IsItemClickEnabled="True"
+            Background="#80777777" Grid.RowSpan="3" CanDragItems="True" CanReorderItems="True" Margin="0" MinWidth="10" MinHeight="10" Padding="50,50,10,10" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+            >
+            <GridView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="0 0 20 20"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left" Width="200" Height="200" Background="#80FFFFFF">
+                        <Border Background="#A0c4426C">
+                        </Border>
+                        <Border Background="#25319b">
+                            <Image Source="{Binding ImageUri}" Stretch="UniformToFill"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Bottom" Background="#A0000000">
+                            <TextBlock Text="{Binding Artist}" Foreground="#FFFFFF" Height="20" Margin="15,5,15,0" FontWeight="SemiBold" FontSize="18"/>
+                            <TextBlock Text="{Binding Name}" Foreground="#FFFFFF" TextWrapping="NoWrap" Margin="15,10,15,5" FontSize="14"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <StackPanel HorizontalAlignment="Left" Height="768" VerticalAlignment="Top" Width="97" Margin="1269,0,0,0" Grid.RowSpan="2">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" Opacity="1" SpreadMethod="Repeat">
+                    <GradientStop Color="#A0FFFFFF" Offset="0.35"/>
+                    <GradientStop Color="#D0FFFFFF" Offset="0.65"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <MediaElement x:Name="MusicPlayer" Height="136" Visibility="Collapsed" Margin="0,0,-66,0"/>
+        </StackPanel>
     </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar Margin="0,-80,0,0">
+            <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
+                <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350" Canvas.Top="40" Stretch="UniformToFill"/>
+                <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458" Canvas.Top="40"/>
+                <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="85" StepFrequency="0.1" Foreground="#FFB41D1D" Background="#29FFFFFF" BorderBrush="{x:Null}" Orientation="Horizontal"/>
+                <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="90" Source="Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="47"/>
+                <Button x:Name="Next_track" Height="69" Canvas.Left="170" Canvas.Top="47" Width="75" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
+                <Button x:Name="Prev_track" Height="69" Canvas.Left="5" Canvas.Top="47" Width="75" Tapped="Prev_track_Tapped" Template="{StaticResource PreviousButtonTemplate}"/>
+                <Image x:Name="FeelLucky" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="270" Source="Assets/Stars.png" Canvas.Top="47" Tapped="FeelLucky_Tapped"/>
+            </Canvas>
+        </AppBar>
+    </Page.BottomAppBar>
+
 </Page>
