@@ -38,30 +38,25 @@ namespace MediaPlayer
             this.VideoID = VideoID;
         }
 
-        public void swap<T>(T a, T b)
+        public void swap<T>(ref T a, ref T b)
         {
             T aux = a;
             a = b;
             b = aux;
         }
 
-        public void reverseString(ref string str)
-        {
-            for (int i = 0; i <= str.Length / 2; i++)
-            {
-                swap(str[i], str[str.Length - i - 1]);
-            }
-        }
+        
 
-        public string dechipherSignature(string signature)
+        public void dechipherSignature(ref string signature)
         {
             //http://www.jwz.org/hacks/youtubedown
-            swap(signature[0], signature[50]);
-            swap(signature[0], signature[17]);
-            reverseString(ref signature);
-            swap(signature[0], signature[7]);
-            swap(signature[0], signature[65]);
-            return signature;
+            char[] char_sig = signature.ToCharArray();
+            swap(ref char_sig[0], ref char_sig[50]);
+            swap(ref char_sig[0], ref char_sig[17]);
+            Array.Reverse(char_sig);
+            swap(ref char_sig[0], ref char_sig[7]);
+            swap(ref char_sig[0], ref char_sig[65]);
+            signature = new String(char_sig);
         }
 
         private void decodeURL(ref string content)
@@ -106,6 +101,30 @@ namespace MediaPlayer
             audioIndex += "type=audio".Length;
             
             result = result.Substring(audioIndex, result.Length - audioIndex);
+
+            string signature = "";
+
+            if (!result.Contains("signature="))
+            {
+                int sigIndex = result.IndexOf("\\u0026s=");
+                int sigIndex2 = result.IndexOf(",s=");
+
+                sigIndex = Math.Max(sigIndex, sigIndex2);
+
+                if (sigIndex == -1)
+                {
+                    throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
+                }
+                sigIndex += "\\u0026s=".Length;
+                int sigEndIndex = sigIndex;
+                int max = result.IndexOf("type=audio");
+                while (result[sigIndex] != '\\' && sigIndex < max)
+                {
+                    signature += result[sigIndex++];
+                }
+                dechipherSignature(ref signature);
+            }
+
             int urlIndex = result.IndexOf("url=");
 
             if (urlIndex == -1)
@@ -119,7 +138,6 @@ namespace MediaPlayer
             int finalIndex = result.IndexOf("\\u0026");
             result = result.Substring(0, finalIndex);
 
-
             string[] remaining = { ",init=", ",type=", ",index=" , ",bitrate=" , ",itag="};
 
             foreach (string str in remaining)
@@ -130,7 +148,8 @@ namespace MediaPlayer
                     result = result.Substring(0, position);
                 }
             }
-
+            if (signature != "")
+                result += "&signature=" + signature;
             return result;
         }
 
@@ -146,7 +165,7 @@ namespace MediaPlayer
                 }
                 catch (Exception er)
                 {
-                    if (er.Message == ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND)
+                    if (er.Message == ExceptionMessages.CONNECTION_FAILED)
                         is_good = false;
                 }
                 
