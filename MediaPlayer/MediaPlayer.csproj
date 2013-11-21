@@ -134,6 +134,10 @@
     <Content Include="Assets\fast_forward_147x147.png" />
     <Content Include="Assets\fast_forward_2100x2100.png" />
     <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\LogoHeart.png" />
+    <Content Include="Assets\LogoHeart_150x150.png" />
+    <Content Include="Assets\LogoHeart_verysmall.png" />
+    <Content Include="Assets\LogoHeart_wide.png" />
     <Content Include="Assets\next_track_147x147.png" />
     <Content Include="Assets\next_track_clicked_147x147.png" />
     <Content Include="Assets\next_track_entered_147x147.png" />

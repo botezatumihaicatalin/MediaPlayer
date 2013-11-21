@@ -150,26 +150,23 @@ namespace MediaPlayer
             }
             if (signature != "")
                 result += "&signature=" + signature;
+
             return result;
         }
 
         public async Task getVideoCacheURL()
         {
-            bool is_good = false;
-            do
+            bool is_good = false;            
+            try
             {
-                try
-                {
-                    mDirectVideoURL = await fetchURL();
-                    is_good = true;
-                }
-                catch (Exception er)
-                {
-                    if (er.Message == ExceptionMessages.CONNECTION_FAILED)
-                        is_good = false;
-                }
+               mDirectVideoURL = await fetchURL();
+               is_good = true;
+            }
+            catch (Exception er)
+            {
+                is_good = false;
+            }
                 
-            }while (!is_good);
         }
     }
 }

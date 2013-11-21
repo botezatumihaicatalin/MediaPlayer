@@ -127,11 +127,19 @@ namespace MediaPlayer
         {
             try
             {
-                await track.getYoutubeUri();                
+                await track.getYoutubeUri();
                 MediaControl.TrackName = track.Name;
                 MediaControl.ArtistName = track.Artist;
                 String t = await saveImageToFile(track.ImageUri);
                 MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
+                ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
+                LiveTileOn(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
+                    
+                lock (mediaPlayer)
+                {
+                    mediaPlayer.Source = track.CacheUriString;
+                    mediaPlayer.play();
+                }
             }
             catch (Exception er)
             {
@@ -165,45 +173,39 @@ namespace MediaPlayer
 
         public async void nextTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex += 1;
-            mediaPlayer.MediaIndex %= GlobalArray.list.Count;
-
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex += 1;
+                mediaPlayer.MediaIndex %= GlobalArray.list.Count;
+            }
             Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-            ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            
-            await LoadTrack(new_item);
-
             VideoTitleHolder.Text = new_item.Name + " - " + new_item.Artist;
             VideoImageHolder.Source = new BitmapImage(new_item.ImageUri);
 
             ProgressSlider.Value = 0;
-            ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
-            mediaPlayer.Source = new_item.CacheUriString;
-            mediaPlayer.play();
+            ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;        
+            LoadTrack(new_item);
 
            
         }
 
         public async void prevTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex -= 1;
-            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count-1;
+            lock (mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex -= 1;
+                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
+            }
 
             Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-            ToastNotifications(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            LiveTileOn(new_item.Artist, new_item.Name, new_item.ImageUri.AbsoluteUri);
-            await LoadTrack(new_item);
-
-            VideoTitleHolder.Text = new_item.Name;
+            VideoTitleHolder.Text = new_item.Name + " - " + new_item.Artist;
             VideoImageHolder.Source = new BitmapImage(new_item.ImageUri);
-
             ProgressSlider.Value = 0;
             ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
-            mediaPlayer.Source = new_item.CacheUriString;
-            mediaPlayer.play();
+
+            LoadTrack(new_item);
             
         }
 
@@ -211,25 +213,24 @@ namespace MediaPlayer
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            mediaPlayer.stop();
-            Track track = ((Track)e.ClickedItem);
+            Track new_item = ((Track)e.ClickedItem);
 
-            mediaPlayer.MediaIndex = list.Items.IndexOf(track);
+            if (mediaPlayer.MediaIndex == list.Items.IndexOf(new_item))
+            {
+                return;
+            }
 
-            await LoadTrack(track);
-
-            VideoTitleHolder.Text = track.Name;
-            VideoImageHolder.Source = new BitmapImage(track.ImageUri);
+            lock(mediaPlayer)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
+            }
+            VideoTitleHolder.Text = new_item.Name + " - " + new_item.Artist;
+            VideoImageHolder.Source = new BitmapImage(new_item.ImageUri);
 
             ProgressSlider.Value = 0;
-            ProgressSlider.Maximum = track.Duration * 4.0 / 5.0;
-
-            mediaPlayer.Source = track.CacheUriString;
-            mediaPlayer.play();
-
-            ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
-            LiveTileOn(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
-            return;
+            ProgressSlider.Maximum = new_item.Duration * 4.0 / 5.0;
+            LoadTrack(new_item);
         }
 
 
