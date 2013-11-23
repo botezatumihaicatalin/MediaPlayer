@@ -19,13 +19,12 @@ namespace MediaPlayer
         {
             get;set;
         }
-        private static Regex youtubeVideoRegex;
+        private static readonly Regex youtubeVideoRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)");
 
         public YoutubeSearch(String trackName, String artistName)
         {
             TrackName = trackName;
             ArtistName = artistName;
-            youtubeVideoRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)");
         }
         public async Task<Pair<string,string>> getAVideoCacheUri()
         {
@@ -33,11 +32,24 @@ namespace MediaPlayer
             {
                 throw new Exception();
             }
-            string new_trackName = TrackName.Replace(' ', '+');
-            string new_artistName = ArtistName.Replace(' ','+');
-
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
-            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + new_artistName + "+" + new_trackName + "&orderby=relevance";
+
+            string[] artist_tokens = Regex.Split(ArtistName, " ");
+            string[] track_tokens = Regex.Split(TrackName, " ");
+            string query_string = "";
+            int i;
+            for (i = 0; i < artist_tokens.Length; i++)
+            {
+                query_string += artist_tokens[i] + "+";
+            }
+            for (i = 0; i < track_tokens.Length-1; i++)
+            {
+                query_string += track_tokens[i] + "+";
+            }
+            if (track_tokens.Length - 1 >= 0)
+                query_string += track_tokens[track_tokens.Length - 1];
+
+            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + query_string + "&orderby=relevance";
             WebRequest request = WebRequest.Create(search_url);
             WebResponse response = null;
             YoutubeDecoder decoder = new YoutubeDecoder();

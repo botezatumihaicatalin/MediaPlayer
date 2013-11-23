@@ -44,7 +44,14 @@ namespace MediaPlayer
             String cacheUrl = "";
             Int32 durationNumber = 0;
 
-            YoutubeSearch src = new YoutubeSearch(artistName, trackName);
+            int index;
+            if ((index = trackName.IndexOf('/')) != -1)
+            {
+                string search_track_name = trackName.Substring(0, index);
+                int b = search_track_name.IndexOf('a');
+            }
+
+            YoutubeSearch src = new YoutubeSearch(trackName, artistName);
             Pair<string,string> pair = await src.getAVideoCacheUri();
 
             videoID = pair.second;
@@ -84,7 +91,7 @@ namespace MediaPlayer
             });
         }
 
-        public async Task get(FrameworkElement frameElement , GridView contentHolder , int no = 50)
+        public async Task get(FrameworkElement frameElement, GridView contentHolder, int no = 50)
         {
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag + 

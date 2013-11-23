@@ -69,7 +69,7 @@ namespace MediaPlayer
 
         private async Task<string> fetchURL()
         {
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://www.youtube.com/watch?v=" + VideoID);
+            WebRequest request = WebRequest.Create("http://www.youtube.com/watch?v=" + VideoID);
             WebResponse response;
             try
             {
