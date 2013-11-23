@@ -127,7 +127,6 @@ namespace MediaPlayer
         {
             try
             {
-                await track.getYoutubeUri();
                 MediaControl.TrackName = track.Name;
                 MediaControl.ArtistName = track.Artist;
                 String t = await saveImageToFile(track.ImageUri);
@@ -274,8 +273,9 @@ namespace MediaPlayer
 
         }
         private async void ToastNotifications(string artists, string tracks, string images)
-        {      
-      
+        {
+            artists = artists.Replace("&", "and");
+            tracks = tracks.Replace("&", "and");
             string toastXmlString = "<toast>"
                             + "<visual version='2'>"
                             + "<binding template='ToastImageAndText04'>"

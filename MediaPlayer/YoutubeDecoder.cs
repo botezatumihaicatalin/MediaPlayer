@@ -98,32 +98,9 @@ namespace MediaPlayer
             {
                 throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
             }
-            audioIndex += "type=audio".Length;
+            audioIndex += "type=audio".Length;           
             
             result = result.Substring(audioIndex, result.Length - audioIndex);
-
-            string signature = "";
-
-            if (!result.Contains("signature="))
-            {
-                int sigIndex = result.IndexOf("\\u0026s=");
-                int sigIndex2 = result.IndexOf(",s=");
-
-                sigIndex = Math.Max(sigIndex, sigIndex2);
-
-                if (sigIndex == -1)
-                {
-                    throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
-                }
-                sigIndex += "\\u0026s=".Length;
-                int sigEndIndex = sigIndex;
-                int max = result.IndexOf("type=audio");
-                while (result[sigIndex] != '\\' && sigIndex < max)
-                {
-                    signature += result[sigIndex++];
-                }
-                dechipherSignature(ref signature);
-            }
 
             int urlIndex = result.IndexOf("url=");
 
@@ -148,8 +125,6 @@ namespace MediaPlayer
                     result = result.Substring(0, position);
                 }
             }
-            if (signature != "")
-                result += "&signature=" + signature;
 
             return result;
         }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -40,17 +41,14 @@ namespace MediaPlayer
             Uri imageUri = new Uri("ms-appx:///Assets/blue.png");
             
             String videoID = "NONE";
+            String cacheUrl = "";
             Int32 durationNumber = 0;
 
-            try
-            {
-                LastFMPageScrapper scpr = new LastFMPageScrapper(new Uri(musicLink));
-                videoID = await scpr.getYoutubeId();
-            }
-            catch (Exception er)
-            {
-                return;
-            }
+            YoutubeSearch src = new YoutubeSearch(artistName, trackName);
+            Pair<string,string> pair = await src.getAVideoCacheUri();
+
+            videoID = pair.second;
+            cacheUrl = pair.first;
 
             YoutubeStats stats = new YoutubeStats(videoID);
 
@@ -78,7 +76,9 @@ namespace MediaPlayer
             videoID = stats.VideoID;
             frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
-                Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID);
+                artistName = artistName.Replace("&", "and");
+                trackName = trackName.Replace("&", "and");
+                Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID , cacheUrl);
                 contentHolder.Items.Add(new_track);
                 GlobalArray.list.Add(new_track);
             });
@@ -93,8 +93,9 @@ namespace MediaPlayer
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
 
             String urlEncoded = Uri.EscapeUriString(url);
-            System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(urlEncoded);
-            System.Net.WebResponse response;
+
+            WebRequest request = WebRequest.Create(urlEncoded);
+            WebResponse response;
             try
             {
                 response = await request.GetResponseAsync();

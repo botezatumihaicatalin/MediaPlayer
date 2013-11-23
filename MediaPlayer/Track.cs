@@ -9,7 +9,7 @@ namespace MediaPlayer.Common
     class Track
     {
         
-        public Track(String artist = null , String name = null , String link = null , Int32 duration = 0 , Uri imageUri = null , String videoID = null , String cacheUri = null)
+        public Track(String artist = null , String name = null , String link = null , Int32 duration = 0 , Uri imageUri = null , String videoID = null , String cacheUri = "https://127.0.0.1")
         {
             this.Artist = artist;
             this.Name = name;
@@ -17,7 +17,7 @@ namespace MediaPlayer.Common
             Duration = duration;
             ImageUri = imageUri;
             VideoID = videoID;
-            CacheUriString = "http://127.0.0.1";
+            CacheUriString = cacheUri;
         }
 
         public String CacheUriString
@@ -59,28 +59,6 @@ namespace MediaPlayer.Common
         public String toString()
         {
             return Name + "\n" + Artist + "\n" + Duration + "\n" + LastFMLink + "\n" + ImageUri.AbsoluteUri + "\n" + VideoID;
-        }
-
-        public async Task getYoutubeUri()
-        {
-            if (VideoID == null)
-            {
-                LastFMPageScrapper scrapper = new LastFMPageScrapper(new Uri(LastFMLink));
-                try
-                {
-                    VideoID = await scrapper.getYoutubeId();
-                }
-                catch (Exception er)
-                {
-
-                }
-            }
-            if (CacheUriString == "http://127.0.0.1")
-            {
-                YoutubeDecoder decoder = new YoutubeDecoder(VideoID);
-                await decoder.getVideoCacheURL();
-                CacheUriString = decoder.DirectVideoURL;
-            }
         }
     }
 }
