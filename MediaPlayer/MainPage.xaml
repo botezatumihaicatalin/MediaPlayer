@@ -45,7 +45,7 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Left" Width="200" Height="200" Background="#80FFFFFF">
+                    <Grid HorizontalAlignment="Left" Width="200" Height="200" Background="#80FFFFFF" ToolTipService.ToolTip="{Binding ToolTipInfo}">                     
                         <Border Background="#A0c4426C">
                         </Border>
                         <Border Background="#25319b">

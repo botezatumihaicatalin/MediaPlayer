@@ -60,5 +60,26 @@ namespace MediaPlayer.Common
         {
             return Name + "\n" + Artist + "\n" + Duration + "\n" + LastFMLink + "\n" + ImageUri.AbsoluteUri + "\n" + VideoID;
         }
+
+        public String ToolTipInfo
+        {
+            get
+            {
+                // this is used for the Tool Tip. Not to use in generaly.
+                int cpyDuration = Duration;
+                int hours = (cpyDuration / 3600);
+                cpyDuration -= hours * 3600;
+                int minutes = cpyDuration / 60;
+                cpyDuration -= minutes * 60;
+
+                string hoursString = hours.ToString();
+                if (hoursString.Length == 1) hoursString = "0" + hoursString;
+                string minutesString = minutes.ToString();
+                if (minutesString.Length == 1) minutesString = "0" + minutesString;
+                string secondsString = cpyDuration.ToString();
+                if (secondsString.Length == 1) secondsString = "0" + secondsString;
+                return "Track name : " + Name + "\nArtist : " + Artist + "\nDuration (h:m:s) : " + hoursString + ":" + minutesString + ":"+secondsString;
+            }
+        }
     }
 }

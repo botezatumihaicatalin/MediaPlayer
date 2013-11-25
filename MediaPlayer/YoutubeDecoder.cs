@@ -22,14 +22,7 @@ namespace MediaPlayer
         {
             get;
             set;
-        }    
-
-        private string mDirectVideoURL;
-        public string DirectVideoURL
-        {
-            get { return mDirectVideoURL; }
-        }
-
+        }  
         public YoutubeDecoder()
         {           
         }
@@ -67,7 +60,7 @@ namespace MediaPlayer
             content = content.Replace("%2C", ",");
         }
 
-        private async Task<string> fetchURL()
+        public async Task<string> fetchURL()
         {
             WebRequest request = WebRequest.Create("http://www.youtube.com/watch?v=" + VideoID);
             WebResponse response;
@@ -129,19 +122,6 @@ namespace MediaPlayer
             return result;
         }
 
-        public async Task getVideoCacheURL()
-        {
-            bool is_good = false;            
-            try
-            {
-               mDirectVideoURL = await fetchURL();
-               is_good = true;
-            }
-            catch (Exception er)
-            {
-                is_good = false;
-            }
-                
-        }
+        
     }
 }

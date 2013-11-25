@@ -34,6 +34,7 @@ namespace MediaPlayer
             XmlNodeList duration = new_xml.GetElementsByTagName("duration");
             XmlNodeList music_url = new_xml.GetElementsByTagName("url");
             XmlNodeList images = new_xml.GetElementsByTagName("image");
+
             String trackName = names[0].InnerText;
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
@@ -44,26 +45,39 @@ namespace MediaPlayer
             String cacheUrl = "";
             Int32 durationNumber = 0;
 
-            int index;
-            if ((index = trackName.IndexOf('/')) != -1)
+            // Check if last fm page has an youtube link
+            try
             {
-                string search_track_name = trackName.Substring(0, index);
-                int b = search_track_name.IndexOf('a');
+                LastFMPageScrapper scpr = new LastFMPageScrapper(new Uri(musicLink));
+                videoID = await scpr.getYoutubeId();
+                // Check if it contains signature , if not then the video it isn't good
+                if (!videoID.Contains("&signature="))
+                {
+                    videoID = "NONE";
+                }
             }
+            catch(Exception error)
+            {
 
-            YoutubeSearch src = new YoutubeSearch(trackName, artistName);
-            Pair<string,string> pair = await src.getAVideoCacheUri();
+            }
+            
+            // If videoID is NONE at this point it means either no video is on the LastFM page or the video cannot be played , so we will search Youtube
+            if (videoID == "NONE")
+            {
+                YoutubeSearch src = new YoutubeSearch(trackName, artistName);
+                Pair<string, string> pair = await src.getAVideoCacheUri();
 
-            videoID = pair.second;
-            cacheUrl = pair.first;
+                videoID = pair.second;
+                cacheUrl = pair.first;
+            }
 
             YoutubeStats stats = new YoutubeStats(videoID);
 
-            var length = Convert.ToInt32(images.Length) - 1;
+            var length = Convert.ToInt32(images.Length);
 
             if (length > 0)
             {
-                imageUri = new Uri(images[Convert.ToInt32(images.Length - 1)].InnerText);                
+                imageUri = new Uri(images[length - 1].InnerText);                
             }
             else
             {
@@ -80,14 +94,19 @@ namespace MediaPlayer
 
             durationNumber = Math.Max(stats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
 
-            videoID = stats.VideoID;
             frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
-                artistName = artistName.Replace("&", "and");
-                trackName = trackName.Replace("&", "and");
-                Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID , cacheUrl);
-                contentHolder.Items.Add(new_track);
-                GlobalArray.list.Add(new_track);
+                lock (contentHolder)
+                {
+                    lock (GlobalArray.list)
+                    {
+                        artistName = artistName.Replace("&", "and");
+                        trackName = trackName.Replace("&", "and");
+                        Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
+                        contentHolder.Items.Add(new_track);
+                        GlobalArray.list.Add(new_track);
+                    }
+                }
             });
         }
 
@@ -123,6 +142,7 @@ namespace MediaPlayer
             {
                 String xml = tracks[i].GetXml();
                 Task.Run(() => getFromXMLNode(xml ,frameElement, contentHolder));
+                //await getFromXMLNode(xml, frameElement, contentHolder);
             }
 
         }

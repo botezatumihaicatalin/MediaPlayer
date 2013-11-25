@@ -26,12 +26,13 @@ namespace MediaPlayer
         private bool mMediaIsPlaying = false;
         private bool mPlayPause = false;
         private FrameworkElement mFrameWorkElement = null;
-        private string mSource;
+        private Track mCurrentTrack;
+        private readonly object mLock = new object();
 
-        public string Source
+        public Track CurrentTrack
         {
-            get { return mSource; }
-            set { mSource = value; mMediaWasOpened = false; }
+            get { return mCurrentTrack; }
+            set { mCurrentTrack = value; mMediaWasOpened = false; mSlider.Value = 0; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
         }
         public bool PlayButtonState
         {
@@ -54,7 +55,7 @@ namespace MediaPlayer
 
             mFrameWorkElement = frameworkElement;
             mMedia = mediaPlayer;
-            MediaIndex = 0;
+            MediaIndex = -1;
             mMedia.MediaOpened += mMedia_MediaOpened;
             mMedia.MediaEnded += mMedia_MediaEnded;
             mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
@@ -63,16 +64,11 @@ namespace MediaPlayer
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
-            MediaControl.StopPressed += MediaControl_StopPressed;
-           
+            MediaControl.StopPressed += MediaControl_StopPressed;           
 
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
-
-            if (mSlider != null)
-            {
-                mSlider.Value = 0;
-            }
+            mSlider.Value = 0;
 
             mTimer = new DispatcherTimer();
             mTimer.Tick += Tick;
@@ -153,30 +149,40 @@ namespace MediaPlayer
 
         public void play()
         {
-            if (mMedia.Source != new Uri(mSource))
+            lock (mLock)
             {
-                mMedia.Source = new Uri(mSource);
-            }
-            if (mSlider.Value == mSlider.Maximum)
-                mSlider.Value = 0;
+                if (mMedia.Source != new Uri(mCurrentTrack.CacheUriString))
+                {
+                    mMedia.Source = new Uri(mCurrentTrack.CacheUriString);
+                }
 
-            mPlayPause = true;
-            mMedia.Play();
-            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");            
+                if (mSlider.Value == mSlider.Maximum)
+                    mSlider.Value = 0;
+
+                mPlayPause = true;
+                mMedia.Play();
+                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");
+            }
         }
 
         public void pause()
         {
-            mPlayPause = false;
-            mMedia.Pause();
-            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+            lock (mLock)
+            {
+                mPlayPause = false;
+                mMedia.Pause();
+                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+            }
         }
 
         public void stop()
         {
-            mPlayPause = false;
-            mMedia.Stop();
-            mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+            lock (mLock)
+            {
+                mPlayPause = false;
+                mMedia.Stop();
+                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+            }
         }
 
         public void playPause()
@@ -210,6 +216,11 @@ namespace MediaPlayer
         private async void MediaControl_PlayPressed(object sender, object e)
         {
             await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
+        }
+
+        ~MediaPlayer()
+        {
+            mTimer.Stop();
         }
 
 

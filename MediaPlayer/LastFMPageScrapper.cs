@@ -24,7 +24,7 @@ namespace MediaPlayer
         public async Task<string> getYoutubeId()
         {
             string ID = "";
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(LastFMUri);
+            WebRequest request = WebRequest.Create(LastFMUri);
             WebResponse response = null;
             try
             {

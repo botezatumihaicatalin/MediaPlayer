@@ -34,24 +34,10 @@ namespace MediaPlayer
             }
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
 
-            string[] artist_tokens = Regex.Split(ArtistName, " ");
-            string[] track_tokens = Regex.Split(TrackName, " ");
-            string query_string = "";
-            int i;
-            for (i = 0; i < artist_tokens.Length; i++)
-            {
-                query_string += artist_tokens[i] + "+";
-            }
-            for (i = 0; i < track_tokens.Length-1; i++)
-            {
-                query_string += track_tokens[i] + "+";
-            }
-            if (track_tokens.Length - 1 >= 0)
-                query_string += track_tokens[track_tokens.Length - 1];
-
-            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + query_string + "&orderby=relevance";
+            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";
             WebRequest request = WebRequest.Create(search_url);
             WebResponse response = null;
+
             YoutubeDecoder decoder = new YoutubeDecoder();
             try
             {
@@ -83,10 +69,18 @@ namespace MediaPlayer
                 {
                     videoId = youtubeMatch.Groups[1].Value;
                     decoder.VideoID = videoId;
-                    await decoder.getVideoCacheURL();
-                    if (decoder.DirectVideoURL.Contains("&signature="))
+                    string directVideoURL = "";
+                    try
                     {
-                        return new Pair<string,string>(decoder.DirectVideoURL,decoder.VideoID);
+                        directVideoURL = await decoder.fetchURL();
+                    }
+                    catch (Exception er)
+                    {
+                        directVideoURL = "";
+                    }
+                    if (directVideoURL.Contains("&signature="))
+                    {
+                        return new Pair<string,string>(directVideoURL,decoder.VideoID);
                     }
                 }           
 

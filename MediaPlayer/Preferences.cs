@@ -109,7 +109,7 @@ namespace MediaPlayer
             if (!isFound)
             {
                 storageFile = await tagsFolder.CreateFileAsync(tag);
-                await FileIO.WriteTextAsync(storageFile, "0");
+                await FileIO.WriteTextAsync(storageFile, "1");
             }
         }       
     } 
