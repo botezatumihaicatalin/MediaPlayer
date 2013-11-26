@@ -133,7 +133,7 @@ namespace MediaPlayer
                 MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
 
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
-                VideoImageHolder.Source = new BitmapImage(track.ImageUri); 
+                VideoImageHolder.Source = new BitmapImage(track.ImageUri);
 
                 //ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
                 //LiveTileOn(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
@@ -183,7 +183,7 @@ namespace MediaPlayer
         {
             mediaPlayer.stop();
             mediaPlayer.MediaIndex -= 1;
-            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;           
+            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;   
 
             Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
             await LoadTrack(new_item);
@@ -231,16 +231,8 @@ namespace MediaPlayer
 
             // Create a DOM.
             XmlDocument tileDOM = new XmlDocument();
-
-
-            // Load the xml string into the DOM, catching any invalid xml characters.
             tileDOM.LoadXml(tileXmlString);
-
-            // Create a tile notification.
-
             TileNotification tile = new TileNotification(tileDOM);
-
-            // Send the notification to the application’s tile.
             TileUpdateManager.CreateTileUpdaterForApplication().Update(tile);
 
         }
@@ -281,19 +273,13 @@ namespace MediaPlayer
                 ToastNotification toast = new ToastNotification(toastDOM);
                 ToastNotificationManager.CreateToastNotifier().Show(toast);
             }
-
-            // If you have other applications in your package, you can specify the AppId of
-            // the app to create a ToastNotifier for that application
         }
 
         private async void FeelLucky_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            /*list.Items.Clear();
+            list.Items.Clear();
             GlobalArray.list.Clear();
-            new DataLayer().getTracksByPreferences(this, list);*/
-            YoutubeSearch src = new YoutubeSearch("Nothing else matters", "Metallica");
-            Pair<string,string> p = await src.getAVideoCacheUri();
-            new MessageDialog(p.first).ShowAsync();
+            new DataLayer().getTracksByPreferences(this, list);
         }
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {

@@ -93,20 +93,13 @@ namespace MediaPlayer
             }
 
             durationNumber = Math.Max(stats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
-
             frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
-                lock (contentHolder)
-                {
-                    lock (GlobalArray.list)
-                    {
-                        artistName = artistName.Replace("&", "and");
-                        trackName = trackName.Replace("&", "and");
-                        Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
-                        contentHolder.Items.Add(new_track);
-                        GlobalArray.list.Add(new_track);
-                    }
-                }
+                 artistName = artistName.Replace("&", "and");
+                 trackName = trackName.Replace("&", "and");
+                 Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
+                 contentHolder.Items.Add(new_track);
+                 GlobalArray.list.Add(new_track);
             });
         }
 
