@@ -65,7 +65,7 @@ namespace MediaPlayer.Common
         {
             get
             {
-                // this is used for the Tool Tip. Not to use in generaly.
+                // this is used for the Tool Tip. Not to use in generally.
                 int cpyDuration = Duration;
                 int hours = (cpyDuration / 3600);
                 cpyDuration -= hours * 3600;

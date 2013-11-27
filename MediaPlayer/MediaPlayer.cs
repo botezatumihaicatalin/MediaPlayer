@@ -142,9 +142,15 @@ namespace MediaPlayer
       
         private void Tick(object sender, object e)
         {
-            if (mMediaIsPlaying && mMediaWasOpened && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress) 
+            if (mMediaIsPlaying && mMediaWasOpened && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
+            {
                 mSlider.Value += 0.1;
-            
+                if (mSlider.Value >= 2.0 && mSlider.Value <= 2.1)
+                {
+                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                }
+            }
         }
 
         public void play()
@@ -158,7 +164,7 @@ namespace MediaPlayer
 
                 if (mSlider.Value == mSlider.Maximum)
                     mSlider.Value = 0;
-
+                
                 mPlayPause = true;
                 mMedia.Play();
                 mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");

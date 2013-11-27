@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MediaPlayer.App">
-      <VisualElements DisplayName="SoulPlayer" Logo="Assets\LogoHeart_150x150.png" SmallLogo="Assets\LogoHeart_verysmall.png" Description="Windows 8 music player , where you can search for everything." ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
-        <DefaultTile ShowName="allLogos" WideLogo="Assets\LogoHeart_wide.png" ShortName="SoulPlayer" />
-        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#464646" />
+      <VisualElements DisplayName="SoulPlayer" Logo="Assets\LogoHeart_150x150.png" SmallLogo="Assets\LogoHeart_verysmall.png" Description="Windows 8 music player , where you can search for everything." ForegroundText="dark" BackgroundColor="#CCCCCC" ToastCapable="true">
+        <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" ShortName="SoulPlayer" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#CCCCCC" />
         <InitialRotationPreference>
           <Rotation Preference="landscape" />
         </InitialRotationPreference>

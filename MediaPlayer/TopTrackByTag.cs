@@ -71,6 +71,9 @@ namespace MediaPlayer
                 cacheUrl = pair.first;
             }
 
+            if (videoID == "NONE")
+                return;
+
             YoutubeStats stats = new YoutubeStats(videoID);
 
             var length = Convert.ToInt32(images.Length);

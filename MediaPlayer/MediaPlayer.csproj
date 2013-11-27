@@ -111,6 +111,7 @@
     <Compile Include="Preferences.cs" />
     <Compile Include="SimilarTags.cs" />
     <Compile Include="Splash.xaml.cs" />
+    <Compile Include="ToastAndTileNotifications.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="LastFMPageScrapper.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -136,9 +137,10 @@
     <Content Include="Assets\fast_forward_2100x2100.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\LogoHeart.png" />
-    <Content Include="Assets\LogoHeart_150x150.png" />
-    <Content Include="Assets\LogoHeart_verysmall.png" />
-    <Content Include="Assets\LogoHeart_wide.png" />
+    <Content Include="Assets\LogoHeart_150x150.scale-100.png" />
+    <Content Include="Assets\LogoHeart_50x50.scale-100.png" />
+    <Content Include="Assets\LogoHeart_verysmall.scale-100.png" />
+    <Content Include="Assets\LogoHeart_wide.scale-100.png" />
     <Content Include="Assets\next_track_147x147.png" />
     <Content Include="Assets\next_track_clicked_147x147.png" />
     <Content Include="Assets\next_track_entered_147x147.png" />
@@ -157,7 +159,8 @@
     <Content Include="Assets\SmallLogo.scale-140.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\Stars.png" />
-    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\WideLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
