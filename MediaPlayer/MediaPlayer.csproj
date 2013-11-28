@@ -156,6 +156,7 @@
     <Content Include="Assets\prev_track_clicked_147x147.png" />
     <Content Include="Assets\prev_track_entered_147x147.png" />
     <Content Include="Assets\search.png" />
+    <Content Include="Assets\slider_button.png" />
     <Content Include="Assets\SmallLogo.scale-140.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\Stars.png" />

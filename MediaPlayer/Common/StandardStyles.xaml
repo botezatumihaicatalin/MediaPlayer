@@ -1900,4 +1900,22 @@
             </Grid.Background>
         </Grid>
     </ControlTemplate>
+    <ControlTemplate x:Key="SliderTemplate" TargetType="Slider">
+        <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle x:Name="HorizontalDecreaseRect" Grid.Row="1" Fill="{TemplateBinding Foreground}" Height="12" Width="11"/>
+            <Rectangle x:Name="BufferStatus" Grid.Column="1" Fill="Gray" Height="12" Grid.ColumnSpan="2" Margin="0,10,3,9"/>
+            <Thumb IsTabStop="True" Height="20" x:Name="HorizontalThumb" Width="20" Grid.Column="1" Margin="-1,0,0,0">
+                <Thumb.Template>
+                    <ControlTemplate TargetType="Thumb">
+                        <Image Source="Assets/slider_button.png" Stretch="UniformToFill" Width="20" Height="20"/>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

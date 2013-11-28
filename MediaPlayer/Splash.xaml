@@ -8,8 +8,7 @@
     mc:Ignorable="d">
 
     <Canvas Background="#CCCCCC">
-
-        <Image x:Name="SplashScreenImage" Source="Assets/SplashScreen.png" Width="369"  Height="290"/>
+        <Image x:Name="SplashScreenImage" Source="Assets/SplashScreen.png" Width="620"  Height="300"/>
         <Image x:Name="ProgressRingImage" Source="Assets/progressRing.png" Width="620" Height="100" Visibility="Collapsed"/>
         <ProgressRing x:Name="ProgressRing" Foreground="#A60000" IsActive="True" MaxHeight="50" MinHeight="50" MaxWidth="80" MinWidth="30" Width="78" Height="74" Canvas.Left="650" Canvas.Top="600" VerticalContentAlignment="Bottom"/>
 
