@@ -19,7 +19,7 @@
         <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" ShortName="SoulPlayer" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#CCCCCC" />
         <InitialRotationPreference>
-          <Rotation Preference="landscape" />
+          <Rotation Preference="portrait" />
         </InitialRotationPreference>
       </VisualElements>
       <Extensions>

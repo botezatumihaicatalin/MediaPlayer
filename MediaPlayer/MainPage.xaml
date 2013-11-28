@@ -7,6 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="#FF00DCFF"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:SliderValueConverter x:Key="SliderValueConverter"/>
+    </Page.Resources>
+
     <Page.TopAppBar>
         <AppBar>
             <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
@@ -67,7 +72,7 @@
             <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
                 <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350" Canvas.Top="40" Stretch="UniformToFill"/>
                 <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458" Canvas.Top="40"/>
-                <Slider x:Name="ProgressSlider" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="85" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}"/>
+                <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="85" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}" ThumbToolTipValueConverter="{StaticResource SliderValueConverter}"/>
                 <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="90" Source="Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="47"/>
                 <Button x:Name="Next_track" Height="69" Canvas.Left="170" Canvas.Top="47" Width="75" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
                 <Button x:Name="Prev_track" Height="69" Canvas.Left="5" Canvas.Top="47" Width="75" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>

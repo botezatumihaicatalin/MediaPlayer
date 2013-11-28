@@ -110,6 +110,7 @@
     <Compile Include="Pair.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="SimilarTags.cs" />
+    <Compile Include="SliderValueConverter.cs" />
     <Compile Include="Splash.xaml.cs" />
     <Compile Include="ToastAndTileNotifications.cs" />
     <Compile Include="Track.cs" />
@@ -157,6 +158,8 @@
     <Content Include="Assets\prev_track_entered_147x147.png" />
     <Content Include="Assets\search.png" />
     <Content Include="Assets\slider_button.png" />
+    <Content Include="Assets\slider_button_hovered.png" />
+    <Content Include="Assets\slider_button_pressed.png" />
     <Content Include="Assets\SmallLogo.scale-140.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\Stars.png" />

@@ -47,7 +47,7 @@ namespace MediaPlayer
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
 
-            list.ItemClick += Grid_ItemClick;   
+            list.ItemClick += Grid_ItemClick;
             
         }
 

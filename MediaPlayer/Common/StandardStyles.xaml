@@ -1912,9 +1912,39 @@
             <Thumb IsTabStop="True" Height="20" x:Name="HorizontalThumb" Width="20" Grid.Column="1" Margin="-1,0,0,0">
                 <Thumb.Template>
                     <ControlTemplate TargetType="Thumb">
-                        <Image Source="Assets/slider_button.png" Stretch="UniformToFill" Width="20" Height="20"/>
+                        <Grid Width="20" Height="20">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ThumbBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/slider_button_pressed.png"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ThumbBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/slider_button.png"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ThumbBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/slider_button_hovered.png"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid.Background>
+                                <ImageBrush x:Name="ThumbBrush" ImageSource="Assets/slider_button.png" Stretch="UniformToFill"/>
+                            </Grid.Background>
+                        </Grid>
                     </ControlTemplate>
-                </Thumb.Template>
+                </Thumb.Template>              
             </Thumb>
         </Grid>
     </ControlTemplate>
