@@ -1,12 +1,13 @@
-﻿using MediaPlayer.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Threading;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -24,10 +25,21 @@ namespace MediaPlayer
         public TopTrackByTag(String tag)
         {
             Tag = tag;
+            mTokenSource = new CancellationTokenSource();
+        }
+
+        private CancellationTokenSource mTokenSource;
+
+        public void cancelCurrentSearch()
+        {
+            mTokenSource.Cancel();
         }
 
         private async Task getFromXMLNode(String XML, FrameworkElement frameElement, GridView contentHolder)
         {
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             XmlDocument new_xml = new XmlDocument();
             new_xml.LoadXml(XML);
             XmlNodeList names = new_xml.GetElementsByTagName("name");
@@ -35,12 +47,18 @@ namespace MediaPlayer
             XmlNodeList music_url = new_xml.GetElementsByTagName("url");
             XmlNodeList images = new_xml.GetElementsByTagName("image");
 
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             String trackName = names[0].InnerText;
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             Uri imageUri = new Uri("ms-appx:///Assets/blue.png");
-            
+
             String videoID = "NONE";
             String cacheUrl = "";
             Int32 durationNumber = 0;
@@ -56,11 +74,14 @@ namespace MediaPlayer
                     videoID = "NONE";
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
 
             }
-            
+
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             // If videoID is NONE at this point it means either no video is on the LastFM page or the video cannot be played , so we will search Youtube
             if (videoID == "NONE")
             {
@@ -74,13 +95,16 @@ namespace MediaPlayer
             if (videoID == "NONE")
                 return;
 
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             YoutubeStats stats = new YoutubeStats(videoID);
 
             var length = Convert.ToInt32(images.Length);
 
             if (length > 0)
             {
-                imageUri = new Uri(images[length - 1].InnerText);                
+                imageUri = new Uri(images[length - 1].InnerText);
             }
             else
             {
@@ -95,23 +119,27 @@ namespace MediaPlayer
                 }
             }
 
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
+
             durationNumber = Math.Max(stats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
-            frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            await frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
-                 artistName = artistName.Replace("&", "and");
-                 trackName = trackName.Replace("&", "and");
-                 Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
-                 contentHolder.Items.Add(new_track);
-                 GlobalArray.list.Add(new_track);
+                artistName = artistName.Replace("&", "and");
+                trackName = trackName.Replace("&", "and");
+                Track new_track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
+                contentHolder.Items.Add(new_track);
+                GlobalArray.list.Add(new_track);
             });
         }
 
-        public async Task get(FrameworkElement frameElement, GridView contentHolder, int no = 50)
+        public async Task get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
+            mTokenSource = new CancellationTokenSource();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
-             Tag + 
-             "&limit=" + 
-             no + 
+             Tag +
+             "&limit=" +
+             no +
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
 
             String urlEncoded = Uri.EscapeUriString(url);
@@ -127,18 +155,19 @@ namespace MediaPlayer
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
 
-            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();          
+            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
 
             XmlDocument fullXML = new XmlDocument();
-            fullXML.LoadXml(resp);            
+            fullXML.LoadXml(resp);
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
 
+            if (mTokenSource.Token.IsCancellationRequested)
+                return;
 
-            for (int i = 0; i < tracks.Length; i++)
+            for (int i = 0; i < tracks.Length && !mTokenSource.IsCancellationRequested; i++)
             {
                 String xml = tracks[i].GetXml();
-                Task.Run(() => getFromXMLNode(xml ,frameElement, contentHolder));
-                //await getFromXMLNode(xml, frameElement, contentHolder);
+                Task.Run(() => getFromXMLNode(xml, frameElement, contentHolder), mTokenSource.Token);
             }
 
         }

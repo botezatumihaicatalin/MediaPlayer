@@ -1,0 +1,34 @@
+﻿<SettingsFlyout
+    x:Class="MediaPlayer.SettingsFlyout1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IconSource="Assets/LogoHeart_verysmall.scale-100.png"
+    Title="Defaults"  
+    Width="346" Background="#FFA60000" HeaderBackground="#FFCCCCCC" HeaderForeground="Black" Foreground="White"  >
+
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+            <TextBlock Text="Search Queue" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Bold" />
+            <ToggleSwitch x:Name="SearchQueue"  IsOn="False" Margin="-6,0,0,0"  HorizontalAlignment="Left" HorizontalContentAlignment="Left" Toggled="SearchQueue_Toggled" Foreground="White" Loaded="SearchQueue_Loaded"   />
+            <TextBlock Text="Search History" Style="{StaticResource BodyTextBlockStyle}" FontWeight="Bold" />
+            <ToggleSwitch x:Name="SearchHistory" Margin="-6,0,0,0"   HorizontalAlignment="Stretch" Foreground="White" Toggled="SearchHistory_Toggled" OffContent="Off" OnContent="On" Loaded="SearchHistory_Loaded"    >
+
+            </ToggleSwitch>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}" >
+            <TextBlock Margin="0,0,0,25" Text="Clear Search History" Style="{StaticResource BodyTextBlockStyle}"  FontWeight="Bold"/>
+            <Button  x:Name="ClearHistory" Margin="-3,0,0,0" Content="Clear" FontWeight="Bold" Background="#ffCCCCCC" Click="ClearHistory_Click"/>
+        </StackPanel>
+
+
+        
+
+
+    </StackPanel>
+</SettingsFlyout>

@@ -1,27 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="SoulPlayer" Publisher="CN=Diana" Version="1.0.0.2" />
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+  <Identity Name="SoulPlayer" Publisher="CN=MihaiS" Version="1.1.0.2" />
   <Properties>
     <DisplayName>SoulPlayer</DisplayName>
-    <PublisherDisplayName>Diana</PublisherDisplayName>
+    <PublisherDisplayName>FMI_Baws</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
-    <OSMinVersion>6.2.1</OSMinVersion>
-    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MediaPlayer.App">
-      <VisualElements DisplayName="SoulPlayer" Logo="Assets\LogoHeart_150x150.png" SmallLogo="Assets\LogoHeart_verysmall.png" Description="Windows 8 music player , where you can search for everything." ForegroundText="dark" BackgroundColor="#CCCCCC" ToastCapable="true">
-        <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" ShortName="SoulPlayer" />
-        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#CCCCCC" />
-        <InitialRotationPreference>
-          <Rotation Preference="portrait" />
-        </InitialRotationPreference>
-      </VisualElements>
       <Extensions>
         <Extension Category="windows.backgroundTasks" StartPage="MainPage.xaml">
           <BackgroundTasks>
@@ -29,6 +22,18 @@
           </BackgroundTasks>
         </Extension>
       </Extensions>
+      <m2:VisualElements DisplayName="SoulPlayer" Description="Windows 8 music player , where you can search for everything." BackgroundColor="#CCCCCC" ForegroundText="dark" ToastCapable="true" Square150x150Logo="Assets\LogoHeart_150x150.png" Square30x30Logo="Assets\LogoHeart_verysmall.png">
+        <m2:DefaultTile ShortName="SoulPlayer" Wide310x150Logo="Assets\WideLogo.png">
+          <m2:ShowNameOnTiles>
+            <m2:ShowOn Tile="square150x150Logo" />
+            <m2:ShowOn Tile="wide310x150Logo" />
+          </m2:ShowNameOnTiles>
+        </m2:DefaultTile>
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="portrait" />
+        </m2:InitialRotationPreference>
+        <m2:SplashScreen BackgroundColor="#CCCCCC" Image="Assets\SplashScreen.png" />
+      </m2:VisualElements>
     </Application>
   </Applications>
   <Capabilities>

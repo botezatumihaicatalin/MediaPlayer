@@ -15,10 +15,24 @@
     <Page.TopAppBar>
         <AppBar>
             <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
-                <TextBox x:Name="VideoIdTextBox" HorizontalAlignment="Left" Height="52" Canvas.Left="120" Canvas.Top="45" TextWrapping="Wrap" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the Video ID" FontSize="25"/>
-                <Button x:Name="Set" Content="Search"  HorizontalAlignment="Left" Height="52" Canvas.Left="900" Canvas.Top="45" VerticalAlignment="Top" Width="186" Click="Set_Click" CharacterSpacing="-2"/>
-                <Image x:Name="SearchIcon" Source="Assets/search.png" Height="42" Width="42" Canvas.Left="1040" Canvas.Top="50" />
-                <TextBox x:Name="text" HorizontalAlignment="Left" Height="49" Canvas.Left="1100" Canvas.Top="45" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="221"/>
+                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="45" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox_QuerySubmitted" Loaded="SearchBox1_Loaded" />
+                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="45" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings" Click="Settings_Click" >
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
+                </AppBarButton>
+                <AppBarButton x:Name="Playlist" Canvas.Left="1185" Canvas.Top="45" RenderTransformOrigin="0.5,0.5" Icon="OpenWith" ToolTipService.ToolTip="Playlist" Click="Playlist_Click">
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
+                </AppBarButton>
+  
+                <AppBarButton x:Name="AddPlaylist"  Icon="Add" RenderTransformOrigin="0.5,0.5" Canvas.Top="45" Canvas.Left="1100" Click="AddPlaylist_Click">
+                <AppBarButton.RenderTransform>
+                    <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                </AppBarButton.RenderTransform>
+                </AppBarButton>
+
             </Canvas>
         </AppBar>
     </Page.TopAppBar>
@@ -41,7 +55,7 @@
             AutomationProperties.AutomationId="ItemsGridView"
             AutomationProperties.Name="Items"
             ItemsSource="{Binding Task}"
-            SelectionMode="None"
+            SelectionMode="Multiple"
             IsSwipeEnabled="True"
             IsItemClickEnabled="True" Grid.RowSpan="3" CanReorderItems="True" Margin="0" MinWidth="10" MinHeight="10" Padding="50,50,10,10" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="#FFA60000" CanDragItems="True"
             >
@@ -50,7 +64,7 @@
                     <Setter Property="Margin" Value="0 0 20 20"/>
                 </Style>
             </GridView.ItemContainerStyle>
-            <GridView.ItemTemplate>
+            <GridView.ItemTemplate >
                 <DataTemplate>
                     <Grid HorizontalAlignment="Left" Width="200" Height="200" Background="#80FFFFFF" ToolTipService.ToolTip="{Binding ToolTipInfo}">
                         <Border Background="#A0c4426C"/>

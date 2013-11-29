@@ -1,10 +1,10 @@
-﻿using MediaPlayer.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
@@ -34,11 +34,13 @@ namespace MediaPlayer
     public sealed partial class MainPage : Page
     {
         private MediaPlayer mediaPlayer;
+        public static MainPage current;
+        private DataLayer searchLayer;
 
         public MainPage()
-        {
+        { 
+            
             this.InitializeComponent();
-            this.Loaded += new RoutedEventHandler(Page_Loaded);
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
             mediaPlayer.OnMediaFailed += MediaEnds;
@@ -48,12 +50,10 @@ namespace MediaPlayer
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
 
             list.ItemClick += Grid_ItemClick;
-            
-        }
+            current = this;
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await new DataLayer().getTracksByPreferences(this, list);
+            searchLayer = new DataLayer();
+            Task.Run(()  =>searchLayer.getTracksByPreferences(this, list));
         }
 
         private async void MediaControl_PreviousTrackPressed(object sender, object e)
@@ -134,9 +134,6 @@ namespace MediaPlayer
 
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
-
-                //ToastNotifications(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
-                //LiveTileOn(track.Artist, track.Name, track.ImageUri.AbsoluteUri);
                 mediaPlayer.CurrentTrack = track;
                 mediaPlayer.play(); 
             }
@@ -154,22 +151,6 @@ namespace MediaPlayer
             result.UriSource = uri;
             return result;
         } 
-
-        private async void Set_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DataLayer t = new DataLayer();
-                Preferences.addTag(VideoIdTextBox.Text);
-                string txt = VideoIdTextBox.Text;
-                Task.Run(()=>t.getTrackByTag(this , list , txt));
-            }
-            catch (Exception exp)
-            {
-               new MessageDialog("Error",exp.Message).ShowAsync();
-            }
-        }
-
         public async void nextTrack()
         {
             mediaPlayer.stop();
@@ -178,7 +159,7 @@ namespace MediaPlayer
             Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];    
             await LoadTrack(new_item);           
         }
-
+     
         public async void prevTrack()
         {
             mediaPlayer.stop();
@@ -202,12 +183,13 @@ namespace MediaPlayer
             mediaPlayer.stop();
             mediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
             await LoadTrack(new_item);
+            
+            
         }
 
 
         private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            text.Text = mediaPlayer.CurrentTrack.CacheUriString;
             mediaPlayer.playPause();
         }
 
@@ -215,7 +197,9 @@ namespace MediaPlayer
         {
             list.Items.Clear();
             GlobalArray.list.Clear();
-            new DataLayer().getTracksByPreferences(this, list);
+            searchLayer.cancelSearch();
+            searchLayer = new DataLayer();
+            Task.Run(() => searchLayer.getTracksByPreferences(this, list));
         }
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -227,6 +211,93 @@ namespace MediaPlayer
             nextTrack();
         }
 
+        private async void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        {
+            if (SettingsFlyout1.Queue == false)
+            {
+                list.Items.Clear();
+                GlobalArray.list.Clear();
+            }
+            
+            try
+            {
+                searchLayer.cancelSearch();
+                searchLayer = new DataLayer();
+                Preferences.addTag(args.QueryText);
+                string txt = args.QueryText;
+                Task.Run(() => searchLayer.getTrackByTag(this, list, txt));  
+            }
+            catch (Exception exp)
+            {
+                new MessageDialog("Error", exp.Message).ShowAsync();
+            }
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            if (b != null)
+            {
+                SettingsFlyout1 sf = new SettingsFlyout1();
+                sf.ShowIndependent();
+            }
+            
+        }
+
+        private void Playlist_Click(object sender, RoutedEventArgs e)
+        {
+            var page = new PlaylistPage();
+            Window.Current.Content = page;
+        }
+
+
+        private void SearchBox1_Loaded(object sender, RoutedEventArgs e)
+        {
+            SearchBox1.SearchHistoryEnabled = SettingsFlyout1.History;
+        }
+        private async Task addToPlayList(Track track)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder nextFolder = null;
+            bool is_found = false;
+            try
+            {
+                nextFolder = await storageFolder.GetFolderAsync("Playlist");
+                is_found = true;
+            }
+            catch (Exception er)
+            {
+            }
+
+            if (!is_found)
+            {
+                nextFolder = await storageFolder.CreateFolderAsync("Playlist");
+            }
+            Random random = new Random();
+            string fileName = track.Name + " " + track.Artist + "-" + random.Next(0, 100000);
+            fileName = fileName.Replace("\\", "");
+            fileName = fileName.Replace("/", "");
+            fileName = fileName.Replace(":", "");
+            fileName = fileName.Replace("\"", "");
+            fileName = fileName.Replace("?", "");
+            fileName = fileName.Replace("<", "");
+            fileName = fileName.Replace(">", "");
+            fileName = fileName.Replace("|", "");
+            fileName = fileName.Replace("*", "");
+            StorageFile file = await nextFolder.CreateFileAsync(fileName);
+            await FileIO.AppendTextAsync(file, track.Name + "\r\n");
+            await FileIO.AppendTextAsync(file, track.Artist + "\r\n");
+            await FileIO.AppendTextAsync(file, track.LastFMLink + "\r\n");
+            await FileIO.AppendTextAsync(file, track.ImageUri.AbsoluteUri + "\r\n");
+            await FileIO.AppendTextAsync(file, track.VideoID + "\r\n");
+            await FileIO.AppendTextAsync(file, track.Duration.ToString());
+        }
+        private async void AddPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            int length = list.SelectedItems.Count;
+            for (int i = 0; i < length; i++)
+               await addToPlayList((Track)list.SelectedItems[i]);
+        }
 
 
 

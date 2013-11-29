@@ -15,7 +15,7 @@ namespace MediaPlayer
             string tileXmlString =
                "<tile>"
                + "<visual version='2'>"
-               + "<binding template='TileSquare150x150PeekImageAndText02' fallback='TileSquarePeekImageAndText02' branding='None'>"
+               + "<binding template='TileSquare150x150PeekImageAndText03' fallback='TileSquarePeekImageAndText02' branding='None'>"
                + "<image id='1' " + "src='" + images + "' />"
                + "<text id='1'>" + artists + "</text>"
                + "<text id='2'>" + tracks + "</text>"

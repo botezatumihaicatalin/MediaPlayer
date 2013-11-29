@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -77,6 +78,24 @@ namespace MediaPlayer
         {
             await Task.Delay(TimeSpan.FromSeconds(3));
             Window.Current.Content = new MainPage();
+        }
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            base.OnWindowCreated(args);
+
+            SettingsPane.GetForCurrentView().CommandsRequested += onCommandsRequested;
+        }
+        void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
+        {
+            SettingsCommand defaultsCommand = new SettingsCommand("defaults", "Defaults",
+                (handler) =>
+                {
+                    // SettingsFlyout1 is defined in "SettingsFlyout1.xaml"
+                    SettingsFlyout1 sf = new SettingsFlyout1();
+                    sf.Show();
+                });
+            e.Request.ApplicationCommands.Add(defaultsCommand);
+
         }
     }
 }

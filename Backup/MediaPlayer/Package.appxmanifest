@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="SoulPlayer" Publisher="CN=Diana" Version="1.0.0.2" />
+  <Properties>
+    <DisplayName>SoulPlayer</DisplayName>
+    <PublisherDisplayName>Diana</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MediaPlayer.App">
+      <VisualElements DisplayName="SoulPlayer" Logo="Assets\LogoHeart_150x150.png" SmallLogo="Assets\LogoHeart_verysmall.png" Description="Windows 8 music player , where you can search for everything." ForegroundText="dark" BackgroundColor="#CCCCCC" ToastCapable="true">
+        <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" ShortName="SoulPlayer" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#CCCCCC" />
+        <InitialRotationPreference>
+          <Rotation Preference="portrait" />
+        </InitialRotationPreference>
+      </VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" StartPage="MainPage.xaml">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
