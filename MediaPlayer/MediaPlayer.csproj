@@ -111,6 +111,7 @@
     <Compile Include="ExceptionMessages.cs" />
     <Compile Include="GlobalArray.cs" />
     <Compile Include="Pair.cs" />
+    <Compile Include="PlayList.cs" />
     <Compile Include="PlaylistPage.xaml.cs">
       <DependentUpon>PlaylistPage.xaml</DependentUpon>
     </Compile>
@@ -141,10 +142,16 @@
     <None Include="MediaPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\add_to_playlist.png" />
+    <Content Include="Assets\add_to_playlist_clicked.png" />
+    <Content Include="Assets\add_to_playlist_entered.png" />
     <Content Include="Assets\BadgeLogo.scale-180.png" />
     <Content Include="Assets\fast_backward_147x147.png" />
     <Content Include="Assets\fast_forward_147x147.png" />
     <Content Include="Assets\fast_forward_2100x2100.png" />
+    <Content Include="Assets\go_playlist.png" />
+    <Content Include="Assets\go_playlist_clicked.png" />
+    <Content Include="Assets\go_playlist_entered.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\LogoHeart.png" />
     <Content Include="Assets\LogoHeart_150x150.scale-100.png" />

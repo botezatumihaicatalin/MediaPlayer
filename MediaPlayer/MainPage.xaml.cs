@@ -66,72 +66,14 @@ namespace MediaPlayer
              await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
         }
 
-        private void MediaEnds(object sender , object e)
+        private void MediaEnds(object sender, object e)
         {
             nextTrack();
         }
-
-        private async Task<string> saveImageToFile(Uri path)
-        {
-            HttpWebRequest request;
-            WebResponse response;
-            Stream stream;
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile storageFile = null;
-            bool found = false;
-
-            try
-            {
-                storageFile = await storageFolder.GetFileAsync("thumbnail.jpg");
-                found = true;
-            }
-            catch(Exception er)
-            {
-                
-            }
-
-            if (!found) storageFile = await storageFolder.CreateFileAsync("thumbnail.jpg");
-
-            request = (HttpWebRequest)WebRequest.Create(path);
-            try
-            {
-                request = (HttpWebRequest)WebRequest.Create(path);
-                response = await request.GetResponseAsync();
-                stream = response.GetResponseStream();
-
-                using (IRandomAccessStream fileStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
-                    {
-                        using (DataWriter dataWriter = new DataWriter(outputStream))
-                        {
-                            int one_byte;
-                            while ((one_byte = stream.ReadByte()) != -1)
-                            {
-                                dataWriter.WriteByte(Convert.ToByte(one_byte));
-                            }
-                            await dataWriter.StoreAsync();
-                            dataWriter.DetachStream();
-                        }
-                    }
-                }
-                return storageFile.Path;                
-            }
-            catch (Exception er)
-            {
-                throw er;
-            }
-        }
-
         private async Task LoadTrack(Track track)
         {
             try
             {
-                String t = await saveImageToFile(track.ImageUri);
-                MediaControl.TrackName = track.Name;
-                MediaControl.ArtistName = track.Artist;
-                MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
-
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
                 mediaPlayer.CurrentTrack = track;
@@ -180,11 +122,10 @@ namespace MediaPlayer
             {
                return;
             }
+
             mediaPlayer.stop();
             mediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
-            await LoadTrack(new_item);
-            
-            
+            await LoadTrack(new_item);            
         }
 
 
@@ -255,53 +196,13 @@ namespace MediaPlayer
         {
             SearchBox1.SearchHistoryEnabled = SettingsFlyout1.History;
         }
-        private async Task addToPlayList(Track track)
-        {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder nextFolder = null;
-            bool is_found = false;
-            try
-            {
-                nextFolder = await storageFolder.GetFolderAsync("Playlist");
-                is_found = true;
-            }
-            catch (Exception er)
-            {
-            }
-
-            if (!is_found)
-            {
-                nextFolder = await storageFolder.CreateFolderAsync("Playlist");
-            }
-            Random random = new Random();
-            string fileName = track.Name + " " + track.Artist + "-" + random.Next(0, 100000);
-            fileName = fileName.Replace("\\", "");
-            fileName = fileName.Replace("/", "");
-            fileName = fileName.Replace(":", "");
-            fileName = fileName.Replace("\"", "");
-            fileName = fileName.Replace("?", "");
-            fileName = fileName.Replace("<", "");
-            fileName = fileName.Replace(">", "");
-            fileName = fileName.Replace("|", "");
-            fileName = fileName.Replace("*", "");
-            StorageFile file = await nextFolder.CreateFileAsync(fileName);
-            await FileIO.AppendTextAsync(file, track.Name + "\r\n");
-            await FileIO.AppendTextAsync(file, track.Artist + "\r\n");
-            await FileIO.AppendTextAsync(file, track.LastFMLink + "\r\n");
-            await FileIO.AppendTextAsync(file, track.ImageUri.AbsoluteUri + "\r\n");
-            await FileIO.AppendTextAsync(file, track.VideoID + "\r\n");
-            await FileIO.AppendTextAsync(file, track.Duration.ToString());
-        }
+      
         private async void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
-               await addToPlayList((Track)list.SelectedItems[i]);
-        }
-
-
-
-        
+               await PlayList.addToPlayList((Track)list.SelectedItems[i]);
+        }      
 
     }
 }

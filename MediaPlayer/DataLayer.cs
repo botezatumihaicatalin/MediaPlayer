@@ -33,14 +33,13 @@ namespace MediaPlayer
                 similarTracks[i] = new TopTrackByTag(tags[i]);
             }
 
-
             for (int i = 0; i < n; i++)
             {
                 try
                 {
                     similarTracks[i].get(frameElement, contentHolder, (int)100 / n);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }
@@ -56,14 +55,14 @@ namespace MediaPlayer
             try
             {
                 similarTracks[0] = new TopTrackByTag(tag);
-                await similarTracks[0].get(frameElement, contentHolder, 50);
+                similarTracks[0].get(frameElement, contentHolder, 50);
             }
             catch (Exception er)
             {
 
             }
 
-            if (contentHolder.Items.Count == 0) // empty list
+            if (contentHolder.Items.Count == 0)
             {
                 //luam primele 3 taguri asemanatoare
                 SimilarTags similarTags = new SimilarTags(tag);
@@ -74,7 +73,7 @@ namespace MediaPlayer
                     try
                     {
                         similarTracks[i + 1] = new TopTrackByTag(tags[i]);
-                        await similarTracks[i + 1].get(frameElement, contentHolder, 15);
+                        similarTracks[i + 1].get(frameElement, contentHolder, 15);
                     }
                     catch (Exception er)
                     {

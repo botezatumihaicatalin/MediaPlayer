@@ -9,24 +9,24 @@
     >
 
     <Grid Background="#FFA60000">
-        <AppBarButton HorizontalAlignment="Left" VerticalAlignment="Top" Icon="Back"  Click="AppBarButton_Click" Height="89" Width="118"/>
+        <AppBarButton HorizontalAlignment="Left" VerticalAlignment="Top" Icon="Back"  Click="AppBarButton_Click" Height="69" Width="91"/>
         <MediaElement x:Name="MusicPlayer" Visibility="Collapsed" Margin="0,0,88.552,767"/>
         <GridView 
     			x:Name="list"
     			HorizontalAlignment="Left" 
     			VerticalAlignment="Top" 
     			Width="1366" 
-    			Height="626"
+    			Height="694"
     			AutomationProperties.AutomationId="ItemsGridView"
     			AutomationProperties.Name="Items"
     			SelectionMode="None"
     			IsSwipeEnabled="True"
-    			IsItemClickEnabled="True" CanReorderItems="True" MinWidth="10" MinHeight="10" Padding="50,50,10,10" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="#FFA60000" CanDragItems="True" Margin="0,74,0,0"
+    			IsItemClickEnabled="True" CanReorderItems="True" MinWidth="5" MinHeight="5" Padding="50,50,5,5" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="#FFA60000" CanDragItems="True" Margin="0,74,0,0"
             >
 
             <GridView.ItemContainerStyle>
                 <Style TargetType="FrameworkElement">
-                    <Setter Property="Margin" Value="0 0 15 15"/>
+                    <Setter Property="Margin" Value="0 0 5 5"/>
                 </Style>
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>

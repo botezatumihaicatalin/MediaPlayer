@@ -26,11 +26,11 @@
                         <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
-  
-                <AppBarButton x:Name="AddPlaylist"  Icon="Add" RenderTransformOrigin="0.5,0.5" Canvas.Top="45" Canvas.Left="1100" Click="AddPlaylist_Click">
-                <AppBarButton.RenderTransform>
-                    <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
-                </AppBarButton.RenderTransform>
+
+                <AppBarButton x:Name="AddPlaylist" RenderTransformOrigin="0.5,0.5" Canvas.Top="40" Canvas.Left="1100" Click="AddPlaylist_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="70" Icon="Add">
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
                 </AppBarButton>
 
             </Canvas>

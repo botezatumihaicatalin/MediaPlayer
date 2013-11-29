@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Media;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -45,7 +49,6 @@ namespace MediaPlayer
 
         public event OnMediaEndHandler OnMediaEnded;
         public event OnMediaFailedHandler OnMediaFailed;
-
 
         public MediaPlayer(FrameworkElement frameworkElement , MediaElement mediaPlayer, Image playPauseButton, Slider progressSlider)
         {
@@ -103,7 +106,7 @@ namespace MediaPlayer
             
         }
 
-        private void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
+        private async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             if (mMedia.CurrentState == MediaElementState.Buffering)
             {
@@ -119,7 +122,11 @@ namespace MediaPlayer
             }
             if (mMedia.CurrentState == MediaElementState.Opening)
             {
-                mMediaWasOpened = false;
+                await saveImageToFile(CurrentTrack.ImageUri);
+                MediaControl.TrackName = CurrentTrack.Name;
+                MediaControl.ArtistName = CurrentTrack.Artist;
+                MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
+                mMediaIsPlaying = false;
             }
             if (mMedia.CurrentState == MediaElementState.Stopped)
             {
@@ -146,8 +153,8 @@ namespace MediaPlayer
                 mSlider.Value += 0.1;
                 if (mSlider.Value >= 2.0 && mSlider.Value <= 2.1)
                 {
-                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
-                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
+                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
                 }
             }
         }
@@ -222,6 +229,47 @@ namespace MediaPlayer
         {
             await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
         }
+        // -----------------------------
+        // Media control events end here
+        // -----------------------------
+
+        private async Task saveImageToFile(Uri path)
+        {
+            HttpWebRequest request;
+            WebResponse response;
+            Stream stream;
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile storageFile = await storageFolder.CreateFileAsync("thumbnail.jpg", CreationCollisionOption.ReplaceExisting);
+
+            request = (HttpWebRequest)WebRequest.Create(path);
+            try
+            {
+                request = (HttpWebRequest)WebRequest.Create(path);
+                response = await request.GetResponseAsync();
+                stream = response.GetResponseStream();
+
+                using (IRandomAccessStream fileStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
+                    {
+                        using (DataWriter dataWriter = new DataWriter(outputStream))
+                        {
+                            int one_byte;
+                            while ((one_byte = stream.ReadByte()) != -1)
+                            {
+                                dataWriter.WriteByte(Convert.ToByte(one_byte));
+                            }
+                            await dataWriter.StoreAsync();
+                            dataWriter.DetachStream();
+                        }
+                    }
+                }
+            }
+            catch (Exception er)
+            {
+                
+            }
+        }
 
         ~MediaPlayer()
         {
@@ -229,8 +277,5 @@ namespace MediaPlayer
         }
 
 
-        // -----------------------------
-        // Media control events end here
-        // -----------------------------
     }
 }
