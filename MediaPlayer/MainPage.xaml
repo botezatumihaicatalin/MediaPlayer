@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="#FF00DCFF"
     mc:Ignorable="d">
-
+    
     <Page.Resources>
         <local:SliderValueConverter x:Key="SliderValueConverter"/>
+    
     </Page.Resources>
 
     <Page.TopAppBar>
@@ -36,6 +37,7 @@
             </Canvas>
         </AppBar>
     </Page.TopAppBar>
+
     <Grid Background="#F1F1F1">
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>

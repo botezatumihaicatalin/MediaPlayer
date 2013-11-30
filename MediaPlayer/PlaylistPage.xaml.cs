@@ -29,7 +29,7 @@ namespace MediaPlayer
         {
             this.InitializeComponent();
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
-            mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
+            mediaPlayer = new MediaPlayer(this, MusicPlayer , PlayPause, ProgressSlider);
             mediaPlayer.OnMediaFailed += MediaEnds;
             mediaPlayer.OnMediaEnded += MediaEnds;
 
@@ -42,12 +42,12 @@ namespace MediaPlayer
 
         private void MediaControl_PreviousTrackPressed(object sender, object e)
         {
-            prevTrack();
+            this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => prevTrack());
         }
 
-        private void MediaControl_NextTrackPressed(object sender, object e)
+        private async void MediaControl_NextTrackPressed(object sender, object e)
         {
-            nextTrack();
+            this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
         }
 
         private void MediaEnds(object sender, EventArgs e)

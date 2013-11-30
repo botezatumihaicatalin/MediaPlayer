@@ -28,10 +28,6 @@ namespace MediaPlayer
         }
         public async Task<Pair<string,string>> getAVideoCacheUri()
         {
-            if (TrackName == null || ArtistName == null)
-            {
-                throw new Exception();
-            }
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
 
             string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";
@@ -74,7 +70,7 @@ namespace MediaPlayer
                     {
                         directVideoURL = await decoder.fetchURL();
                     }
-                    catch (Exception er)
+                    catch (Exception)
                     {
                         directVideoURL = "";
                     }
@@ -82,10 +78,8 @@ namespace MediaPlayer
                     {
                         return new Pair<string,string>(directVideoURL,decoder.VideoID);
                     }
-                }           
-
+                }
             }
-
             return new Pair<string, string>("http://127.0.0.1", "NONE");
         }
     }

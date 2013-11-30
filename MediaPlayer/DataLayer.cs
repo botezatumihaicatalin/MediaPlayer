@@ -11,10 +11,10 @@ namespace MediaPlayer
 {
     class DataLayer
     {
-        private TopTrackByTag[] similarTracks;
+        private TopTracksByTag[] similarTracks;
         public DataLayer()
         {
-            similarTracks = new TopTrackByTag[0];
+            similarTracks = new TopTracksByTag[0];
         }
 
         public void cancelSearch()
@@ -23,14 +23,14 @@ namespace MediaPlayer
                 similarTracks[i].cancelCurrentSearch();
         }
 
-        public async Task getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
+        public async void getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
         {
             List<String> tags = await Preferences.getTopTags();
-            similarTracks = new TopTrackByTag[tags.Count];
+            similarTracks = new TopTracksByTag[tags.Count];
             int n = tags.Count;
             for (int i = 0; i < n; i++)
             {
-                similarTracks[i] = new TopTrackByTag(tags[i]);
+                similarTracks[i] = new TopTracksByTag(tags[i]);
             }
 
             for (int i = 0; i < n; i++)
@@ -39,27 +39,29 @@ namespace MediaPlayer
                 {
                     similarTracks[i].get(frameElement, contentHolder, (int)100 / n);
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-
+                    if (error.Message == ExceptionMessages.CONNECTION_FAILED)
+                        throw error;
                 }
             }
         }
 
-        public async Task getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
+        public async void getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
         {
-            similarTracks = new TopTrackByTag[4];
+            similarTracks = new TopTracksByTag[4];
             for (int i = 0; i < 4; i++)
-                similarTracks[i] = new TopTrackByTag("None");
+                similarTracks[i] = new TopTracksByTag("None");
 
             try
             {
-                similarTracks[0] = new TopTrackByTag(tag);
+                similarTracks[0] = new TopTracksByTag(tag);
                 similarTracks[0].get(frameElement, contentHolder, 50);
             }
-            catch (Exception er)
+            catch (Exception error)
             {
-
+                if (error.Message == ExceptionMessages.CONNECTION_FAILED)
+                    throw error;
             }
 
             if (contentHolder.Items.Count == 0)
@@ -72,12 +74,13 @@ namespace MediaPlayer
                 {
                     try
                     {
-                        similarTracks[i + 1] = new TopTrackByTag(tags[i]);
+                        similarTracks[i + 1] = new TopTracksByTag(tags[i]);
                         similarTracks[i + 1].get(frameElement, contentHolder, 15);
                     }
-                    catch (Exception er)
+                    catch (Exception error)
                     {
-
+                        if (error.Message == ExceptionMessages.CONNECTION_FAILED)
+                            throw error;
                     }
                 }
             }

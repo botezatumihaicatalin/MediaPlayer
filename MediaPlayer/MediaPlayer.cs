@@ -21,12 +21,10 @@ namespace MediaPlayer
 
     class MediaPlayer
     {
-        private MediaElement mMedia;
+        private static MediaElement mMedia;
         private Image mPlayPauseButton = null;
         private Slider mSlider = null;
         private DispatcherTimer mTimer = null;
-        private bool mMediaWasOpened = false;
-        private bool mMediaIsPlaying = false;
         private bool mPlayPause = false;
         private FrameworkElement mFrameWorkElement = null;
         private Track mCurrentTrack;
@@ -35,7 +33,7 @@ namespace MediaPlayer
         public Track CurrentTrack
         {
             get { return mCurrentTrack; }
-            set { mCurrentTrack = value; mMediaWasOpened = false; mSlider.Value = 0; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
+            set { mCurrentTrack = value; mSlider.Value = 0; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
         }
         public bool PlayButtonState
         {
@@ -66,7 +64,7 @@ namespace MediaPlayer
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
-            MediaControl.StopPressed += MediaControl_StopPressed;           
+            MediaControl.StopPressed += MediaControl_StopPressed;   
 
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
@@ -90,7 +88,6 @@ namespace MediaPlayer
 
         private void mMedia_MediaOpened(object sender, RoutedEventArgs e)
         {
-            mMediaWasOpened = true;
             mSlider.Value = 0;
         }
 
@@ -101,60 +98,30 @@ namespace MediaPlayer
             if (OnMediaEnded != null) OnMediaEnded(this, EventArgs.Empty);
         }
 
-        private void mMedia_BufferingProgressChanged(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
-            if (mMedia.CurrentState == MediaElementState.Buffering)
-            {
-                mMediaIsPlaying = false;
-            }
-            if (mMedia.CurrentState == MediaElementState.Playing)
-            {
-                mMediaIsPlaying = true;
-            }
-            if (mMedia.CurrentState == MediaElementState.Paused)
-            {
-                mMediaIsPlaying = false;
-            }
             if (mMedia.CurrentState == MediaElementState.Opening)
             {
-                await saveImageToFile(CurrentTrack.ImageUri);
                 MediaControl.TrackName = CurrentTrack.Name;
                 MediaControl.ArtistName = CurrentTrack.Artist;
+                await saveImageToFile(CurrentTrack.ImageUri);
                 MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
-                mMediaIsPlaying = false;
-            }
-            if (mMedia.CurrentState == MediaElementState.Stopped)
-            {
-                mMediaIsPlaying = false;
             }
         }
 
         // ----------------------------
         // Media player events end here
         // ----------------------------
-
-        public static BitmapImage ImageFromRelativePath(FrameworkElement parent, string path)
-        {
-            var uri = new Uri(parent.BaseUri, path);
-            BitmapImage result = new BitmapImage();
-            result.UriSource = uri;
-            return result;
-        } 
       
         private void Tick(object sender, object e)
         {
-            if (mMediaIsPlaying && mMediaWasOpened && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
+            if (mMedia.CurrentState == MediaElementState.Playing && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
             {
                 mSlider.Value += 0.1;
                 if (mSlider.Value >= 2.0 && mSlider.Value <= 2.1)
                 {
-                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
-                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
+                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
                 }
             }
         }
@@ -173,7 +140,7 @@ namespace MediaPlayer
                 
                 mPlayPause = true;
                 mMedia.Play();
-                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/pause_147x147.png");
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
             }
         }
 
@@ -183,7 +150,7 @@ namespace MediaPlayer
             {
                 mPlayPause = false;
                 mMedia.Pause();
-                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 
@@ -193,7 +160,7 @@ namespace MediaPlayer
             {
                 mPlayPause = false;
                 mMedia.Stop();
-                mPlayPauseButton.Source = ImageFromRelativePath(mFrameWorkElement, "Assets/play_147x147.png");
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 
@@ -229,6 +196,7 @@ namespace MediaPlayer
         {
             await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
         }
+
         // -----------------------------
         // Media control events end here
         // -----------------------------
@@ -270,12 +238,6 @@ namespace MediaPlayer
                 
             }
         }
-
-        ~MediaPlayer()
-        {
-            mTimer.Stop();
-        }
-
 
     }
 }

@@ -41,6 +41,7 @@ namespace MediaPlayer
         { 
             
             this.InitializeComponent();
+
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
             mediaPlayer.OnMediaFailed += MediaEnds;
@@ -51,9 +52,15 @@ namespace MediaPlayer
 
             list.ItemClick += Grid_ItemClick;
             current = this;
-
-            searchLayer = new DataLayer();
-            Task.Run(()  =>searchLayer.getTracksByPreferences(this, list));
+            try
+            {
+                searchLayer = new DataLayer();
+                searchLayer.getTracksByPreferences(this, list);
+            }
+            catch(Exception error)
+            {
+                new MessageDialog(error.Message , "Error").ShowAsync();
+            }
         }
 
         private async void MediaControl_PreviousTrackPressed(object sender, object e)
@@ -77,7 +84,7 @@ namespace MediaPlayer
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
                 mediaPlayer.CurrentTrack = track;
-                mediaPlayer.play(); 
+                mediaPlayer.play();
             }
             catch (Exception er)
             {
@@ -85,14 +92,6 @@ namespace MediaPlayer
             }
 
         }
-
-        public static BitmapImage ImageFromRelativePath(FrameworkElement parent, string path)
-        {
-            var uri = new Uri(parent.BaseUri, path);
-            BitmapImage result = new BitmapImage();
-            result.UriSource = uri;
-            return result;
-        } 
         public async void nextTrack()
         {
             mediaPlayer.stop();
@@ -136,11 +135,18 @@ namespace MediaPlayer
 
         private async void FeelLucky_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            list.Items.Clear();
-            GlobalArray.list.Clear();
-            searchLayer.cancelSearch();
-            searchLayer = new DataLayer();
-            Task.Run(() => searchLayer.getTracksByPreferences(this, list));
+            try
+            {
+                list.Items.Clear();
+                GlobalArray.list.Clear();
+                searchLayer.cancelSearch();
+                searchLayer = new DataLayer();
+                searchLayer.getTracksByPreferences(this, list);
+            }
+            catch (Exception error)
+            {
+                new MessageDialog(error.Message,"Error").ShowAsync();
+            }
         }
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -166,11 +172,11 @@ namespace MediaPlayer
                 searchLayer = new DataLayer();
                 Preferences.addTag(args.QueryText);
                 string txt = args.QueryText;
-                Task.Run(() => searchLayer.getTrackByTag(this, list, txt));  
+                searchLayer.getTrackByTag(this, list, txt);  
             }
             catch (Exception exp)
             {
-                new MessageDialog("Error", exp.Message).ShowAsync();
+                new MessageDialog(exp.Message, "Error").ShowAsync();
             }
         }
 
@@ -202,6 +208,8 @@ namespace MediaPlayer
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
                await PlayList.addToPlayList((Track)list.SelectedItems[i]);
+            list.SelectedIndex = -1;
+            new MessageDialog(length + " tracks were added to playlist!", "Info").ShowAsync();
         }      
 
     }

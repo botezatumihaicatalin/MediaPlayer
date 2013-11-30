@@ -17,6 +17,7 @@
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <PackageCertificateThumbprint>A5872F71BECE460068F4091BCB57A97914F4CE13</PackageCertificateThumbprint>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -146,6 +147,7 @@
     <Content Include="Assets\add_to_playlist_clicked.png" />
     <Content Include="Assets\add_to_playlist_entered.png" />
     <Content Include="Assets\BadgeLogo.scale-180.png" />
+    <Content Include="Assets\default.jpg" />
     <Content Include="Assets\fast_backward_147x147.png" />
     <Content Include="Assets\fast_forward_147x147.png" />
     <Content Include="Assets\fast_forward_2100x2100.png" />

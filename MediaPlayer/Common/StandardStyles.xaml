@@ -28,6 +28,8 @@
 
     <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
+  
+
     <!-- RichTextBlock styles -->
 
     <Style x:Key="BasicRichTextStyle" TargetType="RichTextBlock">

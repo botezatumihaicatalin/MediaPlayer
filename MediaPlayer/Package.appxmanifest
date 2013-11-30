@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="SoulPlayer" Publisher="CN=MihaiS" Version="1.1.0.2" />
+  <Identity Name="SoulPlayer" Publisher="CN=MihaiS" Version="1.1.0.1" />
   <Properties>
     <DisplayName>SoulPlayer</DisplayName>
     <PublisherDisplayName>FMI_Baws</PublisherDisplayName>
@@ -16,7 +16,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MediaPlayer.App">
       <Extensions>
-        <Extension Category="windows.backgroundTasks" StartPage="MainPage.xaml">
+        <Extension Category="windows.backgroundTasks" EntryPoint="MediaPlayer.MainPage">
           <BackgroundTasks>
             <Task Type="audio" />
           </BackgroundTasks>
