@@ -50,7 +50,7 @@ namespace MediaPlayer
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
-            Uri imageUri = new Uri("ms-appx:///Assets/blue.png");
+            Uri imageUri = new Uri("ms-appx:///Assets/default.jpg");
 
             String videoID = "NONE";
             String cacheUrl = "";

@@ -74,6 +74,8 @@ namespace MediaPlayer
             }
             string result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
+            response.Dispose();
+            
             string startSearchString = "adaptive_fmts";
             int startIndex = result.IndexOf(startSearchString);
         

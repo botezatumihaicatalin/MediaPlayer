@@ -56,7 +56,7 @@ namespace MediaPlayer
             try
             {
                 similarTracks[0] = new TopTracksByTag(tag);
-                similarTracks[0].get(frameElement, contentHolder, 50);
+                similarTracks[0].get(frameElement, contentHolder, 100);
             }
             catch (Exception error)
             {
@@ -68,6 +68,7 @@ namespace MediaPlayer
             {
                 //luam primele 3 taguri asemanatoare
                 SimilarTags similarTags = new SimilarTags(tag);
+
                 List<String> tags = await similarTags.get();
 
                 for (int i = 0; i < tags.Count && i < 3; i++)

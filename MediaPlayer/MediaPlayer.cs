@@ -21,7 +21,7 @@ namespace MediaPlayer
 
     class MediaPlayer
     {
-        private static MediaElement mMedia;
+        private MediaElement mMedia;
         private Image mPlayPauseButton = null;
         private Slider mSlider = null;
         private DispatcherTimer mTimer = null;
@@ -120,8 +120,12 @@ namespace MediaPlayer
                 mSlider.Value += 0.1;
                 if (mSlider.Value >= 2.0 && mSlider.Value <= 2.1)
                 {
-                    ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
-                    ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                    try
+                    {
+                        ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                        ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                    }
+                    catch (Exception) { }
                 }
             }
         }
@@ -229,9 +233,14 @@ namespace MediaPlayer
                             }
                             await dataWriter.StoreAsync();
                             dataWriter.DetachStream();
+                            dataWriter.Dispose();
                         }
+                        outputStream.Dispose();
                     }
+                    fileStream.Dispose();
                 }
+                stream.Dispose();
+                response.Dispose();
             }
             catch (Exception er)
             {

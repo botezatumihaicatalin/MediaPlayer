@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MediaPlayer
 {
+    [DataContract]
     class Track
     {
         
@@ -26,31 +28,37 @@ namespace MediaPlayer
             set;
         }
 
+        [DataMember]
         public Uri ImageUri
         {
             get;
             set;
         }
+        [DataMember]
         public String Artist
         {
             get;
             set;
         }
+        [DataMember]
         public String Name
         {
             get;
             set;
         }
+        [DataMember]
         public String LastFMLink
         {
             get;
             set;
         }
+        [DataMember]
         public int Duration
         {
             get;
             set;
         }
+        [DataMember]
         public string VideoID
         {
             get;

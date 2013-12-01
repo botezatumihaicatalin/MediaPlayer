@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
@@ -40,14 +43,16 @@ namespace MediaPlayer
             fileName = fileName.Replace(">", "");
             fileName = fileName.Replace("|", "");
             fileName = fileName.Replace("*", "");
-            StorageFile file = await nextFolder.CreateFileAsync(fileName);
-            await FileIO.AppendTextAsync(file, track.Name + "\r\n");
-            await FileIO.AppendTextAsync(file, track.Artist + "\r\n");
-            await FileIO.AppendTextAsync(file, track.LastFMLink + "\r\n");
-            await FileIO.AppendTextAsync(file, track.ImageUri.AbsoluteUri + "\r\n");
-            await FileIO.AppendTextAsync(file, track.VideoID + "\r\n");
-            await FileIO.AppendTextAsync(file, track.Duration.ToString());
+            StorageFile file = await nextFolder.CreateFileAsync(fileName + ".track");
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Track));
+            using (Stream fileStream = await file.OpenStreamForWriteAsync())
+            {
+                serializer.WriteObject(fileStream , track);
+                fileStream.Flush();
+            }
         }
+
+
         public static async Task readPlayList(GridView contentHolder = null)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
@@ -61,12 +66,15 @@ namespace MediaPlayer
                 return;
             }
             var read = await nextFolder.GetFilesAsync();
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Track));
             for (int i = 0; i < read.Count; i++)
             {
-                IList<String> lines = await FileIO.ReadLinesAsync(read[i]);
-                Track t = new Track(lines[1], lines[0], lines[2], Convert.ToInt32(lines[5]), new Uri(lines[3]), lines[4], null);
-                if (contentHolder != null) contentHolder.Items.Add(t);
-                mTrackList.Add(t);
+                using (Stream fileStream = await read[i].OpenStreamForWriteAsync())
+                {
+                    Track track = (Track)serializer.ReadObject(fileStream);
+                    if (contentHolder != null) contentHolder.Items.Add(track);
+                    mTrackList.Add(track);
+                }
             }
         }
 

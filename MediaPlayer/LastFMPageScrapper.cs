@@ -35,6 +35,7 @@ namespace MediaPlayer
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
             string page_source = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
+            response.Dispose();
             string search_string = "<embed src=\"http://www.youtube.com/v/";
             
             int index = page_source.IndexOf(search_string);

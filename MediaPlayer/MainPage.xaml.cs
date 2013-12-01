@@ -205,11 +205,14 @@ namespace MediaPlayer
       
         private async void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
+            Button sender_button = (Button)sender;
+            sender_button.IsEnabled = false;
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
                await PlayList.addToPlayList((Track)list.SelectedItems[i]);
             list.SelectedIndex = -1;
-            new MessageDialog(length + " tracks were added to playlist!", "Info").ShowAsync();
+            if (length != 0) new MessageDialog(length + " tracks were added to playlist!", "Info").ShowAsync();
+            sender_button.IsEnabled = true;
         }      
 
     }
