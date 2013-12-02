@@ -100,7 +100,7 @@ namespace MediaPlayer
                 mediaPlayer.MediaIndex += 1;
                 mediaPlayer.MediaIndex %= GlobalArray.list.Count;
                 Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-                await LoadTrack(new_item);
+                LoadTrack(new_item);
             }
         }
      
@@ -113,7 +113,7 @@ namespace MediaPlayer
                 if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
 
                 Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-                await LoadTrack(new_item);
+                LoadTrack(new_item);
             }
         }
 
@@ -133,7 +133,7 @@ namespace MediaPlayer
 
         private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (mediaPlayer.MediaIndex == -1)
+            if (mediaPlayer.CurrentTrack == null)
             {
                 if (GlobalArray.list.Count > 0)
                 {
@@ -141,7 +141,10 @@ namespace MediaPlayer
                     mediaPlayer.MediaIndex = 0;
                 }
             }
-            mediaPlayer.playPause();
+            else
+            {
+                mediaPlayer.playPause();
+            }
         }
 
         private async void FeelLucky_Tapped(object sender, TappedRoutedEventArgs e)

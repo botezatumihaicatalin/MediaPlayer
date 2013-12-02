@@ -83,7 +83,7 @@ namespace MediaPlayer
         }
         private async void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (mediaPlayer.MediaIndex == -1)
+            if (mediaPlayer.CurrentTrack == null)
             {
                 if (PlayList.getSize() > 0)
                 {
@@ -91,7 +91,10 @@ namespace MediaPlayer
                     await Task.Run(() => LoadTrack(PlayList.getElement(0)));
                 }
             }
-            mediaPlayer.playPause();
+            else
+            { 
+                mediaPlayer.playPause();
+            }
         }
 
         public async void nextTrack()
