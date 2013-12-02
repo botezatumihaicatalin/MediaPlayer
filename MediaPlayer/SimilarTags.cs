@@ -42,8 +42,7 @@ namespace MediaPlayer
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
 
-            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
-            
+            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();        
 
             XmlDocument fullXML = new XmlDocument();
             fullXML.LoadXml(resp);            

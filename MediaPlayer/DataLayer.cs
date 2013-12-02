@@ -17,13 +17,13 @@ namespace MediaPlayer
             similarTracks = new TopTracksByTag[0];
         }
 
-        public void cancelSearch()
+        public async Task cancelSearch()
         {
             for (int i = 0; i < similarTracks.Length; i++)
-                similarTracks[i].cancelCurrentSearch();
+                await similarTracks[i].cancelCurrentSearch();
         }
 
-        public async void getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
+        public async Task getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
         {
             List<String> tags = await Preferences.getTopTags();
             similarTracks = new TopTracksByTag[tags.Count];
@@ -37,7 +37,7 @@ namespace MediaPlayer
             {
                 try
                 {
-                    similarTracks[i].get(frameElement, contentHolder, (int)100 / n);
+                    await similarTracks[i].get(frameElement, contentHolder, (int)100 / n);
                 }
                 catch (Exception error)
                 {
@@ -47,7 +47,7 @@ namespace MediaPlayer
             }
         }
 
-        public async void getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
+        public async Task getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
         {
             similarTracks = new TopTracksByTag[4];
             for (int i = 0; i < 4; i++)
@@ -56,32 +56,38 @@ namespace MediaPlayer
             try
             {
                 similarTracks[0] = new TopTracksByTag(tag);
-                similarTracks[0].get(frameElement, contentHolder, 100);
+                await similarTracks[0].get(frameElement, contentHolder, 100);
             }
-            catch (Exception error)
+            catch (Exception)
             {
-                if (error.Message == ExceptionMessages.CONNECTION_FAILED)
-                    throw error;
+
             }
 
             if (contentHolder.Items.Count == 0)
             {
                 //luam primele 3 taguri asemanatoare
-                SimilarTags similarTags = new SimilarTags(tag);
 
-                List<String> tags = await similarTags.get();
+                SimilarTags similarTags = new SimilarTags(tag);
+                List<String> tags = null;
+                try
+                {
+                    tags = await similarTags.get();
+                }
+                catch (Exception err)
+                {
+                    if (err.Message == ExceptionMessages.CONNECTION_FAILED)
+                        return;
+                }
 
                 for (int i = 0; i < tags.Count && i < 3; i++)
                 {
                     try
                     {
                         similarTracks[i + 1] = new TopTracksByTag(tags[i]);
-                        similarTracks[i + 1].get(frameElement, contentHolder, 15);
+                        await similarTracks[i + 1].get(frameElement, contentHolder, 15);
                     }
                     catch (Exception error)
                     {
-                        if (error.Message == ExceptionMessages.CONNECTION_FAILED)
-                            throw error;
                     }
                 }
             }

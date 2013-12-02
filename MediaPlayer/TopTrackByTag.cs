@@ -16,7 +16,8 @@ namespace MediaPlayer
 {
     class TopTracksByTag
     {
-        private CancellationTokenSource mTokenSource = new CancellationTokenSource();
+        private bool mIsSearching;
+        private int mRunningThreads;
         public String Tag
         {
             get;
@@ -25,17 +26,20 @@ namespace MediaPlayer
         public TopTracksByTag(String tag)
         {
             Tag = tag;
-            mTokenSource = new CancellationTokenSource();
+            mIsSearching = false;
+            mRunningThreads = 0;
         }
 
-        public void cancelCurrentSearch()
+        public async Task cancelCurrentSearch()
         {
-            mTokenSource.Cancel();
+            mIsSearching = false;
+            while (mRunningThreads > 1) ;
+                await Task.Delay(10);
         }
 
         private async Task<Track> getFromXMLNode(String XML)
         {
-            if (mTokenSource.IsCancellationRequested)
+            if (!mIsSearching)
             {
                 return null;
             }
@@ -56,6 +60,11 @@ namespace MediaPlayer
             String cacheUrl = "";
             Int32 durationNumber = 0;
 
+            if (!mIsSearching)
+            {
+                return null;
+            }
+
             // Check if last fm page has an youtube link
             try
             {
@@ -75,6 +84,11 @@ namespace MediaPlayer
                 }
             }
 
+            if (!mIsSearching)
+            {
+                return null;
+            }
+
             // If videoID is "NONE" at this point it means either no video is on the LastFM page or the video cannot be played , so we will search Youtube
             if (videoID == "NONE")
             {
@@ -91,6 +105,11 @@ namespace MediaPlayer
                     if (error.Message == ExceptionMessages.CONNECTION_FAILED)
                         return null;
                 }
+            }
+
+            if (!mIsSearching)
+            {
+                return null;
             }
 
             // If videoID is "NONE" at this point then the track doesn't have a video attached , so we dont show it.
@@ -116,7 +135,7 @@ namespace MediaPlayer
                 }
             }
 
-            if (mTokenSource.IsCancellationRequested)
+            if (!mIsSearching)
             {
                 return null;
             }
@@ -128,48 +147,49 @@ namespace MediaPlayer
 
         private async Task Thread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
         {
-            for (int i = index; i < tracks.Length && !mTokenSource.IsCancellationRequested; i += 7)
+            mRunningThreads++;
+            for (int i = index; i < tracks.Length && mIsSearching; i += 6)
             {
                 try
                 {
-
                     String xml = tracks[i].GetXml();
-                    Track compute = await Task.Run(() => getFromXMLNode(xml), mTokenSource.Token);
+                    Track compute = await getFromXMLNode(xml);
                     if (compute == null)
-                        continue;
-                    frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                     {
-                        lock (contentHolder)
+                        continue;
+                    }
+                    else
+                    {
+                        await frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                         {
                             contentHolder.Items.Add(compute);
                             GlobalArray.list.Add(compute);
-                        }
-                    });
+                        });
+                    }
                 }
                 catch (Exception error)
                 {
 
                 }
             }
+            mRunningThreads--;
         }
 
-        public async void get(FrameworkElement frameElement, GridView contentHolder, int no)
+        public async Task get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
-            mTokenSource = new CancellationTokenSource();
+            mIsSearching = true;
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag +
              "&limit=" +
              no +
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
-            String urlEncoded = Uri.EscapeUriString(url);
-
-            WebRequest request = WebRequest.Create(urlEncoded);
+            WebRequest request = WebRequest.Create(url);
             WebResponse response;
             try
             {
                 response = await request.GetResponseAsync();
             }
-            catch
+            catch (Exception error)
             {
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
@@ -177,16 +197,13 @@ namespace MediaPlayer
             XmlDocument fullXML = new XmlDocument();
             fullXML.LoadXml(resp);
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
-
-            var ui = TaskScheduler.FromCurrentSynchronizationContext();
-            // 7 THREADS =)))
+            mRunningThreads = 0;
             Task.Run(() => Thread(0, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(1, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(2, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(3, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(4, frameElement, contentHolder, tracks));
-            Task.Run(() => Thread(5, frameElement, contentHolder, tracks));   
-            Task.Run(() => Thread(6, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(5, frameElement, contentHolder, tracks));
         }
     }
 }

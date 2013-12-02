@@ -47,7 +47,6 @@ namespace MediaPlayer
             string string_to_search = "media:player url=";
             string youtubeVideo = "";
             string videoId = "";
-            response.Dispose();
 
             for (int index = 0; index <= contents.Length; index += string_to_search.Length)
             {

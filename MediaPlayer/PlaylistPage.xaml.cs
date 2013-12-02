@@ -40,14 +40,14 @@ namespace MediaPlayer
             PlayList.readPlayList(list);
         }
 
-        private void MediaControl_PreviousTrackPressed(object sender, object e)
+        private async void MediaControl_PreviousTrackPressed(object sender, object e)
         {
-            this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => prevTrack());
+            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => prevTrack());
         }
 
         private async void MediaControl_NextTrackPressed(object sender, object e)
         {
-            this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
+            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
         }
 
         private void MediaEnds(object sender, EventArgs e)
@@ -81,25 +81,39 @@ namespace MediaPlayer
         {
 
         }
-        private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (mediaPlayer.MediaIndex == -1)
+            {
+                if (PlayList.getSize() > 0)
+                {
+                    mediaPlayer.MediaIndex = 0;
+                    await Task.Run(() => LoadTrack(PlayList.getElement(0)));
+                }
+            }
             mediaPlayer.playPause();
         }
 
         public async void nextTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex += 1;
-            mediaPlayer.MediaIndex %= PlayList.getSize();
-            Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+            if (PlayList.getSize() > 0)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex += 1;
+                mediaPlayer.MediaIndex %= PlayList.getSize();
+                Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+            }
         }
 
         public async void prevTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex -= 1;
-            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = PlayList.getSize() - 1;
-            Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+            if (PlayList.getSize() > 0)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex -= 1;
+                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = PlayList.getSize() - 1;
+                Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+            }
         }
 
         private void Prev_track_Tapped(object sender, TappedRoutedEventArgs e)

@@ -94,28 +94,31 @@ namespace MediaPlayer
         }
         public async void nextTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex += 1;
-            mediaPlayer.MediaIndex %= GlobalArray.list.Count;           
-            Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];    
-            await LoadTrack(new_item);           
+            if (GlobalArray.list.Count > 0)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex += 1;
+                mediaPlayer.MediaIndex %= GlobalArray.list.Count;
+                Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
+                await LoadTrack(new_item);
+            }
         }
      
         public async void prevTrack()
         {
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex -= 1;
-            if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;   
+            if (GlobalArray.list.Count > 0)
+            {
+                mediaPlayer.stop();
+                mediaPlayer.MediaIndex -= 1;
+                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
 
-            Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
-            await LoadTrack(new_item);
-            
+                Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
+                await LoadTrack(new_item);
+            }
         }
 
         public async void Grid_ItemClick(object sender, ItemClickEventArgs e)
         {
-            // Navigate to the appropriate destination page, configuring the new page
-            // by passing required information as a navigation parameter
             Track new_item = ((Track)e.ClickedItem);
             if (mediaPlayer.MediaIndex == list.Items.IndexOf(new_item))
             {
@@ -130,6 +133,14 @@ namespace MediaPlayer
 
         private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (mediaPlayer.MediaIndex == -1)
+            {
+                if (GlobalArray.list.Count > 0)
+                {
+                    LoadTrack(GlobalArray.list[0]);
+                    mediaPlayer.MediaIndex = 0;
+                }
+            }
             mediaPlayer.playPause();
         }
 
@@ -139,6 +150,7 @@ namespace MediaPlayer
             {
                 list.Items.Clear();
                 GlobalArray.list.Clear();
+                mediaPlayer.MediaIndex = -1;
                 searchLayer.cancelSearch();
                 searchLayer = new DataLayer();
                 searchLayer.getTracksByPreferences(this, list);
@@ -164,15 +176,18 @@ namespace MediaPlayer
             {
                 list.Items.Clear();
                 GlobalArray.list.Clear();
+                mediaPlayer.MediaIndex = -1;
             }
             
             try
             {
-                searchLayer.cancelSearch();
+                sender.IsEnabled = false;
+                await Task.Run(()=>searchLayer.cancelSearch());
                 searchLayer = new DataLayer();
                 Preferences.addTag(args.QueryText);
                 string txt = args.QueryText;
-                searchLayer.getTrackByTag(this, list, txt);  
+                Task.Run(() => searchLayer.getTrackByTag(this, list, txt));
+                sender.IsEnabled = true;
             }
             catch (Exception exp)
             {
