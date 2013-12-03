@@ -55,7 +55,7 @@ namespace MediaPlayer
             try
             {
                 searchLayer = new DataLayer();
-                searchLayer.getTracksByPreferences(this, list);
+                Task.Run(()=>searchLayer.getTracksByPreferences(this, list));
             }
             catch(Exception error)
             {

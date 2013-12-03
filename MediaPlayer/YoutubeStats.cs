@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
@@ -57,17 +58,21 @@ namespace MediaPlayer
         public async Task getData()
         {
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(baseUrl + VideoID + "?v=2");
-            WebResponse response = null;
+
+            String result = "";
             try
             {
-                response = await request.GetResponseAsync();
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(baseUrl + VideoID + "?v=2"))
+                using (HttpContent content = response.Content)
+                {
+                    result = await content.ReadAsStringAsync();
+                }
             }
-            catch (Exception)
-            {                
-                throw new Exception("No internet connection or bad request!");                
+            catch (Exception error)
+            {
+                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
-            String result = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
             XmlDocument Xml = new XmlDocument();
             Xml.LoadXml(result);

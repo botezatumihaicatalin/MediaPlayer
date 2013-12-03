@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Net.Http;
 
 namespace MediaPlayer
 {
@@ -31,19 +32,22 @@ namespace MediaPlayer
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
 
             string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";
-            WebRequest request = WebRequest.Create(search_url);
-            WebResponse response = null;
-
             YoutubeDecoder decoder = new YoutubeDecoder();
+            string contents;
             try
             {
-                response = await request.GetResponseAsync();
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(search_url))
+                using (HttpContent content = response.Content)
+                {
+                    contents = await content.ReadAsStringAsync();
+                }
             }
-            catch(Exception er)
+            catch (Exception error)
             {
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
-            string contents = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            
             string string_to_search = "media:player url=";
             string youtubeVideo = "";
             string videoId = "";

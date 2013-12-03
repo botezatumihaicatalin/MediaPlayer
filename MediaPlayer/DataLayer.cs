@@ -11,58 +11,57 @@ namespace MediaPlayer
 {
     class DataLayer
     {
-        private TopTracksByTag[] similarTracks;
+        private TopTracksByTag mSimilarTracks;
+        private bool mIsSearching;
         public DataLayer()
         {
-            similarTracks = new TopTracksByTag[0];
+            mSimilarTracks = new TopTracksByTag("");
+            mIsSearching = false;
         }
 
         public async Task cancelSearch()
         {
-            for (int i = 0; i < similarTracks.Length; i++)
-                await similarTracks[i].cancelCurrentSearch();
+            mIsSearching = false;
+            await mSimilarTracks.cancelCurrentSearch();
         }
 
         public async Task getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
         {
+            mIsSearching = true;
             List<String> tags = await Preferences.getTopTags();
-            similarTracks = new TopTracksByTag[tags.Count];
             int n = tags.Count;
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n && mIsSearching; i++)
             {
-                similarTracks[i] = new TopTracksByTag(tags[i]);
-            }
-
-            for (int i = 0; i < n; i++)
-            {
+                mSimilarTracks = new TopTracksByTag(tags[i]);
                 try
                 {
-                    await similarTracks[i].get(frameElement, contentHolder, (int)100 / n);
+                    await mSimilarTracks.get(frameElement, contentHolder, 100 / n);                    
                 }
                 catch (Exception error)
                 {
                     if (error.Message == ExceptionMessages.CONNECTION_FAILED)
                         throw error;
                 }
+                await mSimilarTracks.waitTillFinish();
             }
         }
 
         public async Task getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
         {
-            similarTracks = new TopTracksByTag[4];
-            for (int i = 0; i < 4; i++)
-                similarTracks[i] = new TopTracksByTag("None");
-
+            mIsSearching = true;
             try
             {
-                similarTracks[0] = new TopTracksByTag(tag);
-                await similarTracks[0].get(frameElement, contentHolder, 100);
+                mSimilarTracks = new TopTracksByTag(tag);
+                await mSimilarTracks.get(frameElement, contentHolder, 100);
             }
             catch (Exception)
             {
 
             }
 
+            await mSimilarTracks.waitTillFinish();
+
+            if (!mIsSearching) return;
             if (contentHolder.Items.Count == 0)
             {
                 //luam primele 3 taguri asemanatoare
@@ -78,13 +77,15 @@ namespace MediaPlayer
                     if (err.Message == ExceptionMessages.CONNECTION_FAILED)
                         return;
                 }
+                
 
-                for (int i = 0; i < tags.Count && i < 3; i++)
+                for (int i = 0; i < tags.Count && i < 3 && mIsSearching; i++)
                 {
                     try
                     {
-                        similarTracks[i + 1] = new TopTracksByTag(tags[i]);
-                        await similarTracks[i + 1].get(frameElement, contentHolder, 15);
+                        mSimilarTracks = new TopTracksByTag(tags[i]);
+                        await mSimilarTracks.get(frameElement, contentHolder, 15);
+                        await mSimilarTracks.waitTillFinish();
                     }
                     catch (Exception error)
                     {

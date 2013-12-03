@@ -10,6 +10,7 @@ using Windows.Foundation.Collections;
 using Windows.Media;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -59,7 +60,21 @@ namespace MediaPlayer
         {
             YoutubeDecoder decoder = new YoutubeDecoder();
             decoder.VideoID = track.VideoID;
-            track.CacheUriString = await decoder.fetchURL();
+            try
+            {
+                track.CacheUriString = await decoder.fetchURL();
+            }
+            catch (Exception error)
+            {
+                if (error.Message == ExceptionMessages.CONNECTION_FAILED)
+                {
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
+                    {
+                        new MessageDialog("Unable to load track due to internet problems!", "Error").ShowAsync();
+                    });
+                }
+                return;
+            }
             Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
             {
                 mediaPlayer.CurrentTrack = track;
@@ -89,6 +104,7 @@ namespace MediaPlayer
                 {
                     mediaPlayer.MediaIndex = 0;
                     await Task.Run(() => LoadTrack(PlayList.getElement(0)));
+                    
                 }
             }
             else

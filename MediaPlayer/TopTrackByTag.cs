@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,13 @@ namespace MediaPlayer
         public async Task cancelCurrentSearch()
         {
             mIsSearching = false;
-            while (mRunningThreads > 1) ;
+            while (mRunningThreads > 0)
+                await Task.Delay(10);
+        }
+
+        public async Task waitTillFinish()
+        {
+            while (mRunningThreads > 0)
                 await Task.Delay(10);
         }
 
@@ -148,7 +155,7 @@ namespace MediaPlayer
         private async Task Thread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
         {
             mRunningThreads++;
-            for (int i = index; i < tracks.Length && mIsSearching; i += 6)
+            for (int i = index; i < tracks.Length && mIsSearching; i += 12)
             {
                 try
                 {
@@ -158,8 +165,9 @@ namespace MediaPlayer
                     {
                         continue;
                     }
-                    else
+                    else if (mIsSearching)
                     {
+                        
                         await frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                         {
                             contentHolder.Items.Add(compute);
@@ -183,27 +191,39 @@ namespace MediaPlayer
              "&limit=" +
              no +
              "&api_key=30e44ae9c1e227a2f44f410e16e56586";
-            WebRequest request = WebRequest.Create(url);
-            WebResponse response;
+            string resp;
+
             try
             {
-                response = await request.GetResponseAsync();
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(url))
+                using (HttpContent content = response.Content)
+                {
+                    resp = await content.ReadAsStringAsync();
+                }
             }
-            catch (Exception error)
+            catch (Exception err)
             {
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
-            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
+
             XmlDocument fullXML = new XmlDocument();
             fullXML.LoadXml(resp);
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
             mRunningThreads = 0;
+
             Task.Run(() => Thread(0, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(1, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(2, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(3, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(4, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(5, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(6, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(7, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(8, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(9, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(10, frameElement, contentHolder, tracks));
+            Task.Run(() => Thread(11, frameElement, contentHolder, tracks));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
@@ -62,19 +63,20 @@ namespace MediaPlayer
 
         public async Task<string> fetchURL()
         {
-            WebRequest request = WebRequest.Create("http://www.youtube.com/watch?v=" + VideoID);
-            WebResponse response;
+            string result;
             try
             {
-                response = await request.GetResponseAsync();
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync("http://www.youtube.com/watch?v=" + VideoID))
+                using (HttpContent content = response.Content)
+                {
+                    result = await content.ReadAsStringAsync();
+                }
             }
-            catch
+            catch (Exception error)
             {
                 throw new Exception(ExceptionMessages.CONNECTION_FAILED);
             }
-            string result = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            response.Dispose();
             
             string startSearchString = "adaptive_fmts";
             int startIndex = result.IndexOf(startSearchString);
