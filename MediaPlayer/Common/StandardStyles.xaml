@@ -1950,4 +1950,47 @@
             </Thumb>
         </Grid>
     </ControlTemplate>
+    <ControlTemplate x:Key="StarsButtonTemplate" TargetType="Button">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/Stars_Clicked.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Normal">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/Stars.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/Stars_Inactive.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="ImageSource" Storyboard.TargetName="ButtonBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Assets/Stars_Hovered.png"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused"/>
+                    <VisualState x:Name="PointerFocused"/>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Grid.Background>
+                <ImageBrush x:Name="ButtonBrush" ImageSource="Assets/Stars.png"/>
+            </Grid.Background>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

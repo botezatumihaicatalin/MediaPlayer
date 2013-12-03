@@ -154,9 +154,12 @@ namespace MediaPlayer
                 list.Items.Clear();
                 GlobalArray.list.Clear();
                 mediaPlayer.MediaIndex = -1;
-                searchLayer.cancelSearch();
+                Button senderAsButton = (Button)sender;
+                senderAsButton.IsEnabled = false;
+                await Task.Run(()=>searchLayer.cancelSearch());
                 searchLayer = new DataLayer();
                 searchLayer.getTracksByPreferences(this, list);
+                senderAsButton.IsEnabled = true;
             }
             catch (Exception error)
             {

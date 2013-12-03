@@ -66,6 +66,7 @@ namespace MediaPlayer
                 using (HttpResponseMessage response = await client.GetAsync(baseUrl + VideoID + "?v=2"))
                 using (HttpContent content = response.Content)
                 {
+
                     result = await content.ReadAsStringAsync();
                 }
             }
