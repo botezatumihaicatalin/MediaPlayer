@@ -45,22 +45,34 @@ namespace MediaPlayer
             MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
             mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
             mediaPlayer.OnMediaFailed += MediaEnds;
-            mediaPlayer.OnMediaEnded += MediaEnds;            
+            mediaPlayer.OnMediaEnded += MediaEnds;       
 
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
+            MediaControl.PlayPressed += MediaControl_PlayPressed;
+            MediaControl.PausePressed += MediaControl_PausePressed;
+            MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
 
             list.ItemClick += Grid_ItemClick;
             current = this;
-            try
+            searchLayer = new DataLayer();
+            FeelLucky_Tapped(FeelLucky, null);
+        }
+        private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                searchLayer = new DataLayer();
-                Task.Run(()=>searchLayer.getTracksByPreferences(this, list));
-            }
-            catch(Exception error)
-            {
-                new MessageDialog(error.Message , "Error").ShowAsync();
-            }
+                PlayPause_Tapped(PlayPause,null);
+            });
+        }
+        private async void MediaControl_PausePressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => PlayPause_Tapped(PlayPause,null));
+        }
+
+        private async void MediaControl_PlayPressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => PlayPause_Tapped(PlayPause,null));
         }
 
         private async void MediaControl_PreviousTrackPressed(object sender, object e)

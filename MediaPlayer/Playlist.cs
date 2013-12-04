@@ -72,8 +72,15 @@ namespace MediaPlayer
                 using (Stream fileStream = await read[i].OpenStreamForWriteAsync())
                 {
                     Track track = (Track)serializer.ReadObject(fileStream);
-                    if (contentHolder != null) contentHolder.Items.Add(track);
-                    mTrackList.Add(track);
+                    await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                    {
+                        lock (mTrackList)
+                        {
+                            if (contentHolder != null)
+                                contentHolder.Items.Add(track);
+                            mTrackList.Add(track);
+                        }
+                    });
                 }
             }
         }

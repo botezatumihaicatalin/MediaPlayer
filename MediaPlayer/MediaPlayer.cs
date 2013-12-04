@@ -60,11 +60,6 @@ namespace MediaPlayer
             mMedia.MediaEnded += mMedia_MediaEnded;
             mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
             mMedia.MediaFailed += mMedia_MediaFailed;
-            
-            MediaControl.PlayPressed += MediaControl_PlayPressed;
-            MediaControl.PausePressed += MediaControl_PausePressed;
-            MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
-            MediaControl.StopPressed += MediaControl_StopPressed;   
 
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
@@ -173,38 +168,6 @@ namespace MediaPlayer
             if (mPlayPause) pause();
             else play();
         }
-
-        // --------------------
-        // Media control events
-        // --------------------
-
-        private async void MediaControl_StopPressed(object sender, object e)
-        {
-            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => stop());
-        }
-
-        private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
-        {
-            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                playPause();
-            });
-        }
-
-        private async void MediaControl_PausePressed(object sender, object e)
-        {
-           await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => pause());
-        }
-
-        private async void MediaControl_PlayPressed(object sender, object e)
-        {
-            await mFrameWorkElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => play());
-        }
-
-        // -----------------------------
-        // Media control events end here
-        // -----------------------------
-
         private async Task saveImageToFile(Uri path)
         {
             HttpWebRequest request;

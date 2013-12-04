@@ -36,9 +36,29 @@ namespace MediaPlayer
 
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
+            MediaControl.PlayPressed += MediaControl_PlayPressed;
+            MediaControl.PausePressed += MediaControl_PausePressed;
+            MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
 
             list.ItemClick += Grid_ItemClick;
-            PlayList.readPlayList(list);
+            Task.Run(()=>PlayList.readPlayList(list));
+        }
+
+        private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                PlayPause_Tapped(PlayPause, null);
+            });
+        }
+        private async void MediaControl_PausePressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => PlayPause_Tapped(PlayPause, null));
+        }
+
+        private async void MediaControl_PlayPressed(object sender, object e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => PlayPause_Tapped(PlayPause, null));
         }
 
         private async void MediaControl_PreviousTrackPressed(object sender, object e)
@@ -75,7 +95,7 @@ namespace MediaPlayer
                 }
                 return;
             }
-            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
             {
                 mediaPlayer.CurrentTrack = track;
                 mediaPlayer.play();

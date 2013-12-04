@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaPlayer
 {
-    class ExceptionMessages
+    abstract class ExceptionMessages
     {
         public static string INVALID_URI = "Invalid URI!";
         public static string YOUTUBE_VIDEO_ID_NOT_FOUND = "Youtube video id was not found!";
