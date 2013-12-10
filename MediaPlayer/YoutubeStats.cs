@@ -42,6 +42,8 @@ namespace MediaPlayer
         {
             get { return mVideoImage; }
         }
+        private HttpClient mClient;
+        private HttpResponseMessage mResponse;
 
         public YoutubeStats(String VideoID)
         {
@@ -50,25 +52,28 @@ namespace MediaPlayer
             mVideoImageURL = "";
             mVideoImage = null;
             mDurationInSeconds = 0;
+            mClient = new HttpClient();
         }
         public YoutubeStats()
         {
+            mClient = new HttpClient();
         }
 
+        public void cancel()
+        {
+            mClient.CancelPendingRequests();
+        }
         public async Task getData()
         {
+            mClient.CancelPendingRequests();
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";
 
             String result = "";
             try
             {
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(baseUrl + VideoID + "?v=2"))
-                using (HttpContent content = response.Content)
-                {
 
-                    result = await content.ReadAsStringAsync();
-                }
+                mResponse = await mClient.GetAsync(baseUrl + VideoID + "?v=2");         
+                result = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)
             {

@@ -88,8 +88,17 @@ namespace MediaPlayer
 
         }
 
-        public async static void addTag(String tag)
+        public async static void addTag(string tag)
         {
+            tag = tag.Replace("\\", "");
+            tag = tag.Replace("/", "");
+            tag = tag.Replace(":", "");
+            tag = tag.Replace("\"", "");
+            tag = tag.Replace("?", "");
+            tag = tag.Replace("<", "");
+            tag = tag.Replace(">", "");
+            tag = tag.Replace("|", "");
+            tag = tag.Replace("*", "");
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFolder tagsFolder = await storageFolder.GetFolderAsync("Tags");
             StorageFile storageFile = null;

@@ -19,6 +19,14 @@ namespace MediaPlayer
     {
         private bool mIsSearching;
         private int mRunningThreads;
+        private HttpClient mClient;
+        private HttpResponseMessage mResponse;
+
+        private YoutubeDecoder[] mYTDecoders;
+        private YoutubeSearch[] mYTSearches;
+        private YoutubeStats[] mYTStats;
+        private LastFMPageScrapper[] mPageScrappers;
+
         public String Tag
         {
             get;
@@ -29,11 +37,34 @@ namespace MediaPlayer
             Tag = tag;
             mIsSearching = false;
             mRunningThreads = 0;
+            mClient = new HttpClient();
+            mYTDecoders = new YoutubeDecoder[12];
+            mYTSearches = new YoutubeSearch[12];
+            mYTStats = new YoutubeStats[12];
+            mPageScrappers = new LastFMPageScrapper[12];
+            for (int i = 0; i < 12; i++)
+            {
+                mYTDecoders[i] = new YoutubeDecoder();
+                mYTSearches[i] = new YoutubeSearch();
+                mYTStats[i] = new YoutubeStats();
+                mPageScrappers[i] = new LastFMPageScrapper();
+            }
+
         }
 
         public async Task cancelCurrentSearch()
         {
             mIsSearching = false;
+            mClient.CancelPendingRequests();
+
+            for (int i = 0; i < 12; i++)
+            {
+                mYTDecoders[i].cancel();
+                mYTSearches[i].cancel();
+                mYTStats[i].cancel();
+                mPageScrappers[i].cancel();
+            }
+
             while (mRunningThreads > 0)
                 await Task.Delay(10);
         }
@@ -44,7 +75,7 @@ namespace MediaPlayer
                 await Task.Delay(10);
         }
 
-        private async Task<Track> getFromXMLNode(String XML)
+        private async Task<Track> getFromXMLNode(String XML , int index)
         {
             if (!mIsSearching)
             {
@@ -75,12 +106,17 @@ namespace MediaPlayer
             // Check if last fm page has an youtube link
             try
             {
-                LastFMPageScrapper scpr = new LastFMPageScrapper(new Uri(musicLink));
-                videoID = await scpr.getYoutubeId();
+                mPageScrappers[index].LastFMUri = new Uri(musicLink);
+                videoID = await mPageScrappers[index].getYoutubeId();
+
+                mYTDecoders[index].VideoID = videoID;
+                cacheUrl = await  mYTDecoders[index].fetchURL();
+
                 // Check if it contains signature , if not then the video it isn't good
-                if (!videoID.Contains("&signature="))
+                if (!cacheUrl.Contains("&signature="))
                 {
                     videoID = "NONE";
+                    cacheUrl = "";
                 }
             }
             catch (Exception error)
@@ -101,8 +137,9 @@ namespace MediaPlayer
             {
                 try
                 {
-                    YoutubeSearch src = new YoutubeSearch(trackName, artistName);
-                    Pair<string, string> pair = await src.getAVideoCacheUri();
+                    mYTSearches[index].ArtistName = artistName;
+                    mYTSearches[index].TrackName = trackName;
+                    Pair<string, string> pair = await mYTSearches[index].getAVideoCacheUri();
 
                     videoID = pair.second;
                     cacheUrl = pair.first;
@@ -123,7 +160,8 @@ namespace MediaPlayer
             if (videoID == "NONE")
                 return null;
 
-            YoutubeStats stats = new YoutubeStats(videoID);
+            mYTStats[index].VideoID = videoID;
+
             var length = Convert.ToInt32(images.Length);
             if (length > 0)
             {
@@ -133,8 +171,8 @@ namespace MediaPlayer
             {
                 try
                 {
-                    await stats.getData();
-                    imageUri = new Uri(stats.VideoImageURL);
+                    await mYTStats[index].getData();
+                    imageUri = new Uri(mYTStats[index].VideoImageURL);
                 }
                 catch (Exception er)
                 {
@@ -147,7 +185,7 @@ namespace MediaPlayer
                 return null;
             }
 
-            durationNumber = Math.Max(stats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
+            durationNumber = Math.Max(mYTStats[index].DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
             return new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
 
         }
@@ -160,14 +198,13 @@ namespace MediaPlayer
                 try
                 {
                     String xml = tracks[i].GetXml();
-                    Track compute = await getFromXMLNode(xml);
+                    Track compute = await getFromXMLNode(xml , index);
                     if (compute == null)
                     {
                         continue;
                     }
                     else if (mIsSearching)
-                    {
-                        
+                    {                        
                         await frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                         {
                             contentHolder.Items.Add(compute);
@@ -186,6 +223,7 @@ namespace MediaPlayer
         public async Task get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
             mIsSearching = true;
+            mClient.CancelPendingRequests();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag +
              "&limit=" +
@@ -195,12 +233,8 @@ namespace MediaPlayer
 
             try
             {
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
-                {
-                    resp = await content.ReadAsStringAsync();
-                }
+                mResponse = await mClient.GetAsync(url);
+                resp = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception err)
             {
@@ -211,6 +245,9 @@ namespace MediaPlayer
             fullXML.LoadXml(resp);
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
             mRunningThreads = 0;
+
+            if (tracks.Length != 0)
+                Preferences.addTag(Tag);
 
             Task.Run(() => Thread(0, frameElement, contentHolder, tracks));
             Task.Run(() => Thread(1, frameElement, contentHolder, tracks));

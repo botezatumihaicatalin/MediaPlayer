@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer_1.1.0.3_Bundle\MediaPlayer_1.1.0.3_AnyCPU.appx
+SymbolPackage=C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\AppPackages\MediaPlayer_1.1.0.3_Test\MediaPlayer_1.1.0.3_AnyCPU.appxsym
+ResourcePack=C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer_1.1.0.3_Bundle\MediaPlayer_1.1.0.3_scale-140.appx
+ResourcePack=C:\Users\Mihai\Documents\GitHub\MediaPlayer\MediaPlayer\bin\Release\MediaPlayer_1.1.0.3_Bundle\MediaPlayer_1.1.0.3_scale-180.appx

@@ -202,7 +202,6 @@ namespace MediaPlayer
                 sender.IsEnabled = false;
                 await Task.Run(()=>searchLayer.cancelSearch());
                 searchLayer = new DataLayer();
-                Preferences.addTag(args.QueryText);
                 string txt = args.QueryText;
                 Task.Run(() => searchLayer.getTrackByTag(this, list, txt));
                 sender.IsEnabled = true;
@@ -242,7 +241,7 @@ namespace MediaPlayer
             sender_button.IsEnabled = false;
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
-               await PlayList.addToPlayList((Track)list.SelectedItems[i]);
+                await PlayList.addToPlayList((Track)list.SelectedItems[i]);
             list.SelectedIndex = -1;
             if (length != 0) new MessageDialog(length + " tracks were added to playlist!", "Info").ShowAsync();
             sender_button.IsEnabled = true;

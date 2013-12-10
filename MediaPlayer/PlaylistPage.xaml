@@ -19,7 +19,7 @@
     			Height="694"
     			AutomationProperties.AutomationId="ItemsGridView"
     			AutomationProperties.Name="Items"
-    			SelectionMode="None"
+    			SelectionMode="Multiple"
     			IsSwipeEnabled="True"
     			IsItemClickEnabled="True" CanReorderItems="True" MinWidth="5" MinHeight="5" Padding="50,50,5,5" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="#FFA60000" CanDragItems="True" Margin="0,74,0,0"
             >
@@ -45,6 +45,7 @@
             </GridView.ItemTemplate>
 
         </GridView>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="369,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 
 

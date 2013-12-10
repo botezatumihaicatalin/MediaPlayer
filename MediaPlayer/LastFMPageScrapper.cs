@@ -17,23 +17,33 @@ namespace MediaPlayer
             get;
             set;
         }
+        private HttpClient mClient;
+        private HttpResponseMessage mResponse;
         public LastFMPageScrapper(Uri uri)
         {
             LastFMUri = uri;
+            mClient = new HttpClient();
         }
 
+        public LastFMPageScrapper()
+        {
+            LastFMUri = new Uri("http://127.0.0.1");
+            mClient = new HttpClient();
+        }
+
+        public void cancel()
+        {
+            mClient.CancelPendingRequests();
+        }
         public async Task<string> getYoutubeId()
         {
+            mClient.CancelPendingRequests();
             string ID = "";
             string page_source = "";
             try
-            {
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(LastFMUri))
-                using (HttpContent content = response.Content)
-                {
-                    page_source = await content.ReadAsStringAsync();
-                }
+            {                
+                mResponse = await mClient.GetAsync(LastFMUri);               
+                page_source = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)
             {

@@ -25,34 +25,16 @@ namespace MediaPlayer
             set;
         }  
         public YoutubeDecoder()
-        {           
+        {
+            mClient = new HttpClient();
         }
         public YoutubeDecoder(string VideoID)
         {
             this.VideoID = VideoID;
+            mClient = new HttpClient();
         }
-
-        public void swap<T>(ref T a, ref T b)
-        {
-            T aux = a;
-            a = b;
-            b = aux;
-        }
-
-        
-
-        public void dechipherSignature(ref string signature)
-        {
-            //http://www.jwz.org/hacks/youtubedown
-            char[] char_sig = signature.ToCharArray();
-            swap(ref char_sig[0], ref char_sig[50]);
-            swap(ref char_sig[0], ref char_sig[17]);
-            Array.Reverse(char_sig);
-            swap(ref char_sig[0], ref char_sig[7]);
-            swap(ref char_sig[0], ref char_sig[65]);
-            signature = new String(char_sig);
-        }
-
+        private HttpClient mClient;
+        private HttpResponseMessage mResponse;
         private void decodeURL(ref string content)
         {
             foreach (string key in chars.Keys)
@@ -61,17 +43,19 @@ namespace MediaPlayer
             content = content.Replace("%2C", ",");
         }
 
+        public void cancel()
+        {
+            mClient.CancelPendingRequests();
+        }
+
         public async Task<string> fetchURL()
         {
+            mClient.CancelPendingRequests();
             string result;
             try
             {
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync("http://www.youtube.com/watch?v=" + VideoID))
-                using (HttpContent content = response.Content)
-                {
-                    result = await content.ReadAsStringAsync();
-                }
+                mResponse = await mClient.GetAsync("http://www.youtube.com/watch?v=" + VideoID);            
+                result = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)
             {

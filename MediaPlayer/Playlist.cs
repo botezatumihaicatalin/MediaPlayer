@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace MediaPlayer
@@ -14,6 +15,8 @@ namespace MediaPlayer
     class PlayList
     {
         private static List<Track> mTrackList = new List<Track>();
+        private static List<String> mFileNames = new List<String>();
+
         public static async Task addToPlayList(Track track)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
@@ -52,6 +55,35 @@ namespace MediaPlayer
             }
         }
 
+        public static async Task removeFromPlayList(Track track , GridView contentHolder)
+        {
+            int position = mTrackList.IndexOf(track);
+
+            if (position == -1)
+                return;
+
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder nextFolder = null;
+            try
+            {
+                nextFolder = await storageFolder.GetFolderAsync("Playlist");
+            }
+            catch (Exception er)
+            {
+                return;
+            }
+            StorageFile file = await nextFolder.GetFileAsync(mFileNames[position]);
+            await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                lock (contentHolder)
+                {
+                    mFileNames.RemoveAt(position);
+                    mTrackList.RemoveAt(position);
+                    contentHolder.Items.RemoveAt(position);
+                }
+            });
+        }
 
         public static async Task readPlayList(GridView contentHolder = null)
         {
@@ -74,15 +106,16 @@ namespace MediaPlayer
                     Track track = (Track)serializer.ReadObject(fileStream);
                     await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                     {
-                        lock (mTrackList)
+                        lock (contentHolder)
                         {
                             if (contentHolder != null)
                                 contentHolder.Items.Add(track);
                             mTrackList.Add(track);
+                            mFileNames.Add(read[i].Name);
                         }
                     });
                 }
-            }
+            }            
         }
 
         public static Track getElement(int index)
@@ -99,5 +132,11 @@ namespace MediaPlayer
         {
             return mTrackList.Count;
         }
+
+        public static void updateElement(Track track , int index)
+        {
+            mTrackList[index] = track;
+        }
+
     }
 }

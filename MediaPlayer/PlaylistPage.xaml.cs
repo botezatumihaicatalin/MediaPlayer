@@ -169,5 +169,24 @@ namespace MediaPlayer
         {
             Window.Current.Content = MainPage.current;
         }
+        
+
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // The code to remove!
+            Button sender_button = (Button)sender;
+            sender_button.IsEnabled = false;            
+            int length = list.SelectedItems.Count;
+            for (int i = 0; i < length; i++)
+            {
+                Track track_to_delete = (Track)list.SelectedItems[list.SelectedItems.Count - 1];
+                await Task.Run(()=>PlayList.removeFromPlayList(track_to_delete, list));
+            }
+            list.SelectedIndex = -1;
+            if (length != 0) new MessageDialog(length + " tracks were removed from playlist!", "Info").ShowAsync();           
+
+            sender_button.IsEnabled = true;
+        }
     }
 }
