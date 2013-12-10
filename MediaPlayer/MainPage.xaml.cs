@@ -166,12 +166,13 @@ namespace MediaPlayer
                 list.Items.Clear();
                 GlobalArray.list.Clear();
                 mediaPlayer.MediaIndex = -1;
-                Button senderAsButton = (Button)sender;
-                senderAsButton.IsEnabled = false;
+                SearchBox1.IsEnabled = false;
+                FeelLucky.IsEnabled = false;
                 await Task.Run(()=>searchLayer.cancelSearch());
                 searchLayer = new DataLayer();
                 searchLayer.getTracksByPreferences(this, list);
-                senderAsButton.IsEnabled = true;
+                SearchBox1.IsEnabled = true;
+                FeelLucky.IsEnabled = true;
             }
             catch (Exception error)
             {
@@ -199,12 +200,14 @@ namespace MediaPlayer
             
             try
             {
-                sender.IsEnabled = false;
+                SearchBox1.IsEnabled = false;
+                FeelLucky.IsEnabled = false;
                 await Task.Run(()=>searchLayer.cancelSearch());
                 searchLayer = new DataLayer();
                 string txt = args.QueryText;
                 Task.Run(() => searchLayer.getTrackByTag(this, list, txt));
-                sender.IsEnabled = true;
+                SearchBox1.IsEnabled = true;
+                FeelLucky.IsEnabled = true;
             }
             catch (Exception exp)
             {

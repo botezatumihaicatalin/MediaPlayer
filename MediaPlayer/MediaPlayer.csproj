@@ -132,6 +132,7 @@
     <Compile Include="MediaPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TopTrackByTag.cs" />
+    <Compile Include="TrackCreator.cs" />
     <Compile Include="YoutubeDecoder.cs" />
     <Compile Include="YoutubeSearch.cs" />
     <Compile Include="YoutubeStats.cs" />
