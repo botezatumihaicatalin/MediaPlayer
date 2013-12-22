@@ -33,19 +33,23 @@ namespace MediaPlayer
 
     public sealed partial class MainPage : Page
     {
-        private MediaPlayer mediaPlayer;
-        public static MainPage current;
         private DataLayer searchLayer;
-
+        private int lastTrackIndex = -1;
         public MainPage()
         { 
-            
             this.InitializeComponent();
+            searchLayer = new DataLayer();
+            this.Loaded += OnLoaded;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            FeelLucky_Tapped(FeelLucky, null);
+        }
 
-            MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
-            mediaPlayer = new MediaPlayer(this, MusicPlayer, PlayPause, ProgressSlider);
-            mediaPlayer.OnMediaFailed += MediaEnds;
-            mediaPlayer.OnMediaEnded += MediaEnds;       
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            MediaPlayer.initialize(PlayPause, ProgressSlider , VideoImageHolder, VideoTitleHolder);
+            MediaPlayer.OnMediaFailed += MediaEnds;
+            MediaPlayer.OnMediaEnded += MediaEnds;
+            MediaPlayer.MediaIndex = lastTrackIndex;
 
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
@@ -54,10 +58,8 @@ namespace MediaPlayer
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
 
             list.ItemClick += Grid_ItemClick;
-            current = this;
-            searchLayer = new DataLayer();
-            FeelLucky_Tapped(FeelLucky, null);
         }
+
         private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -85,7 +87,7 @@ namespace MediaPlayer
              await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
         }
 
-        private void MediaEnds(object sender, object e)
+        private void MediaEnds(object e)
         {
             nextTrack();
         }
@@ -95,8 +97,8 @@ namespace MediaPlayer
             {
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
-                mediaPlayer.CurrentTrack = track;
-                mediaPlayer.play();
+                MediaPlayer.CurrentTrack = track;
+                MediaPlayer.play();
             }
             catch (Exception er)
             {
@@ -108,10 +110,10 @@ namespace MediaPlayer
         {
             if (GlobalArray.list.Count > 0)
             {
-                mediaPlayer.stop();
-                mediaPlayer.MediaIndex += 1;
-                mediaPlayer.MediaIndex %= GlobalArray.list.Count;
-                Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
+                MediaPlayer.stop();
+                MediaPlayer.MediaIndex += 1;
+                MediaPlayer.MediaIndex %= GlobalArray.list.Count;
+                Track new_item = GlobalArray.list[MediaPlayer.MediaIndex];
                 LoadTrack(new_item);
             }
         }
@@ -120,11 +122,11 @@ namespace MediaPlayer
         {
             if (GlobalArray.list.Count > 0)
             {
-                mediaPlayer.stop();
-                mediaPlayer.MediaIndex -= 1;
-                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
+                MediaPlayer.stop();
+                MediaPlayer.MediaIndex -= 1;
+                if (MediaPlayer.MediaIndex < 0) MediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
 
-                Track new_item = GlobalArray.list[mediaPlayer.MediaIndex];
+                Track new_item = GlobalArray.list[MediaPlayer.MediaIndex];
                 LoadTrack(new_item);
             }
         }
@@ -132,30 +134,30 @@ namespace MediaPlayer
         public async void Grid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Track new_item = ((Track)e.ClickedItem);
-            if (mediaPlayer.MediaIndex == list.Items.IndexOf(new_item))
+            if (MediaPlayer.MediaIndex == list.Items.IndexOf(new_item))
             {
                return;
             }
 
-            mediaPlayer.stop();
-            mediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
+            MediaPlayer.stop();
+            MediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
             await LoadTrack(new_item);            
         }
 
 
         private void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (mediaPlayer.CurrentTrack == null)
+            if (MediaPlayer.CurrentTrack == null)
             {
                 if (GlobalArray.list.Count > 0)
                 {
                     LoadTrack(GlobalArray.list[0]);
-                    mediaPlayer.MediaIndex = 0;
+                    MediaPlayer.MediaIndex = 0;
                 }
             }
             else
             {
-                mediaPlayer.playPause();
+                MediaPlayer.playPause();
             }
         }
 
@@ -165,7 +167,7 @@ namespace MediaPlayer
             {
                 list.Items.Clear();
                 GlobalArray.list.Clear();
-                mediaPlayer.MediaIndex = -1;
+                MediaPlayer.MediaIndex = -1;
                 SearchBox1.IsEnabled = false;
                 FeelLucky.IsEnabled = false;
                 await Task.Run(()=>searchLayer.cancelSearch());
@@ -195,7 +197,7 @@ namespace MediaPlayer
             {
                 list.Items.Clear();
                 GlobalArray.list.Clear();
-                mediaPlayer.MediaIndex = -1;
+                MediaPlayer.MediaIndex = -1;
             }
             
             try
@@ -228,8 +230,8 @@ namespace MediaPlayer
 
         private void Playlist_Click(object sender, RoutedEventArgs e)
         {
-            var page = new PlaylistPage();
-            Window.Current.Content = page;
+            lastTrackIndex = MediaPlayer.MediaIndex;
+            App.RootFrame.Navigate(typeof(PlaylistPage));
         }
 
 
@@ -246,7 +248,6 @@ namespace MediaPlayer
             for (int i = 0; i < length; i++)
                 await PlayList.addToPlayList((Track)list.SelectedItems[i]);
             list.SelectedIndex = -1;
-            if (length != 0) new MessageDialog(length + " tracks were added to playlist!", "Info").ShowAsync();
             sender_button.IsEnabled = true;
         }      
 

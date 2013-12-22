@@ -34,6 +34,8 @@ namespace MediaPlayer
             mClient = new HttpClient();
             mDecoder = new YoutubeDecoder();
             mIsRunning = false;
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public YoutubeSearch()
@@ -43,6 +45,8 @@ namespace MediaPlayer
             mIsRunning = false;
             TrackName = "";
             ArtistName = "";
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         
         public void cancel()
@@ -59,7 +63,7 @@ namespace MediaPlayer
             string contents;
             try
             {
-                mResponse = await mClient.GetAsync(search_url);
+                mResponse = await mClient.GetAsync(search_url,HttpCompletionOption.ResponseHeadersRead);
                 contents = await mResponse.Content.ReadAsStringAsync();
             }
             catch (Exception error)

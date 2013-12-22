@@ -43,11 +43,6 @@
             <RowDefinition Height="47*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-
-        <MediaElement x:Name="MusicPlayer" Visibility="Collapsed" Margin="0,0,1203,616"/>
-
-
         <GridView 
             x:Name="list"
             HorizontalAlignment="Left" 

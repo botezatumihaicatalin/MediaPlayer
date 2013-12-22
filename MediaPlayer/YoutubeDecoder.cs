@@ -27,11 +27,15 @@ namespace MediaPlayer
         public YoutubeDecoder()
         {
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         public YoutubeDecoder(string VideoID)
         {
             this.VideoID = VideoID;
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         private HttpClient mClient;
         private HttpResponseMessage mResponse;
@@ -54,7 +58,7 @@ namespace MediaPlayer
             string result;
             try
             {
-                mResponse = await mClient.GetAsync("http://www.youtube.com/watch?v=" + VideoID);            
+                mResponse = await mClient.GetAsync("http://www.youtube.com/watch?v=" + VideoID,HttpCompletionOption.ResponseHeadersRead);            
                 result = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)

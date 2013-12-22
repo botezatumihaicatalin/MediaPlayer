@@ -1,0 +1,52 @@
+﻿<SettingsFlyout
+    x:Class="MediaPlayer.SettingsFlyout2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IconSource="Assets/LogoHeart_verysmall.scale-100.png"
+    Title="Privacy Policy"  
+    Width="346" Background="#FFA60000" HeaderBackground="#FFCCCCCC" HeaderForeground="Black" Foreground="White"  >
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+        <!-- The StackPanel(s) below define individual content sections -->
+
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Soul Player Privacy Policy" Height="41" FontSize="20"/>
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+
+                    The application is purely based on web service and does not store or ask the user any of his credentials.</TextBlock.Text></TextBlock>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    The application access live streams to the corresponding songs and does not store any of the user information.
+                </TextBlock.Text></TextBlock>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    The application stores the search tags only for giving  the user his preferences and does not send the preferences across the network.
+                </TextBlock.Text></TextBlock>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    If you face any problem please contact the developers at mihai_sa20@hotmail.com
+                </TextBlock.Text></TextBlock>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    The application does not violate the privacy of the user.
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+
+        <!-- Define more Content Sections below as necessary -->
+
+    </StackPanel>
+</SettingsFlyout>

@@ -12,12 +12,13 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MediaPlayer_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>MediaPlayer_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
-    <PackageCertificateThumbprint>A5872F71BECE460068F4091BCB57A97914F4CE13</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>3412C81EECBFE8AB6838F5AB71FA94D5D1C3749A</PackageCertificateThumbprint>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -120,6 +121,9 @@
     <Compile Include="SettingsFlyout1.xaml.cs">
       <DependentUpon>SettingsFlyout1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsFlyout2.xaml.cs">
+      <DependentUpon>SettingsFlyout2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimilarTags.cs" />
     <Compile Include="SliderValueConverter.cs" />
     <Compile Include="Splash.xaml.cs" />
@@ -141,6 +145,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="MediaPlayer_StoreKey.pfx" />
     <None Include="MediaPlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +192,7 @@
     <Content Include="Assets\Stars_Inactive.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\WideLogo.scale-100.png" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -206,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsFlyout1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsFlyout2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,15 +24,20 @@ namespace MediaPlayer
 {
     public sealed partial class PlaylistPage : Page
     {
-        private MediaPlayer mediaPlayer;
-
+        private int lastTrackIndex = -1;
         public PlaylistPage()
         {
             this.InitializeComponent();
-            MusicPlayer.AudioCategory = AudioCategory.BackgroundCapableMedia;
-            mediaPlayer = new MediaPlayer(this, MusicPlayer , PlayPause, ProgressSlider);
-            mediaPlayer.OnMediaFailed += MediaEnds;
-            mediaPlayer.OnMediaEnded += MediaEnds;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            this.Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            MediaPlayer.initialize(PlayPause, ProgressSlider, VideoImageHolder, VideoTitleHolder);
+            MediaPlayer.OnMediaFailed += MediaEnds;
+            MediaPlayer.OnMediaEnded += MediaEnds;
+            MediaPlayer.MediaIndex = lastTrackIndex;
 
             MediaControl.NextTrackPressed += MediaControl_NextTrackPressed;
             MediaControl.PreviousTrackPressed += MediaControl_PreviousTrackPressed;
@@ -41,7 +46,8 @@ namespace MediaPlayer
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
 
             list.ItemClick += Grid_ItemClick;
-            Task.Run(()=>PlayList.readPlayList(list));
+            list.Items.Clear();
+            Task.Run(() => PlayList.readPlayList(list));
         }
 
         private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
@@ -71,7 +77,7 @@ namespace MediaPlayer
             await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => nextTrack());
         }
 
-        private void MediaEnds(object sender, EventArgs e)
+        private void MediaEnds(EventArgs e)
         {
             nextTrack();
         }
@@ -80,6 +86,7 @@ namespace MediaPlayer
         {
             YoutubeDecoder decoder = new YoutubeDecoder();
             decoder.VideoID = track.VideoID;
+
             try
             {
                 track.CacheUriString = await decoder.fetchURL();
@@ -95,10 +102,11 @@ namespace MediaPlayer
                 }
                 return;
             }
+
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
             {
-                mediaPlayer.CurrentTrack = track;
-                mediaPlayer.play();
+                MediaPlayer.CurrentTrack = track;
+                MediaPlayer.play();
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
             });
@@ -107,8 +115,8 @@ namespace MediaPlayer
         private void Grid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Track new_item = ((Track)e.ClickedItem);
-            mediaPlayer.MediaIndex = PlayList.getIndex(new_item);
-            mediaPlayer.stop();
+            MediaPlayer.MediaIndex = PlayList.getIndex(new_item);
+            MediaPlayer.stop();
             Task.Run(() => LoadTrack(new_item));
         }
 
@@ -118,18 +126,18 @@ namespace MediaPlayer
         }
         private async void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (mediaPlayer.CurrentTrack == null)
+            if (MediaPlayer.CurrentTrack == null)
             {
                 if (PlayList.getSize() > 0)
                 {
-                    mediaPlayer.MediaIndex = 0;
+                    MediaPlayer.MediaIndex = 0;
                     await Task.Run(() => LoadTrack(PlayList.getElement(0)));
                     
                 }
             }
             else
             { 
-                mediaPlayer.playPause();
+                MediaPlayer.playPause();
             }
         }
 
@@ -137,10 +145,10 @@ namespace MediaPlayer
         {
             if (PlayList.getSize() > 0)
             {
-                mediaPlayer.stop();
-                mediaPlayer.MediaIndex += 1;
-                mediaPlayer.MediaIndex %= PlayList.getSize();
-                Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+                MediaPlayer.stop();
+                MediaPlayer.MediaIndex += 1;
+                MediaPlayer.MediaIndex %= PlayList.getSize();
+                Task.Run(() => LoadTrack(PlayList.getElement(MediaPlayer.MediaIndex)));
             }
         }
 
@@ -148,10 +156,10 @@ namespace MediaPlayer
         {
             if (PlayList.getSize() > 0)
             {
-                mediaPlayer.stop();
-                mediaPlayer.MediaIndex -= 1;
-                if (mediaPlayer.MediaIndex < 0) mediaPlayer.MediaIndex = PlayList.getSize() - 1;
-                Task.Run(() => LoadTrack(PlayList.getElement(mediaPlayer.MediaIndex)));
+                MediaPlayer.stop();
+                MediaPlayer.MediaIndex -= 1;
+                if (MediaPlayer.MediaIndex < 0) MediaPlayer.MediaIndex = PlayList.getSize() - 1;
+                Task.Run(() => LoadTrack(PlayList.getElement(MediaPlayer.MediaIndex)));
             }
         }
 
@@ -167,26 +175,49 @@ namespace MediaPlayer
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Window.Current.Content = MainPage.current;
+            lastTrackIndex = MediaPlayer.MediaIndex;
+            App.RootFrame.GoBack();
         }
-        
 
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private  async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            // The code to remove!
-            Button sender_button = (Button)sender;
-            sender_button.IsEnabled = false;            
+            AppBarButton sender_button = (AppBarButton)sender;
+            sender_button.IsEnabled = false;
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
             {
                 Track track_to_delete = (Track)list.SelectedItems[list.SelectedItems.Count - 1];
-                await Task.Run(()=>PlayList.removeFromPlayList(track_to_delete, list));
+                await Task.Run(() => PlayList.removeFromPlayList(track_to_delete, list));
             }
             list.SelectedIndex = -1;
-            if (length != 0) new MessageDialog(length + " tracks were removed from playlist!", "Info").ShowAsync();           
-
             sender_button.IsEnabled = true;
+        }
+
+        private void AddPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            lastTrackIndex = MediaPlayer.MediaIndex;
+            App.RootFrame.GoBack();
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            if (b != null)
+            {
+                SettingsFlyout1 sf = new SettingsFlyout1();
+                sf.ShowIndependent();
+            }
+        }
+
+        private async void SearchBox1_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        {
+            list.Items.Clear();
+            await  Task.Run(() => PlayList.filterPlayList(args.QueryText,list));
+        }
+
+        private void SearchBox1_Loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

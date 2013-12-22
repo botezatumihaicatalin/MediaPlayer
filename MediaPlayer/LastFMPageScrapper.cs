@@ -23,12 +23,16 @@ namespace MediaPlayer
         {
             LastFMUri = uri;
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public LastFMPageScrapper()
         {
             LastFMUri = new Uri("http://127.0.0.1");
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public void cancel()
@@ -42,7 +46,7 @@ namespace MediaPlayer
             string page_source = "";
             try
             {                
-                mResponse = await mClient.GetAsync(LastFMUri);               
+                mResponse = await mClient.GetAsync(LastFMUri,HttpCompletionOption.ResponseHeadersRead);               
                 page_source = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)

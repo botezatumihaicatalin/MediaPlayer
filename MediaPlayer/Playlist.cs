@@ -117,6 +117,40 @@ namespace MediaPlayer
                 }
             }            
         }
+        public static async Task filterPlayList(String filter,GridView contentHolder = null)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder nextFolder = null;
+            try
+            {
+                nextFolder = await storageFolder.GetFolderAsync("Playlist");
+            }
+            catch (Exception er)
+            {
+                return;
+            }
+            var read = await nextFolder.GetFilesAsync();
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Track));
+            for (int i = 0; i < read.Count; i++)
+            {
+                using (Stream fileStream = await read[i].OpenStreamForWriteAsync())
+                {
+                    Track track = (Track)serializer.ReadObject(fileStream);
+                    await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                    {
+                        lock (contentHolder)
+                        {
+                            if (contentHolder != null)
+                                if (!(track.Name.IndexOf(filter, 0, StringComparison.CurrentCultureIgnoreCase) == -1 && track.Artist.IndexOf(filter, 0, StringComparison.CurrentCultureIgnoreCase) == -1))
+                                contentHolder.Items.Add(track);
+                            mTrackList.Add(track);
+                            mFileNames.Add(read[i].Name);
+                        }
+                    });
+                }
+            }
+        }
+
 
         public static Track getElement(int index)
         {

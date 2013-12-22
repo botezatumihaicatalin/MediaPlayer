@@ -53,10 +53,18 @@ namespace MediaPlayer
             mVideoImage = null;
             mDurationInSeconds = 0;
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         public YoutubeStats()
         {
+            mVideoTitle = "";
+            mVideoImageURL = "";
+            mVideoImage = null;
+            mDurationInSeconds = 0;
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public void cancel()
@@ -72,7 +80,7 @@ namespace MediaPlayer
             try
             {
 
-                mResponse = await mClient.GetAsync(baseUrl + VideoID + "?v=2");         
+                mResponse = await mClient.GetAsync(baseUrl + VideoID + "?v=2",HttpCompletionOption.ResponseHeadersRead);         
                 result = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception error)

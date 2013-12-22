@@ -7,10 +7,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
+    <Page.TopAppBar>
+        <AppBar>
+            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
+                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="45" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox1_QuerySubmitted"  Loaded="SearchBox1_Loaded"/>
+                <AppBarButton HorizontalAlignment="Left" Canvas.Left="12" Canvas.Top="40" VerticalAlignment="Top" Icon="Back"  Click="AppBarButton_Click" Height="69" Width="91" RenderTransformOrigin="0.5,0.5">
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
+                </AppBarButton>
+                <AppBarButton Canvas.Left="1185" Canvas.Top="42" Icon="Remove" RenderTransformOrigin="0.5,0.5" Click="AppBarButton_Click_1" >
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
+                </AppBarButton>
+                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="40" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings"  Height="70" Click="Settings_Click" >
+                    <AppBarButton.RenderTransform>
+                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                    </AppBarButton.RenderTransform>
+                </AppBarButton>
 
+
+            </Canvas>
+        </AppBar>
+    </Page.TopAppBar>
     <Grid Background="#FFA60000">
-        <AppBarButton HorizontalAlignment="Left" VerticalAlignment="Top" Icon="Back"  Click="AppBarButton_Click" Height="69" Width="91"/>
-        <MediaElement x:Name="MusicPlayer" Visibility="Collapsed" Margin="0,0,88.552,767"/>
         <GridView 
     			x:Name="list"
     			HorizontalAlignment="Left" 
@@ -45,7 +66,7 @@
             </GridView.ItemTemplate>
 
         </GridView>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="369,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+
     </Grid>
 
 

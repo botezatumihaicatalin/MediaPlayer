@@ -35,6 +35,8 @@ namespace MediaPlayer
             mIsSearching = false;
             mRunningThreads = 0;
             mClient = new HttpClient();
+            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
                 mTrackCreators[i] = new TrackCreator();         
@@ -66,7 +68,7 @@ namespace MediaPlayer
             {
                 try
                 {
-                    mTrackCreators[index].XML = tracks[index].GetXml();
+                    mTrackCreators[index].XML = tracks[i].GetXml();
                     Track compute = await mTrackCreators[index].getFromXML();
                     if (compute == null)
                     {
@@ -102,7 +104,7 @@ namespace MediaPlayer
 
             try
             {
-                mResponse = await mClient.GetAsync(url);
+                mResponse = await mClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
                 resp = await mResponse.Content.ReadAsStringAsync();                
             }
             catch (Exception err)

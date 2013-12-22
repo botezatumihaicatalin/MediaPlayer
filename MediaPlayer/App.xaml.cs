@@ -29,6 +29,10 @@ namespace MediaPlayer
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        /// 
+
+        public static Frame RootFrame;
+
         public App()
         {
             this.InitializeComponent();
@@ -73,11 +77,16 @@ namespace MediaPlayer
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
-        }
+        }      
+
         private async void RemoveExtendedSplash()
         {
-            await Task.Delay(TimeSpan.FromSeconds(3));
-            Window.Current.Content = new MainPage();
+            await Task.Delay(TimeSpan.FromSeconds(1.5));
+            //Window.Current.Content = new MainPage();
+            RootFrame = new Frame();
+            RootFrame.Style = App.Current.Resources["RootFrameStyle"] as Style;
+            RootFrame.Navigate(typeof(MainPage));
+            Window.Current.Content = RootFrame;
         }
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
@@ -95,6 +104,14 @@ namespace MediaPlayer
                     sf.Show();
                 });
             e.Request.ApplicationCommands.Add(defaultsCommand);
+            SettingsCommand privacyCommand = new SettingsCommand("privacy policy", "Privacy Policy",
+                (handler) =>
+                {
+                    // SettingsFlyout2 is defined in "SettingsFlyout2.xaml"
+                    SettingsFlyout2 sfpp = new SettingsFlyout2();
+                    sfpp.Show();
+                });
+            e.Request.ApplicationCommands.Add(privacyCommand);
 
         }
     }

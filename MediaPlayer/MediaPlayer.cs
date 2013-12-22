@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Media;
@@ -16,84 +17,95 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MediaPlayer
 {
-    public delegate void OnMediaEndHandler(object sender, EventArgs e);
-    public delegate void OnMediaFailedHandler(object sender, EventArgs e);
+    public delegate void OnMediaEndHandler(EventArgs e);
+    public delegate void OnMediaFailedHandler(EventArgs e);
 
-    class MediaPlayer
+    abstract class MediaPlayer
     {
-        private MediaElement mMedia;
-        private Image mPlayPauseButton = null;
-        private Slider mSlider = null;
-        private DispatcherTimer mTimer = null;
-        private bool mPlayPause = false;
-        private FrameworkElement mFrameWorkElement = null;
-        private Track mCurrentTrack;
-        private readonly object mLock = new object();
+        private static MediaElement mMedia;
+        private static Image mPlayPauseButton = null;
+        private static Slider mSlider = null;
+        private static DispatcherTimer mTimer = null;
+        private static bool mPlayPause = false;
+        private static Track mCurrentTrack;
+        private static double mPlayed;
+        private static readonly object mLock = new object();
 
-        public Track CurrentTrack
+        public static Track CurrentTrack
         {
             get { return mCurrentTrack; }
-            set { mCurrentTrack = value; mSlider.Value = 0; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
+            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
         }
-        public bool PlayButtonState
+        public static bool PlayButtonState
         {
             get { return mPlayPause; }
         }
-        public int MediaIndex
+        public static int MediaIndex
         {
             get;
             set;
         }
 
-        public event OnMediaEndHandler OnMediaEnded;
-        public event OnMediaFailedHandler OnMediaFailed;
+        public static event OnMediaEndHandler OnMediaEnded;
+        public static event OnMediaFailedHandler OnMediaFailed;
 
-        public MediaPlayer(FrameworkElement frameworkElement , MediaElement mediaPlayer, Image playPauseButton, Slider progressSlider)
+        public static void initialize(Image playPauseButton, Slider progressSlider , Image videoImageHolder , TextBlock videoTitleHolder)
         {
-            if (frameworkElement == null) throw new Exception("FrameworkElement cannot be null");
-            if (mediaPlayer == null) throw new Exception("MediaPlayer cannot be null!");
+            if (mMedia == null)
+            {
+                DependencyObject rootGrid = VisualTreeHelper.GetChild(Window.Current.Content, 0);
+                MediaElement rootMediaElement = (MediaElement)VisualTreeHelper.GetChild(rootGrid, 0);
 
-            mFrameWorkElement = frameworkElement;
-            mMedia = mediaPlayer;
-            MediaIndex = -1;
-            mMedia.MediaOpened += mMedia_MediaOpened;
-            mMedia.MediaEnded += mMedia_MediaEnded;
-            mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
-            mMedia.MediaFailed += mMedia_MediaFailed;
+                mMedia = rootMediaElement;
+                mMedia.AudioCategory = AudioCategory.BackgroundCapableMedia;
 
+                MediaIndex = -1;
+                mMedia.MediaOpened += mMedia_MediaOpened;
+                mMedia.MediaEnded += mMedia_MediaEnded;
+                mMedia.CurrentStateChanged += mMedia_CurrentStateChanged;
+                mMedia.MediaFailed += mMedia_MediaFailed;
+                mPlayed = 0.0;
+
+                if (mTimer == null)
+                {
+                    mTimer = new DispatcherTimer();
+                    mTimer.Tick += Tick;
+                    mTimer.Interval = TimeSpan.FromMilliseconds(100);
+                    mTimer.Start();
+                }
+            }
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
-            mSlider.Value = 0;
-
-            mTimer = new DispatcherTimer();
-            mTimer.Tick += Tick;
-            mTimer.Interval = TimeSpan.FromMilliseconds(100);
-            mTimer.Start();
-
+            if (mCurrentTrack != null)
+            {
+                mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0;
+                videoImageHolder.Source = new BitmapImage(mCurrentTrack.ImageUri);
+                videoTitleHolder.Text = mCurrentTrack.Name + " - " + mCurrentTrack.Artist;
+            }
         }
 
-        private void mMedia_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        private static void mMedia_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            if (OnMediaFailed != null) OnMediaFailed(this, EventArgs.Empty);
+            if (OnMediaFailed != null) OnMediaFailed(EventArgs.Empty);
         }
 
         // -------------------
         // Media player events
         // -------------------
 
-        private void mMedia_MediaOpened(object sender, RoutedEventArgs e)
+        private static void mMedia_MediaOpened(object sender, RoutedEventArgs e)
         {
-            mSlider.Value = 0;
+            mPlayed = 0.0;
         }
 
-        private void mMedia_MediaEnded(object sender, RoutedEventArgs e)
+        private static void mMedia_MediaEnded(object sender, RoutedEventArgs e)
         {
             stop();
-            mSlider.Value = mSlider.Maximum;
-            if (OnMediaEnded != null) OnMediaEnded(this, EventArgs.Empty);
+            mPlayed = mSlider.Maximum;
+            if (OnMediaEnded != null) OnMediaEnded(EventArgs.Empty);
         }
 
-        private async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
+        private static async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             if (mMedia.CurrentState == MediaElementState.Opening)
             {
@@ -107,13 +119,13 @@ namespace MediaPlayer
         // ----------------------------
         // Media player events end here
         // ----------------------------
-      
-        private void Tick(object sender, object e)
+
+        private static void Tick(object sender, object e)
         {
             if (mMedia.CurrentState == MediaElementState.Playing && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
             {
-                mSlider.Value += 0.1;
-                if (mSlider.Value >= 2.0 && mSlider.Value <= 2.1)
+                mPlayed += 0.1;
+                if (mPlayed >= 2.0 && mPlayed <= 2.1)
                 {
                     try
                     {
@@ -123,9 +135,10 @@ namespace MediaPlayer
                     catch (Exception) { }
                 }
             }
+            mSlider.Value = mPlayed;
         }
 
-        public void play()
+        public static void play()
         {
             lock (mLock)
             {
@@ -134,16 +147,16 @@ namespace MediaPlayer
                     mMedia.Source = new Uri(mCurrentTrack.CacheUriString);
                 }
 
-                if (mSlider.Value == mSlider.Maximum)
-                    mSlider.Value = 0;
-                
+                if (mPlayed == mSlider.Maximum)
+                    mPlayed = 0;
+
                 mPlayPause = true;
                 mMedia.Play();
                 mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
             }
         }
 
-        public void pause()
+        public static void pause()
         {
             lock (mLock)
             {
@@ -153,7 +166,7 @@ namespace MediaPlayer
             }
         }
 
-        public void stop()
+        public static void stop()
         {
             lock (mLock)
             {
@@ -163,12 +176,12 @@ namespace MediaPlayer
             }
         }
 
-        public void playPause()
+        public static void playPause()
         {
             if (mPlayPause) pause();
             else play();
         }
-        private async Task saveImageToFile(Uri path)
+        private static async Task saveImageToFile(Uri path)
         {
             HttpWebRequest request;
             WebResponse response;
@@ -207,7 +220,7 @@ namespace MediaPlayer
             }
             catch (Exception er)
             {
-                
+
             }
         }
 
