@@ -109,6 +109,11 @@ namespace MediaPlayer
                 {
                     return null;
                 }
+                if (error.Message == ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND)
+                {
+                    videoID = "NONE";
+                    cacheUrl = "";
+                }
             }
 
             if (!mIsSearching)

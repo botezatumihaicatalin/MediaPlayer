@@ -42,7 +42,14 @@ namespace MediaPlayer
             this.Loaded += OnLoaded;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             FeelLucky_Tapped(FeelLucky, null);
+            Window.Current.VisibilityChanged += Current_VisibilityChanged;
         }
+
+        private void Current_VisibilityChanged(object sender, Windows.UI.Core.VisibilityChangedEventArgs e)
+        {
+            MediaPlayer.Volume = 1.0;
+        }
+
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

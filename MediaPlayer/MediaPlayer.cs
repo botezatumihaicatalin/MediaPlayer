@@ -30,6 +30,7 @@ namespace MediaPlayer
         private static Track mCurrentTrack;
         private static double mPlayed;
         private static readonly object mLock = new object();
+        private static double mVolume;
 
         public static Track CurrentTrack
         {
@@ -44,6 +45,12 @@ namespace MediaPlayer
         {
             get;
             set;
+        }
+
+        public static double Volume
+        {
+            get { return mVolume; }          
+            set { mVolume = value; if (mMedia != null) mMedia.Volume = mVolume; }
         }
 
         public static event OnMediaEndHandler OnMediaEnded;
@@ -73,6 +80,7 @@ namespace MediaPlayer
                     mTimer.Interval = TimeSpan.FromMilliseconds(100);
                     mTimer.Start();
                 }
+                Volume = 1.0;
             }
             mPlayPauseButton = playPauseButton;
             mSlider = progressSlider;
