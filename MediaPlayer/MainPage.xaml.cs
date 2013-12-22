@@ -45,9 +45,12 @@ namespace MediaPlayer
             Window.Current.VisibilityChanged += Current_VisibilityChanged;
         }
 
-        private void Current_VisibilityChanged(object sender, Windows.UI.Core.VisibilityChangedEventArgs e)
+        private async void Current_VisibilityChanged(object sender, Windows.UI.Core.VisibilityChangedEventArgs e)
         {
-            MediaPlayer.Volume = 1.0;
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                MediaPlayer.Volume = 1.0;
+            });
         }
 
 
