@@ -173,13 +173,13 @@ namespace MediaPlayer
             nextTrack();
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             lastTrackIndex = MediaPlayer.MediaIndex;
             App.RootFrame.GoBack();
         }
 
-        private  async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        private  async void RemoveButtonClick(object sender, RoutedEventArgs e)
         {
             AppBarButton sender_button = (AppBarButton)sender;
             sender_button.IsEnabled = false;
@@ -190,6 +190,10 @@ namespace MediaPlayer
                 await Task.Run(() => PlayList.removeFromPlayList(track_to_delete, list));
             }
             list.SelectedIndex = -1;
+            if (MediaPlayer.MediaIndex > list.Items.Count - 1)
+            {
+                MediaPlayer.MediaIndex = list.Items.Count - 1;
+            }
             sender_button.IsEnabled = true;
         }
 
