@@ -240,6 +240,8 @@ namespace MediaPlayer
 
         private void Playlist_Click(object sender, RoutedEventArgs e)
         {
+            MediaPlayer.OnMediaFailed -= MediaEnds;
+            MediaPlayer.OnMediaEnded -= MediaEnds;
             lastTrackIndex = MediaPlayer.MediaIndex;
             App.RootFrame.Navigate(typeof(PlaylistPage));
         }

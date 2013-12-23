@@ -83,6 +83,16 @@ namespace MediaPlayer
                 Volume = 1.0;
             }
             mPlayPauseButton = playPauseButton;
+
+            if (mMedia.CurrentState == MediaElementState.Playing)
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
+            }
+            else
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+            }
+            
             mSlider = progressSlider;
             if (mCurrentTrack != null)
             {
@@ -117,10 +127,27 @@ namespace MediaPlayer
         {
             if (mMedia.CurrentState == MediaElementState.Opening)
             {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
                 MediaControl.TrackName = CurrentTrack.Name;
                 MediaControl.ArtistName = CurrentTrack.Artist;
                 await saveImageToFile(CurrentTrack.ImageUri);
                 MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
+            }
+            if (mMedia.CurrentState == MediaElementState.Playing)
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
+            }
+            if (mMedia.CurrentState == MediaElementState.Paused)
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+            }
+            if (mMedia.CurrentState == MediaElementState.Stopped)
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+            }
+            if (mMedia.CurrentState == MediaElementState.Buffering)
+            {
+                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 
@@ -160,7 +187,6 @@ namespace MediaPlayer
 
                 mPlayPause = true;
                 mMedia.Play();
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
             }
         }
 
@@ -170,7 +196,6 @@ namespace MediaPlayer
             {
                 mPlayPause = false;
                 mMedia.Pause();
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 
@@ -180,7 +205,6 @@ namespace MediaPlayer
             {
                 mPlayPause = false;
                 mMedia.Stop();
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 

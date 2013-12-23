@@ -175,6 +175,8 @@ namespace MediaPlayer
 
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
+            MediaPlayer.OnMediaFailed -= MediaEnds;
+            MediaPlayer.OnMediaEnded -= MediaEnds;
             lastTrackIndex = MediaPlayer.MediaIndex;
             App.RootFrame.GoBack();
         }
