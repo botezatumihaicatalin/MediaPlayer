@@ -21,7 +21,7 @@ namespace MediaPlayer
             get;set;
         }
         private static readonly Regex youtubeVideoRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)");
-        private HttpClient mClient;
+        private HttpDownloader mClient;
         private HttpResponseMessage mResponse;
         private YoutubeDecoder mDecoder;
         private bool mIsRunning;
@@ -31,45 +31,40 @@ namespace MediaPlayer
         {
             TrackName = trackName;
             ArtistName = artistName;
-            mClient = new HttpClient();
+            mClient = new HttpDownloader();
             mDecoder = new YoutubeDecoder();
             mIsRunning = false;
-            mClient.MaxResponseContentBufferSize = 10240;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public YoutubeSearch()
         {
-            mClient = new HttpClient();
+            mClient = new HttpDownloader();
             mDecoder = new YoutubeDecoder();
             mIsRunning = false;
             TrackName = "";
             ArtistName = "";
-            mClient.MaxResponseContentBufferSize = 1024;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         
         public void Cancel()
         {
             mIsRunning = false;
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
         }
         public async Task<Pair<string,string>> GetAVideoCacheUri()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
             mIsRunning = true;
             string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";        
             string contents;
             try
             {
-                mResponse = await mClient.GetAsync(search_url,HttpCompletionOption.ResponseHeadersRead);
-                contents = await mResponse.Content.ReadAsStringAsync();
+                contents = await mClient.GetHttp(new Uri(search_url));
             }
             catch (Exception error)
             {
                 mIsRunning = false;
-                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
+                throw error;
             }
             
             string string_to_search = "media:player url=";

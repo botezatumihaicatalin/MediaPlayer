@@ -35,7 +35,7 @@ namespace MediaPlayer
             mIsSearching = false;
             mRunningThreads = 0;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 10240;
+            mClient.MaxResponseContentBufferSize = 66000;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
@@ -93,6 +93,7 @@ namespace MediaPlayer
 
         public async Task Get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
+            mRunningThreads++;
             mIsSearching = true;
             mClient.CancelPendingRequests();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
@@ -131,6 +132,7 @@ namespace MediaPlayer
             Task.Run(()=>mThread(9,frameElement,contentHolder,tracks));
             Task.Run(()=>mThread(10,frameElement,contentHolder,tracks));
             Task.Run(()=>mThread(11,frameElement,contentHolder,tracks));
+            mRunningThreads--;
         }
     }
 }

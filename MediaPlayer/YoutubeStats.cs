@@ -15,6 +15,7 @@ namespace MediaPlayer
     public class YoutubeStats
     {
 
+        private HttpDownloader mClient;
         private string mVideoTitle;
         private string mVideoImageURL;
         private int mDurationInSeconds;
@@ -42,8 +43,6 @@ namespace MediaPlayer
         {
             get { return mVideoImage; }
         }
-        private HttpClient mClient;
-        private HttpResponseMessage mResponse;
 
         public YoutubeStats(String VideoID)
         {
@@ -52,9 +51,7 @@ namespace MediaPlayer
             mVideoImageURL = "";
             mVideoImage = null;
             mDurationInSeconds = 0;
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 10240;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
         public YoutubeStats()
         {
@@ -62,32 +59,20 @@ namespace MediaPlayer
             mVideoImageURL = "";
             mVideoImage = null;
             mDurationInSeconds = 0;
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 10240;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
 
         public void Cancel()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
         }
         public async Task GetData()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";
-
-            String result = "";
-            try
-            {
-
-                mResponse = await mClient.GetAsync(baseUrl + VideoID + "?v=2",HttpCompletionOption.ResponseHeadersRead);         
-                result = await mResponse.Content.ReadAsStringAsync();                
-            }
-            catch (Exception error)
-            {
-                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
-            }
-
+            
+            String result = await mClient.GetHttp(new Uri(baseUrl + VideoID + "?v=2"));
+           
             XmlDocument Xml = new XmlDocument();
             Xml.LoadXml(result);
 

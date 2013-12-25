@@ -112,6 +112,7 @@
     <Compile Include="DataLayer.cs" />
     <Compile Include="ExceptionMessages.cs" />
     <Compile Include="GlobalArray.cs" />
+    <Compile Include="HttpDownloader.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PlayList.cs" />
     <Compile Include="PlaylistPage.xaml.cs">

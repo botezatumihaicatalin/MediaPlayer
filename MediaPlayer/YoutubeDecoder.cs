@@ -19,6 +19,7 @@ namespace MediaPlayer
             {"7D","}"},{"7C","|"},{"5C","\\"},{"5E","^"},{"7E","~"},
             {"5B","["},{"5D","]"},{"60","`"},{"25","%"}};
 
+        private HttpDownloader mClient;
         public string VideoID
         {
             get;
@@ -26,19 +27,14 @@ namespace MediaPlayer
         }  
         public YoutubeDecoder()
         {
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 1024 * 10;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
         public YoutubeDecoder(string VideoID)
         {
             this.VideoID = VideoID;
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 1024 * 10;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
-        private HttpClient mClient;
-        private HttpResponseMessage mResponse;
+       
         private void mDecodeURL(ref string content)
         {
             foreach (string key in chars.Keys)
@@ -49,23 +45,14 @@ namespace MediaPlayer
 
         public void Cancel()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
         }
 
         public async Task<string> FetchURL()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
             string result;
-            try
-            {
-                mResponse = await mClient.GetAsync("http://www.youtube.com/watch?v=" + VideoID,HttpCompletionOption.ResponseHeadersRead);            
-                result = await mResponse.Content.ReadAsStringAsync();                
-            }
-            catch (Exception error)
-            {
-                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
-            }
-            
+            result = await mClient.GetHttp(new Uri("http://www.youtube.com/watch?v=" + VideoID));                                       
             string startSearchString = "adaptive_fmts";
             int startIndex = result.IndexOf(startSearchString);
         

@@ -17,42 +17,29 @@ namespace MediaPlayer
             get;
             set;
         }
-        private HttpClient mClient;
+        private HttpDownloader mClient;
         private HttpResponseMessage mResponse;
         public LastFMPageScrapper(Uri uri)
         {
             LastFMUri = uri;
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 10240;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
 
         public LastFMPageScrapper()
         {
             LastFMUri = new Uri("http://127.0.0.1");
-            mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 10240;
-            mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
+            mClient = new HttpDownloader();
         }
 
         public void Cancel()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
         }
         public async Task<string> GetYoutubeId()
         {
-            mClient.CancelPendingRequests();
+            mClient.Cancel();
             string ID = "";
-            string page_source = "";
-            try
-            {                
-                mResponse = await mClient.GetAsync(LastFMUri,HttpCompletionOption.ResponseHeadersRead);               
-                page_source = await mResponse.Content.ReadAsStringAsync();                
-            }
-            catch (Exception error)
-            {
-                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
-            }
+            string page_source = await mClient.GetHttp(LastFMUri);
             string search_string = "<embed src=\"http://www.youtube.com/v/";
             
             int index = page_source.IndexOf(search_string);

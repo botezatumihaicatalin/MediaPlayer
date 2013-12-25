@@ -42,6 +42,7 @@ namespace MediaPlayer
                     if (error.Message == ExceptionMessages.CONNECTION_FAILED)
                         throw error;
                 }
+                await Task.Delay(1000);
                 await mSimilarTracks.WaitTillFinish();
             }
         }
