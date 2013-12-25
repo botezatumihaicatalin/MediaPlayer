@@ -23,7 +23,7 @@ namespace MediaPlayer
         {
             LastFMUri = uri;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
@@ -31,15 +31,15 @@ namespace MediaPlayer
         {
             LastFMUri = new Uri("http://127.0.0.1");
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
-        public void cancel()
+        public void Cancel()
         {
             mClient.CancelPendingRequests();
         }
-        public async Task<string> getYoutubeId()
+        public async Task<string> GetYoutubeId()
         {
             mClient.CancelPendingRequests();
             string ID = "";

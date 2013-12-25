@@ -34,7 +34,7 @@ namespace MediaPlayer
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.initialize(PlayPause, ProgressSlider, VideoImageHolder, VideoTitleHolder);
+            MediaPlayer.Initialize(PlayPause, ProgressSlider, VideoImageHolder, VideoTitleHolder);
             MediaPlayer.OnMediaFailed += MediaEnds;
             MediaPlayer.OnMediaEnded += MediaEnds;
             MediaPlayer.MediaIndex = lastTrackIndex;
@@ -47,7 +47,7 @@ namespace MediaPlayer
 
             list.ItemClick += Grid_ItemClick;
             list.Items.Clear();
-            Task.Run(() => PlayList.readPlayList(list));
+            Task.Run(() => PlayList.ReadPlayList(list));
         }
 
         private async void MediaControl_PlayPauseTogglePressed(object sender, object e)
@@ -89,7 +89,7 @@ namespace MediaPlayer
 
             try
             {
-                track.CacheUriString = await decoder.fetchURL();
+                track.CacheUriString = await decoder.FetchURL();
             }
             catch (Exception error)
             {
@@ -106,7 +106,7 @@ namespace MediaPlayer
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
             {
                 MediaPlayer.CurrentTrack = track;
-                MediaPlayer.play();
+                MediaPlayer.Play();
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
             });
@@ -116,7 +116,7 @@ namespace MediaPlayer
         {
             Track new_item = ((Track)e.ClickedItem);
             MediaPlayer.MediaIndex = PlayList.getIndex(new_item);
-            MediaPlayer.stop();
+            MediaPlayer.Stop();
             Task.Run(() => LoadTrack(new_item));
         }
 
@@ -137,7 +137,7 @@ namespace MediaPlayer
             }
             else
             { 
-                MediaPlayer.playPause();
+                MediaPlayer.PlayPause();
             }
         }
 
@@ -145,7 +145,7 @@ namespace MediaPlayer
         {
             if (PlayList.getSize() > 0)
             {
-                MediaPlayer.stop();
+                MediaPlayer.Stop();
                 MediaPlayer.MediaIndex += 1;
                 MediaPlayer.MediaIndex %= PlayList.getSize();
                 Task.Run(() => LoadTrack(PlayList.getElement(MediaPlayer.MediaIndex)));
@@ -156,7 +156,7 @@ namespace MediaPlayer
         {
             if (PlayList.getSize() > 0)
             {
-                MediaPlayer.stop();
+                MediaPlayer.Stop();
                 MediaPlayer.MediaIndex -= 1;
                 if (MediaPlayer.MediaIndex < 0) MediaPlayer.MediaIndex = PlayList.getSize() - 1;
                 Task.Run(() => LoadTrack(PlayList.getElement(MediaPlayer.MediaIndex)));
@@ -189,7 +189,7 @@ namespace MediaPlayer
             for (int i = 0; i < length; i++)
             {
                 Track track_to_delete = (Track)list.SelectedItems[list.SelectedItems.Count - 1];
-                await Task.Run(() => PlayList.removeFromPlayList(track_to_delete, list));
+                await Task.Run(() => PlayList.RemoveFromPlayList(track_to_delete, list));
             }
             list.SelectedIndex = -1;
             if (MediaPlayer.MediaIndex > list.Items.Count - 1)

@@ -35,7 +35,7 @@ namespace MediaPlayer
             mIsSearching = false;
             mRunningThreads = 0;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
@@ -43,7 +43,7 @@ namespace MediaPlayer
 
         }
 
-        public async Task cancelCurrentSearch()
+        public async Task CancelCurrentSearch()
         {
             mIsSearching = false;
             mClient.CancelPendingRequests();
@@ -55,13 +55,13 @@ namespace MediaPlayer
                 await Task.Delay(10);
         }
 
-        public async Task waitTillFinish()
+        public async Task WaitTillFinish()
         {
             while (mRunningThreads > 0)
                 await Task.Delay(10);
         }
 
-        private async Task Thread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
+        private async Task mThread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
         {
             mRunningThreads++;
             for (int i = index; i < tracks.Length && mIsSearching; i += 12)
@@ -91,7 +91,7 @@ namespace MediaPlayer
             mRunningThreads--;
         }
 
-        public async Task get(FrameworkElement frameElement, GridView contentHolder, int no)
+        public async Task Get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
             mIsSearching = true;
             mClient.CancelPendingRequests();
@@ -119,18 +119,18 @@ namespace MediaPlayer
 
             if (tracks.Length != 0)
                 Preferences.addTag(Tag);
-            Task.Run(()=>Thread(0,frameElement,contentHolder,tracks));            
-            Task.Run(()=>Thread(1,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(2,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(3,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(4,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(5,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(6,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(7,frameElement,contentHolder,tracks));            
-            Task.Run(()=>Thread(8,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(9,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(10,frameElement,contentHolder,tracks));
-            Task.Run(()=>Thread(11,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(0,frameElement,contentHolder,tracks));            
+            Task.Run(()=>mThread(1,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(2,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(3,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(4,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(5,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(6,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(7,frameElement,contentHolder,tracks));            
+            Task.Run(()=>mThread(8,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(9,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(10,frameElement,contentHolder,tracks));
+            Task.Run(()=>mThread(11,frameElement,contentHolder,tracks));
         }
     }
 }

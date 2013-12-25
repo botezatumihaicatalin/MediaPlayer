@@ -19,13 +19,13 @@ namespace MediaPlayer
             mIsSearching = false;
         }
 
-        public async Task cancelSearch()
+        public async Task CancelSearch()
         {
             mIsSearching = false;
-            await mSimilarTracks.cancelCurrentSearch();
+            await mSimilarTracks.CancelCurrentSearch();
         }
 
-        public async Task getTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
+        public async Task GetTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
         {
             mIsSearching = true;
             List<String> tags = await Preferences.getTopTags();
@@ -35,31 +35,31 @@ namespace MediaPlayer
                 mSimilarTracks = new TopTracksByTag(tags[i]);
                 try
                 {
-                    await mSimilarTracks.get(frameElement, contentHolder, 100 / n);                    
+                    await mSimilarTracks.Get(frameElement, contentHolder, 100 / n);                    
                 }
                 catch (Exception error)
                 {
                     if (error.Message == ExceptionMessages.CONNECTION_FAILED)
                         throw error;
                 }
-                await mSimilarTracks.waitTillFinish();
+                await mSimilarTracks.WaitTillFinish();
             }
         }
 
-        public async Task getTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
+        public async Task GetTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
         {
             mIsSearching = true;
             try
             {
                 mSimilarTracks = new TopTracksByTag(tag);
-                await mSimilarTracks.get(frameElement, contentHolder, 100);
+                await mSimilarTracks.Get(frameElement, contentHolder, 100);
             }
             catch (Exception)
             {
 
             }
 
-            await mSimilarTracks.waitTillFinish();
+            await mSimilarTracks.WaitTillFinish();
 
             if (!mIsSearching) return;
             if (contentHolder.Items.Count == 0)
@@ -84,8 +84,8 @@ namespace MediaPlayer
                     try
                     {
                         mSimilarTracks = new TopTracksByTag(tags[i]);
-                        await mSimilarTracks.get(frameElement, contentHolder, 15);
-                        await mSimilarTracks.waitTillFinish();
+                        await mSimilarTracks.Get(frameElement, contentHolder, 15);
+                        await mSimilarTracks.WaitTillFinish();
                     }
                     catch (Exception error)
                     {

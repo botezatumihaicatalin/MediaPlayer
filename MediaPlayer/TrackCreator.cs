@@ -47,10 +47,10 @@ namespace MediaPlayer
         public void cancel()
         {
             mIsSearching = false;
-            mYTSearch.cancel();
-            mYTDecoder.cancel();
-            mYTStats.cancel();
-            mPageScrapper.cancel();
+            mYTSearch.Cancel();
+            mYTDecoder.Cancel();
+            mYTStats.Cancel();
+            mPageScrapper.Cancel();
         }
 
         public bool isSearching()
@@ -91,10 +91,10 @@ namespace MediaPlayer
             try
             {
                 mPageScrapper.LastFMUri = new Uri(musicLink);
-                videoID = await mPageScrapper.getYoutubeId();
+                videoID = await mPageScrapper.GetYoutubeId();
 
                 mYTDecoder.VideoID = videoID;
-                cacheUrl = await mYTDecoder.fetchURL();
+                cacheUrl = await mYTDecoder.FetchURL();
 
                 // Check if it contains signature , if not then the video it isn't good
                 if (!cacheUrl.Contains("&signature="))
@@ -128,10 +128,10 @@ namespace MediaPlayer
                 {
                     mYTSearch.ArtistName = artistName;
                     mYTSearch.TrackName = trackName;
-                    Pair<string, string> pair = await mYTSearch.getAVideoCacheUri();
+                    Pair<string, string> pair = await mYTSearch.GetAVideoCacheUri();
 
-                    videoID = pair.second;
-                    cacheUrl = pair.first;
+                    videoID = pair.Second;
+                    cacheUrl = pair.First;
                 }
                 catch (Exception error)
                 {
@@ -160,7 +160,7 @@ namespace MediaPlayer
             {
                 try
                 {
-                    await mYTStats.getData();
+                    await mYTStats.GetData();
                     imageUri = new Uri(mYTStats.VideoImageURL);
                 }
                 catch (Exception er)

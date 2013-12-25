@@ -8,20 +8,20 @@ namespace MediaPlayer
 {
     class Pair<T,K>
     {
-        public T first
+        public T First
         {
             get;
             set;
         }
-        public K second
+        public K Second
         {
             get;
             set;
         }
         public Pair(T a, K b)
         {
-            first = a;
-            second = b;
+            First = a;
+            Second = b;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace MediaPlayer
             mVideoImage = null;
             mDurationInSeconds = 0;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         public YoutubeStats()
@@ -63,15 +63,15 @@ namespace MediaPlayer
             mVideoImage = null;
             mDurationInSeconds = 0;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
-        public void cancel()
+        public void Cancel()
         {
             mClient.CancelPendingRequests();
         }
-        public async Task getData()
+        public async Task GetData()
         {
             mClient.CancelPendingRequests();
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";

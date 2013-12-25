@@ -27,19 +27,19 @@ namespace MediaPlayer
         public YoutubeDecoder()
         {
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 1024 * 10;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         public YoutubeDecoder(string VideoID)
         {
             this.VideoID = VideoID;
             mClient = new HttpClient();
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 1024 * 10;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         private HttpClient mClient;
         private HttpResponseMessage mResponse;
-        private void decodeURL(ref string content)
+        private void mDecodeURL(ref string content)
         {
             foreach (string key in chars.Keys)
                 content = content.Replace("%" + key, chars[key]);
@@ -47,12 +47,12 @@ namespace MediaPlayer
             content = content.Replace("%2C", ",");
         }
 
-        public void cancel()
+        public void Cancel()
         {
             mClient.CancelPendingRequests();
         }
 
-        public async Task<string> fetchURL()
+        public async Task<string> FetchURL()
         {
             mClient.CancelPendingRequests();
             string result;
@@ -76,7 +76,7 @@ namespace MediaPlayer
 
             startIndex += "adaptive_fmts".Length;
             result = result.Substring(startIndex, result.Length - startIndex);
-            decodeURL(ref result);
+            mDecodeURL(ref result);
 
             int audioIndex = result.IndexOf("type=audio");
             if (audioIndex == -1)

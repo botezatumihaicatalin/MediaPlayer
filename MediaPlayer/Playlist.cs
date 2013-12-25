@@ -17,7 +17,7 @@ namespace MediaPlayer
         private static List<Track> mTrackList = new List<Track>();
         private static List<String> mFileNames = new List<String>();
 
-        public static async Task addToPlayList(Track track)
+        public static async Task AddToPlayList(Track track)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFolder nextFolder = null;
@@ -55,7 +55,7 @@ namespace MediaPlayer
             }
         }
 
-        public static async Task removeFromPlayList(Track track , GridView contentHolder)
+        public static async Task RemoveFromPlayList(Track track , GridView contentHolder)
         {
             int position = mTrackList.IndexOf(track);
 
@@ -85,7 +85,7 @@ namespace MediaPlayer
             });
         }
 
-        public static async Task readPlayList(GridView contentHolder = null)
+        public static async Task ReadPlayList(GridView contentHolder = null)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFolder nextFolder = null;

@@ -34,7 +34,7 @@ namespace MediaPlayer
             mClient = new HttpClient();
             mDecoder = new YoutubeDecoder();
             mIsRunning = false;
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 10240;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
@@ -45,16 +45,16 @@ namespace MediaPlayer
             mIsRunning = false;
             TrackName = "";
             ArtistName = "";
-            mClient.MaxResponseContentBufferSize = 65536;
+            mClient.MaxResponseContentBufferSize = 1024;
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
         
-        public void cancel()
+        public void Cancel()
         {
             mIsRunning = false;
             mClient.CancelPendingRequests();
         }
-        public async Task<Pair<string,string>> getAVideoCacheUri()
+        public async Task<Pair<string,string>> GetAVideoCacheUri()
         {
             mClient.CancelPendingRequests();
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
@@ -96,7 +96,7 @@ namespace MediaPlayer
                     string directVideoURL = "";
                     try
                     {
-                        directVideoURL = await mDecoder.fetchURL();
+                        directVideoURL = await mDecoder.FetchURL();
                     }
                     catch (Exception)
                     {

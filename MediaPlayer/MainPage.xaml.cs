@@ -56,7 +56,7 @@ namespace MediaPlayer
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.initialize(PlayPause, ProgressSlider , VideoImageHolder, VideoTitleHolder);
+            MediaPlayer.Initialize(PlayPause, ProgressSlider , VideoImageHolder, VideoTitleHolder);
             MediaPlayer.OnMediaFailed += MediaEnds;
             MediaPlayer.OnMediaEnded += MediaEnds;
             MediaPlayer.MediaIndex = lastTrackIndex;
@@ -108,7 +108,7 @@ namespace MediaPlayer
                 VideoTitleHolder.Text = track.Name + " - " + track.Artist;
                 VideoImageHolder.Source = new BitmapImage(track.ImageUri);
                 MediaPlayer.CurrentTrack = track;
-                MediaPlayer.play();
+                MediaPlayer.Play();
             }
             catch (Exception er)
             {
@@ -120,7 +120,7 @@ namespace MediaPlayer
         {
             if (GlobalArray.list.Count > 0)
             {
-                MediaPlayer.stop();
+                MediaPlayer.Stop();
                 MediaPlayer.MediaIndex += 1;
                 MediaPlayer.MediaIndex %= GlobalArray.list.Count;
                 Track new_item = GlobalArray.list[MediaPlayer.MediaIndex];
@@ -132,7 +132,7 @@ namespace MediaPlayer
         {
             if (GlobalArray.list.Count > 0)
             {
-                MediaPlayer.stop();
+                MediaPlayer.Stop();
                 MediaPlayer.MediaIndex -= 1;
                 if (MediaPlayer.MediaIndex < 0) MediaPlayer.MediaIndex = GlobalArray.list.Count - 1;
 
@@ -149,7 +149,7 @@ namespace MediaPlayer
                return;
             }
 
-            MediaPlayer.stop();
+            MediaPlayer.Stop();
             MediaPlayer.MediaIndex = list.Items.IndexOf(new_item);
             await LoadTrack(new_item);            
         }
@@ -167,7 +167,7 @@ namespace MediaPlayer
             }
             else
             {
-                MediaPlayer.playPause();
+                MediaPlayer.PlayPause();
             }
         }
 
@@ -180,9 +180,9 @@ namespace MediaPlayer
                 MediaPlayer.MediaIndex = -1;
                 SearchBox1.IsEnabled = false;
                 FeelLucky.IsEnabled = false;
-                await Task.Run(()=>searchLayer.cancelSearch());
+                await Task.Run(()=>searchLayer.CancelSearch());
                 searchLayer = new DataLayer();
-                searchLayer.getTracksByPreferences(this, list);
+                searchLayer.GetTracksByPreferences(this, list);
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }
@@ -214,10 +214,10 @@ namespace MediaPlayer
             {
                 SearchBox1.IsEnabled = false;
                 FeelLucky.IsEnabled = false;
-                await Task.Run(()=>searchLayer.cancelSearch());
+                await Task.Run(()=>searchLayer.CancelSearch());
                 searchLayer = new DataLayer();
                 string txt = args.QueryText;
-                Task.Run(() => searchLayer.getTrackByTag(this, list, txt));
+                Task.Run(() => searchLayer.GetTrackByTag(this, list, txt));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }
@@ -258,7 +258,7 @@ namespace MediaPlayer
             sender_button.IsEnabled = false;
             int length = list.SelectedItems.Count;
             for (int i = 0; i < length; i++)
-                await PlayList.addToPlayList((Track)list.SelectedItems[i]);
+                await PlayList.AddToPlayList((Track)list.SelectedItems[i]);
             list.SelectedIndex = -1;
             sender_button.IsEnabled = true;
         }      

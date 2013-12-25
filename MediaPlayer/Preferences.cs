@@ -53,26 +53,26 @@ namespace MediaPlayer
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].second > max1)
+                if (list[i].Second > max1)
                 {
                     max3 = max2;
                     tag3 = tag2;
                     max2 = max1;
                     tag2 = tag1;
-                    max1 = list[i].second;
-                    tag1 = list[i].first;
+                    max1 = list[i].Second;
+                    tag1 = list[i].First;
                 }
-                else if (list[i].second > max2)
+                else if (list[i].Second > max2)
                 {
                     max3 = max2;
                     tag3 = tag2;
-                    max2 = list[i].second;
-                    tag2 = list[i].first;
+                    max2 = list[i].Second;
+                    tag2 = list[i].First;
                 }
-                else if (list[i].second > max3)
+                else if (list[i].Second > max3)
                 {
-                    max3 = list[i].second;
-                    tag3 = list[i].first;
+                    max3 = list[i].Second;
+                    tag3 = list[i].First;
                 }
             }
 

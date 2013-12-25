@@ -56,7 +56,7 @@ namespace MediaPlayer
         public static event OnMediaEndHandler OnMediaEnded;
         public static event OnMediaFailedHandler OnMediaFailed;
 
-        public static void initialize(Image playPauseButton, Slider progressSlider , Image videoImageHolder , TextBlock videoTitleHolder)
+        public static void Initialize(Image playPauseButton, Slider progressSlider , Image videoImageHolder , TextBlock videoTitleHolder)
         {
             if (mMedia == null)
             {
@@ -76,7 +76,7 @@ namespace MediaPlayer
                 if (mTimer == null)
                 {
                     mTimer = new DispatcherTimer();
-                    mTimer.Tick += Tick;
+                    mTimer.Tick += mTick;
                     mTimer.Interval = TimeSpan.FromMilliseconds(100);
                     mTimer.Start();
                 }
@@ -118,7 +118,7 @@ namespace MediaPlayer
 
         private static void mMedia_MediaEnded(object sender, RoutedEventArgs e)
         {
-            stop();
+            Stop();
             mPlayed = mSlider.Maximum;
             if (OnMediaEnded != null) OnMediaEnded(EventArgs.Empty);
         }
@@ -130,7 +130,7 @@ namespace MediaPlayer
                 mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
                 MediaControl.TrackName = CurrentTrack.Name;
                 MediaControl.ArtistName = CurrentTrack.Artist;
-                await saveImageToFile(CurrentTrack.ImageUri);
+                await mSaveImageToFile(CurrentTrack.ImageUri);
                 MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
             }
             if (mMedia.CurrentState == MediaElementState.Playing)
@@ -155,7 +155,7 @@ namespace MediaPlayer
         // Media player events end here
         // ----------------------------
 
-        private static void Tick(object sender, object e)
+        private static void mTick(object sender, object e)
         {
             if (mMedia.CurrentState == MediaElementState.Playing && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
             {
@@ -173,7 +173,7 @@ namespace MediaPlayer
             mSlider.Value = mPlayed;
         }
 
-        public static void play()
+        public static void Play()
         {
             lock (mLock)
             {
@@ -190,7 +190,7 @@ namespace MediaPlayer
             }
         }
 
-        public static void pause()
+        public static void Pause()
         {
             lock (mLock)
             {
@@ -199,7 +199,7 @@ namespace MediaPlayer
             }
         }
 
-        public static void stop()
+        public static void Stop()
         {
             lock (mLock)
             {
@@ -208,12 +208,12 @@ namespace MediaPlayer
             }
         }
 
-        public static void playPause()
+        public static void PlayPause()
         {
-            if (mPlayPause) pause();
-            else play();
+            if (mPlayPause) Pause();
+            else Play();
         }
-        private static async Task saveImageToFile(Uri path)
+        private static async Task mSaveImageToFile(Uri path)
         {
             HttpWebRequest request;
             WebResponse response;
