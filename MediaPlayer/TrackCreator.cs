@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
@@ -103,17 +104,14 @@ namespace MediaPlayer
                     cacheUrl = "";
                 }
             }
-            catch (Exception error)
+            catch (YoutubeVideoNotFoundException)
             {
-                if (error.Message == ExceptionMessages.CONNECTION_FAILED)
-                {
-                    return null;
-                }
-                if (error.Message == ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND)
-                {
-                    videoID = "NONE";
-                    cacheUrl = "";
-                }
+                videoID = "NONE";
+                cacheUrl = "";
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
             if (!mIsSearching)
@@ -135,8 +133,7 @@ namespace MediaPlayer
                 }
                 catch (Exception error)
                 {
-                    if (error.Message == ExceptionMessages.CONNECTION_FAILED)
-                        return null;
+                     return null;
                 }
             }
 

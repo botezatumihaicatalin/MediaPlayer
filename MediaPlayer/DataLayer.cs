@@ -39,8 +39,6 @@ namespace MediaPlayer
                 }
                 catch (Exception error)
                 {
-                    if (error.Message == ExceptionMessages.CONNECTION_FAILED)
-                        throw error;
                 }
                 await Task.Delay(1000);
                 await mSimilarTracks.WaitTillFinish();
@@ -75,10 +73,8 @@ namespace MediaPlayer
                 }
                 catch (Exception err)
                 {
-                    if (err.Message == ExceptionMessages.CONNECTION_FAILED)
-                        return;
-                }
-                
+                    return;
+                }                
 
                 for (int i = 0; i < tags.Count && i < 3 && mIsSearching; i++)
                 {

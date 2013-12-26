@@ -32,7 +32,6 @@ namespace MediaPlayer
             String result = "";
             HttpWebRequest request = WebRequest.CreateHttp(requestUri);
             request.Method = "GET";
-            int i = 0;
             using (WebResponse response = await request.GetResponseAsync())
             using (Stream responseStream = response.GetResponseStream())
             {
@@ -45,7 +44,7 @@ namespace MediaPlayer
 
             mIsDownloading = false;
             if (mIsCanceled)
-                throw new Exception("Canceled!");
+                throw new OperationCanceledException();
 
             return result;
         }

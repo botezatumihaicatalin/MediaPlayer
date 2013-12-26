@@ -51,8 +51,7 @@ namespace MediaPlayer
             mClient.Cancel();
         }
         public async Task<Pair<string,string>> GetAVideoCacheUri()
-        {
-            mClient.Cancel();
+        {            
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
             mIsRunning = true;
             string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";        

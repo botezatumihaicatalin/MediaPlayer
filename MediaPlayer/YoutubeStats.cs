@@ -68,7 +68,6 @@ namespace MediaPlayer
         }
         public async Task GetData()
         {
-            mClient.Cancel();
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";
             
             String result = await mClient.GetHttp(new Uri(baseUrl + VideoID + "?v=2"));

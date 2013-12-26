@@ -110,7 +110,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataLayer.cs" />
-    <Compile Include="ExceptionMessages.cs" />
     <Compile Include="GlobalArray.cs" />
     <Compile Include="HttpDownloader.cs" />
     <Compile Include="Pair.cs" />
@@ -141,6 +140,8 @@
     <Compile Include="YoutubeDecoder.cs" />
     <Compile Include="YoutubeSearch.cs" />
     <Compile Include="YoutubeStats.cs" />
+    <Compile Include="YoutubeVideoNotFoundException.cs" />
+    <Compile Include="YoutubeVideoUrlNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

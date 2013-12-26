@@ -110,7 +110,8 @@ namespace MediaPlayer
             }
             catch (Exception err)
             {
-                throw new Exception(ExceptionMessages.CONNECTION_FAILED);
+                mRunningThreads--;
+                throw err;
             }
 
             XmlDocument fullXML = new XmlDocument();

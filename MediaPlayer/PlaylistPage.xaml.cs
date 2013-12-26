@@ -92,14 +92,11 @@ namespace MediaPlayer
                 track.CacheUriString = await decoder.FetchURL();
             }
             catch (Exception error)
-            {
-                if (error.Message == ExceptionMessages.CONNECTION_FAILED)
+            {                
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
                 {
-                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
-                    {
-                        new MessageDialog("Unable to load track due to internet problems!", "Error").ShowAsync();
-                    });
-                }
+                    new MessageDialog("Unable to load track!", "Error").ShowAsync();
+                });
                 return;
             }
 

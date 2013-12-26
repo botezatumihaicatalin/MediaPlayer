@@ -37,7 +37,6 @@ namespace MediaPlayer
         }
         public async Task<string> GetYoutubeId()
         {
-            mClient.Cancel();
             string ID = "";
             string page_source = await mClient.GetHttp(LastFMUri);
             string search_string = "<embed src=\"http://www.youtube.com/v/";
@@ -46,7 +45,7 @@ namespace MediaPlayer
 
             if (index == -1)
             {
-                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_ID_NOT_FOUND); 
+                throw new YoutubeVideoNotFoundException(); 
             }
             index += search_string.Length;
             int end = index;
@@ -58,7 +57,7 @@ namespace MediaPlayer
 
             if (ID.Length <= 3)
             {
-                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_ID_NOT_FOUND);
+                throw new YoutubeVideoNotFoundException();
             }
 
             return ID;

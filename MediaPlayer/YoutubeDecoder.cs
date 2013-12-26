@@ -58,7 +58,7 @@ namespace MediaPlayer
         
             if (startIndex == -1)
             {
-                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
+                throw new YoutubeVideoUrlNotFoundException();
             }
 
             startIndex += "adaptive_fmts".Length;
@@ -68,7 +68,7 @@ namespace MediaPlayer
             int audioIndex = result.IndexOf("type=audio");
             if (audioIndex == -1)
             {
-                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
+                throw new YoutubeVideoUrlNotFoundException();
             }
             audioIndex += "type=audio".Length;           
             
@@ -78,7 +78,7 @@ namespace MediaPlayer
 
             if (urlIndex == -1)
             {
-                throw new Exception(ExceptionMessages.YOUTUBE_VIDEO_URL_NOT_FOUND);
+                throw new YoutubeVideoUrlNotFoundException();
             }
             urlIndex += "url=".Length;
 
