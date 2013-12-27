@@ -20,6 +20,7 @@ namespace MediaPlayer
         private string mVideoImageURL;
         private int mDurationInSeconds;
         private BitmapImage mVideoImage;
+        private String mLastVideoID;
 
         public string VideoID
         {
@@ -68,6 +69,9 @@ namespace MediaPlayer
         }
         public async Task GetData()
         {
+            if (mLastVideoID !=null && mLastVideoID == VideoID)
+                return;
+
             const String baseUrl = "https://gdata.youtube.com/feeds/api/videos/";
             
             String result = await mClient.GetHttp(new Uri(baseUrl + VideoID + "?v=2"));
@@ -99,10 +103,7 @@ namespace MediaPlayer
 
                 }
             }
-
+            mLastVideoID = VideoID;
         }
-
-
-
     }
 }

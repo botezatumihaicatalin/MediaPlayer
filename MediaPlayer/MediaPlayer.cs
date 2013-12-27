@@ -35,7 +35,7 @@ namespace MediaPlayer
         public static Track CurrentTrack
         {
             get { return mCurrentTrack; }
-            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0; }
+            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration; }
         }
         public static bool PlayButtonState
         {
@@ -157,7 +157,7 @@ namespace MediaPlayer
 
         private static void mTick(object sender, object e)
         {
-            if (mMedia.CurrentState == MediaElementState.Playing && mSlider.Value <= mSlider.Maximum * mMedia.BufferingProgress)
+            if (mMedia.CurrentState == MediaElementState.Playing && mPlayed <= mCurrentTrack.Duration * mMedia.BufferingProgress)
             {
                 mPlayed += 0.1;
                 if (mPlayed >= 2.0 && mPlayed <= 2.1)

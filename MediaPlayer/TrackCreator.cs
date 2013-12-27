@@ -21,6 +21,10 @@ namespace MediaPlayer
         {
             get;set;
         }
+        public bool IsSearching
+        {
+            get { return mIsSearching; }
+        }
         
 
         public TrackCreator(String XML)
@@ -45,7 +49,7 @@ namespace MediaPlayer
             XML = "";
         }
 
-        public void cancel()
+        public void Cancel()
         {
             mIsSearching = false;
             mYTSearch.Cancel();
@@ -54,12 +58,8 @@ namespace MediaPlayer
             mPageScrapper.Cancel();
         }
 
-        public bool isSearching()
-        {
-            return mIsSearching;
-        }
 
-        public async Task<Track> getFromXML()
+        public async Task<Track> GetFromXML()
         {
             mIsSearching = true;
             if (!mIsSearching)
@@ -77,11 +77,11 @@ namespace MediaPlayer
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
-            Uri imageUri = new Uri("ms-appx:///Assets/default.jpg");
+            Uri imageUri = new Uri("http://simpleicon.com/wp-content/uploads/music-note-5.png");
 
             String videoID = "NONE";
             String cacheUrl = "";
-            Int32 durationNumber = 0;
+            Int32 durationNumber = -1;
 
             if (!mIsSearching)
             {
@@ -97,12 +97,25 @@ namespace MediaPlayer
                 mYTDecoder.VideoID = videoID;
                 cacheUrl = await mYTDecoder.FetchURL();
 
-                // Check if it contains signature , if not then the video it isn't good
+                // Check if it contains signature. If not, the video it isn't good
                 if (!cacheUrl.Contains("&signature="))
                 {
                     videoID = "NONE";
                     cacheUrl = "";
                 }
+                else
+                {
+                    // If the video is OK , then we check if XML contains duration. If it does then we get it from XML , no need to download anymore for this.
+                    if (duration.Length == 1)
+                    {
+                        durationNumber = Convert.ToInt32(duration[0].InnerText);
+                    }
+                }
+            }
+            catch (YoutubeVideoUrlNotFoundException)
+            {
+                videoID = "NONE";
+                cacheUrl = "";
             }
             catch (YoutubeVideoNotFoundException)
             {
@@ -130,6 +143,13 @@ namespace MediaPlayer
 
                     videoID = pair.Second;
                     cacheUrl = pair.First;
+
+                    if (videoID != "NONE")
+                    {
+                        mYTStats.VideoID = videoID;
+                        await mYTStats.GetData();
+                        durationNumber = mYTStats.DurationInSeconds;
+                    }
                 }
                 catch (Exception error)
                 {
@@ -142,13 +162,12 @@ namespace MediaPlayer
                 return null;
             }
 
-            // If videoID is "NONE" at this point then the track doesn't have a video attached , so we dont show it.
+            // If videoID is "NONE" at this point then the track doesn't have a video attached or we couldnt find one, so we dont show it.
             if (videoID == "NONE")
                 return null;
 
-            mYTStats.VideoID = videoID;
-
             var length = Convert.ToInt32(images.Length);
+
             if (length > 0)
             {
                 imageUri = new Uri(images[length - 1].InnerText);
@@ -157,21 +176,30 @@ namespace MediaPlayer
             {
                 try
                 {
+                    mYTStats.VideoID = videoID;
                     await mYTStats.GetData();
                     imageUri = new Uri(mYTStats.VideoImageURL);
                 }
-                catch (Exception er)
+                catch (Exception)
                 {
-                    imageUri = new Uri("ms-appx:///Assets/default.jpg");
+                    imageUri = new Uri("http://simpleicon.com/wp-content/uploads/music-note-5.png");
                 }
             }
 
+
+            // Check if durationNumber is set we dont want it to be -1.
+            if (durationNumber == -1)
+            {
+                mYTStats.VideoID = videoID;
+                await mYTStats.GetData();
+                durationNumber = mYTStats.DurationInSeconds;
+            }
+            
             if (!mIsSearching)
             {
                 return null;
             }
 
-            durationNumber = Math.Max(mYTStats.DurationInSeconds, Convert.ToInt32(duration[0].InnerText));
             mIsSearching = false;
             return new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
         }

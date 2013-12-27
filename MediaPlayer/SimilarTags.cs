@@ -33,6 +33,7 @@ namespace MediaPlayer
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
 
             System.Net.WebResponse response = await request.GetResponseAsync();
+            
 
             String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();        
 
