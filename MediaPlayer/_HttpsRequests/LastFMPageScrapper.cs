@@ -18,7 +18,6 @@ namespace MediaPlayer
             set;
         }
         private HttpDownloader mClient;
-        private HttpResponseMessage mResponse;
         public LastFMPageScrapper(Uri uri)
         {
             LastFMUri = uri;

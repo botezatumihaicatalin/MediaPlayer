@@ -22,7 +22,6 @@ namespace MediaPlayer
         }
         private static readonly Regex youtubeVideoRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)");
         private HttpDownloader mClient;
-        private HttpResponseMessage mResponse;
         private YoutubeDecoder mDecoder;
         private bool mIsRunning;
 
