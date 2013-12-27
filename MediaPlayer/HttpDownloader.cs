@@ -35,7 +35,8 @@ namespace MediaPlayer
             using (WebResponse response = await request.GetResponseAsync())
             using (Stream responseStream = response.GetResponseStream())
             {
-                responseStream.ReadTimeout = 5000;
+                responseStream.ReadTimeout = 1000;
+
                 int bytesRead;
                 while (!mIsCanceled && (bytesRead = responseStream.Read(mBuffer, 0, mBuffer.Length)) > 0)
                 {

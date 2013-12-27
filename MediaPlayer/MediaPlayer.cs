@@ -35,7 +35,7 @@ namespace MediaPlayer
         public static Track CurrentTrack
         {
             get { return mCurrentTrack; }
-            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration; }
+            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0; }
         }
         public static bool PlayButtonState
         {
@@ -96,7 +96,7 @@ namespace MediaPlayer
             mSlider = progressSlider;
             if (mCurrentTrack != null)
             {
-                mSlider.Maximum = mCurrentTrack.Duration * 4.5 / 5.0;
+                mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0;
                 videoImageHolder.Source = new BitmapImage(mCurrentTrack.ImageUri);
                 videoTitleHolder.Text = mCurrentTrack.Name + " - " + mCurrentTrack.Artist;
             }
@@ -157,7 +157,7 @@ namespace MediaPlayer
 
         private static void mTick(object sender, object e)
         {
-            if (mMedia.CurrentState == MediaElementState.Playing && mPlayed <= mCurrentTrack.Duration * mMedia.BufferingProgress)
+            if (mMedia.CurrentState == MediaElementState.Playing && mPlayed <= mCurrentTrack.Duration * 4.0 * mMedia.DownloadProgress / 5.0)
             {
                 mPlayed += 0.1;
                 if (mPlayed >= 2.0 && mPlayed <= 2.1)

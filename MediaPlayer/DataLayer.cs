@@ -40,8 +40,7 @@ namespace MediaPlayer
                 catch (Exception error)
                 {
                 }
-                await Task.Delay(1000);
-                await mSimilarTracks.WaitTillFinish();
+                await mSimilarTracks.WaitForFinish();
             }
         }
 
@@ -58,7 +57,7 @@ namespace MediaPlayer
 
             }
 
-            await mSimilarTracks.WaitTillFinish();
+            await mSimilarTracks.WaitForFinish();
 
             if (!mIsSearching) return;
             if (contentHolder.Items.Count == 0)
@@ -82,7 +81,7 @@ namespace MediaPlayer
                     {
                         mSimilarTracks = new TopTracksByTag(tags[i]);
                         await mSimilarTracks.Get(frameElement, contentHolder, 15);
-                        await mSimilarTracks.WaitTillFinish();
+                        await mSimilarTracks.WaitForFinish();
                     }
                     catch (Exception error)
                     {

@@ -18,10 +18,11 @@ namespace MediaPlayer
     class TopTracksByTag
     {
         private bool mIsSearching;
-        private int mRunningThreads;
         private HttpClient mClient;
         private HttpResponseMessage mResponse;
         private TrackCreator[] mTrackCreators;
+        private bool mIsDownloading;
+        private uint mTracksRemaining;
         
 
         public String Tag
@@ -33,10 +34,9 @@ namespace MediaPlayer
         {
             Tag = tag;
             mIsSearching = false;
-            mRunningThreads = 0;
             mClient = new HttpClient();
             mClient.MaxResponseContentBufferSize = 66000;
-            //mClient.Timeout = new TimeSpan(5000);
+            mClient.Timeout = TimeSpan.FromMilliseconds(5000);
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
@@ -51,20 +51,19 @@ namespace MediaPlayer
 
             for (int i = 0; i < 12; i++)
                 mTrackCreators[i].Cancel();
-            
-            while (mRunningThreads > 0)
-                await Task.Delay(10);
+            await WaitForFinish();
         }
 
-        public async Task WaitTillFinish()
+        public async Task WaitForFinish()
         {
-            while (mRunningThreads > 0)
+            while (mIsDownloading)
+            {
                 await Task.Delay(10);
+            }
         }
 
         private async Task mThread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
         {
-            mRunningThreads++;
             for (int i = index; i < tracks.Length && mIsSearching; i += 12)
             {
                 try
@@ -88,13 +87,17 @@ namespace MediaPlayer
                 {
 
                 }
+                mTracksRemaining--;
             }
-            mRunningThreads--;
+            if (mTracksRemaining == 0 || !mIsSearching)
+            {
+                mIsDownloading = false;
+            }
         }
 
         public async Task Get(FrameworkElement frameElement, GridView contentHolder, int no)
         {
-            mRunningThreads++;
+            mIsDownloading = true;
             mIsSearching = true;
             mClient.CancelPendingRequests();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
@@ -111,17 +114,24 @@ namespace MediaPlayer
             }
             catch (Exception err)
             {
-                mRunningThreads--;
+                mIsDownloading = false;
                 throw err;
             }
 
             XmlDocument fullXML = new XmlDocument();
             fullXML.LoadXml(resp);
             XmlNodeList tracks = fullXML.GetElementsByTagName("track");
-            mRunningThreads = 0;
+            mTracksRemaining = tracks.Length;
 
             if (tracks.Length != 0)
+            {
                 Preferences.addTag(Tag);
+            }
+            else
+            {
+                mIsDownloading = false;
+                return;
+            }
             Task.Run(()=>mThread(0,frameElement,contentHolder,tracks));            
             Task.Run(()=>mThread(1,frameElement,contentHolder,tracks));
             Task.Run(()=>mThread(2,frameElement,contentHolder,tracks));
@@ -134,7 +144,6 @@ namespace MediaPlayer
             Task.Run(()=>mThread(9,frameElement,contentHolder,tracks));
             Task.Run(()=>mThread(10,frameElement,contentHolder,tracks));
             Task.Run(()=>mThread(11,frameElement,contentHolder,tracks));
-            mRunningThreads--;
         }
     }
 }

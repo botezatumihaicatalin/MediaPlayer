@@ -182,7 +182,7 @@ namespace MediaPlayer
                 FeelLucky.IsEnabled = false;
                 await Task.Run(()=>searchLayer.CancelSearch());
                 searchLayer = new DataLayer();
-                searchLayer.GetTracksByPreferences(this, list);
+                Task.Run(()=>searchLayer.GetTracksByPreferences(this, list));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }
