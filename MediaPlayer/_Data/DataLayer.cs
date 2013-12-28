@@ -61,7 +61,7 @@ namespace MediaPlayer
 
             if (!mIsSearching) return;
             if (contentHolder.Items.Count == 0)
-            {
+            {   
                 //luam primele 3 taguri asemanatoare
 
                 SimilarTags similarTags = new SimilarTags(tag);
