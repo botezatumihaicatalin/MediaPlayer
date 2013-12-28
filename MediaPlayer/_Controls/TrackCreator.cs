@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaPlayer._Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -77,6 +78,12 @@ namespace MediaPlayer
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
+            //try to get this track from database
+            Track track = await DatabaseHelper.getTrackFromDatabase(musicLink);
+            if (track != null)
+                return track;
+
+            //track wasn't found, so we get all the needed info
             Uri imageUri = new Uri("http://simpleicon.com/wp-content/uploads/music-note-5.png");
 
             String videoID = "NONE";
@@ -201,7 +208,12 @@ namespace MediaPlayer
             }
 
             mIsSearching = false;
-            return new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
+
+            //now we have all the info for the track, we store them to the database
+            track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
+            DatabaseHelper.addTrackToDatabase(track);
+
+            return track;
         }
 
     }

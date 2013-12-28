@@ -10,7 +10,7 @@ namespace MediaPlayer
     [DataContract]
     class Track
     {
-        
+
         public Track(String artist = null , String name = null , String link = null , Int32 duration = 0 , Uri imageUri = null , String videoID = null , String cacheUri = "https://127.0.0.1")
         {
             this.Artist = artist;
@@ -20,6 +20,12 @@ namespace MediaPlayer
             ImageUri = imageUri;
             VideoID = videoID;
             CacheUriString = cacheUri;
+
+            //setting trackID
+            setTrackID();
+
+            //setting updating date
+            setUpdatingDate();
         }
 
         public String CacheUriString
@@ -59,6 +65,18 @@ namespace MediaPlayer
             set;
         }
         [DataMember]
+        public DateTime updatingDate
+        {
+            get;
+            set;
+        }
+        [DataMember]
+        public int trackID
+        {
+            get;
+            set;
+        }
+        [DataMember]
         public string VideoID
         {
             get;
@@ -88,6 +106,25 @@ namespace MediaPlayer
                 if (secondsString.Length == 1) secondsString = "0" + secondsString;
                 return "Track name : " + Name + "\nArtist : " + Artist + "\nDuration (h:m:s) : " + hoursString + ":" + minutesString + ":"+secondsString;
             }
+        }
+
+        public int setTrackID()//generates trackID from link to LastFM
+        {
+            const int BASE = 137;
+            const int MOD = 10000000;
+            for (int i = 0; i < this.LastFMLink.Length; i++)
+            {
+                trackID = trackID * BASE + this.LastFMLink[i];
+                while (trackID > MOD)
+                    trackID -= MOD;
+            }
+
+            return trackID;
+        }
+
+        private void setUpdatingDate()
+        {
+            updatingDate = DateTime.Now;
         }
     }
 }
