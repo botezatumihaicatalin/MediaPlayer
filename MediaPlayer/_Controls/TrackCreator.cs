@@ -78,8 +78,9 @@ namespace MediaPlayer
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
+            Track track = new Track();
             //try to get this track from database
-            Track track = await DatabaseHelper.getTrackFromDatabase(musicLink);
+            track = await DatabaseHelper.getTrackFromDatabase(musicLink);
             if (track != null)
                 return track;
 

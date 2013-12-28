@@ -112,6 +112,10 @@ namespace MediaPlayer
         {
             const int BASE = 137;
             const int MOD = 10000000;
+
+            if (LastFMLink == null)
+                return 0;
+
             for (int i = 0; i < this.LastFMLink.Length; i++)
             {
                 trackID = trackID * BASE + this.LastFMLink[i];
