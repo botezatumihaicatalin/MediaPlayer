@@ -13,6 +13,7 @@ namespace MediaPlayer
 {
     class SimilarTags
     {
+        private HttpDownloader mDownloader;
         public String Tag
         {
             get;
@@ -21,24 +22,23 @@ namespace MediaPlayer
         public SimilarTags(String tag)
         {
             Tag = tag;
+            mDownloader = new HttpDownloader();
+        }
+
+        public void Cancel()
+        {
+            mDownloader.Cancel();
         }
 
         public async Task<List<String>> get()
         {
 
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.getsimilar&tag=" +
-             Tag + 
-             "&api_key=30e44ae9c1e227a2f44f410e16e56586";
-
-            System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
-
-            System.Net.WebResponse response = await request.GetResponseAsync();
-            
-
-            String resp = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();        
+             Tag +
+             "&api_key=30e44ae9c1e227a2f44f410e16e56586";       
 
             XmlDocument fullXML = new XmlDocument();
-            fullXML.LoadXml(resp);            
+            fullXML.LoadXml(await mDownloader.GetHttp(new Uri(url)));            
             XmlNodeList tracks = fullXML.GetElementsByTagName("name");
             List<String> list = new List<String>();
 
@@ -47,7 +47,7 @@ namespace MediaPlayer
                 list.Add(elements.InnerText);
             }
             return list;
-
         }
+
     }
 }

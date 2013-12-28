@@ -182,7 +182,7 @@ namespace MediaPlayer
                 FeelLucky.IsEnabled = false;
                 await Task.Run(()=>searchLayer.CancelSearch());
                 searchLayer = new DataLayer();
-                Task.Run(()=>searchLayer.GetTracksByPreferences(this, list));
+                Task.Run(()=>searchLayer.GetTracksByPreferences(list));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }
@@ -217,7 +217,7 @@ namespace MediaPlayer
                 await Task.Run(()=>searchLayer.CancelSearch());
                 searchLayer = new DataLayer();
                 string txt = args.QueryText;
-                Task.Run(() => searchLayer.GetTrackByTag(this, list, txt));
+                Task.Run(() => searchLayer.GetTrackByTag(list, txt));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }

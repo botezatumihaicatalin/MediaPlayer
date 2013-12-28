@@ -53,7 +53,7 @@ namespace MediaPlayer
         {            
             // example https://gdata.youtube.com/feeds/api/videos?q=Lady+Gaga+Alejandro&orderby=relevance
             mIsRunning = true;
-            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + ArtistName + " " + TrackName + "&orderby=relevance";        
+            string search_url = "https://gdata.youtube.com/feeds/api/videos?q=" + Uri.EscapeDataString(ArtistName + " " + TrackName) + "&orderby=relevance";        
             string contents;
             try
             {

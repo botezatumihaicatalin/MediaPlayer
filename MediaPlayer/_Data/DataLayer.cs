@@ -25,7 +25,7 @@ namespace MediaPlayer
             await mSimilarTracks.CancelCurrentSearch();
         }
 
-        public async Task GetTracksByPreferences(FrameworkElement frameElement, GridView contentHolder)
+        public async Task GetTracksByPreferences(GridView contentHolder)
         {
             mIsSearching = true;
             List<String> tags = await Preferences.getTopTags();
@@ -35,7 +35,7 @@ namespace MediaPlayer
                 mSimilarTracks = new TopTracksByTag(tags[i]);
                 try
                 {
-                    await mSimilarTracks.Get(frameElement, contentHolder, 100 / n);                    
+                    await mSimilarTracks.Get(contentHolder, 100 / n);                    
                 }
                 catch (Exception error)
                 {
@@ -44,13 +44,13 @@ namespace MediaPlayer
             }
         }
 
-        public async Task GetTrackByTag(FrameworkElement frameElement, GridView contentHolder, String tag)
+        public async Task GetTrackByTag(GridView contentHolder, String tag)
         {
             mIsSearching = true;
             try
             {
                 mSimilarTracks = new TopTracksByTag(tag);
-                await mSimilarTracks.Get(frameElement, contentHolder, 100);
+                await mSimilarTracks.Get(contentHolder, 100);
             }
             catch (Exception)
             {
@@ -80,7 +80,7 @@ namespace MediaPlayer
                     try
                     {
                         mSimilarTracks = new TopTracksByTag(tags[i]);
-                        await mSimilarTracks.Get(frameElement, contentHolder, 15);
+                        await mSimilarTracks.Get(contentHolder, 15);
                         await mSimilarTracks.WaitForFinish();
                     }
                     catch (Exception error)

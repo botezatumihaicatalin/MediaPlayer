@@ -21,7 +21,6 @@ namespace MediaPlayer
         private HttpResponseMessage mResponse;
         private TrackCreator[] mTrackCreators;
         private bool mIsSearching;
-        private bool mIsDownloading;
         private int mRunningTasks;
 
         public String Tag
@@ -31,6 +30,7 @@ namespace MediaPlayer
         }
         public TopTracksByTag(String tag)
         {
+            mRunningTasks = 0;
             Tag = tag;
             mClient = new HttpClient();
             mClient.MaxResponseContentBufferSize = 66000;
@@ -59,7 +59,7 @@ namespace MediaPlayer
             }
         }
 
-        private async Task mThread(int index, FrameworkElement frameElement, GridView contentHolder , XmlNodeList tracks)
+        private async Task mThread(int index,  GridView contentHolder , XmlNodeList tracks)
         {
             for (int i = index; i < tracks.Length && mIsSearching; i += 12)
             {
@@ -73,7 +73,7 @@ namespace MediaPlayer
                     }
                     else if (mIsSearching)
                     {                        
-                        await frameElement.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                        await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                         {
                             contentHolder.Items.Add(compute);
                             GlobalArray.list.Add(compute);
@@ -88,10 +88,10 @@ namespace MediaPlayer
             mRunningTasks --;
         }
 
-        public async Task Get(FrameworkElement frameElement, GridView contentHolder, int no)
+        public async Task Get(GridView contentHolder, int no)
         {
             mIsSearching = true;
-            mRunningTasks = 1;
+            mRunningTasks ++;
             mClient.CancelPendingRequests();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag +
@@ -126,18 +126,18 @@ namespace MediaPlayer
                 return;
             }
             mRunningTasks += 12;
-            Task.Run(()=>mThread(0,frameElement,contentHolder,tracks));            
-            Task.Run(()=>mThread(1,frameElement,contentHolder,tracks));
-            Task.Run(()=>mThread(2,frameElement,contentHolder,tracks));
-            Task.Run(()=>mThread(3,frameElement,contentHolder,tracks));
-            Task.Run(() => mThread(4, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(5, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(6, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(7, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(8, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(9, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(10, frameElement, contentHolder, tracks));
-            Task.Run(() => mThread(11, frameElement, contentHolder, tracks));
+            Task.Run(()=>mThread(0,contentHolder,tracks));            
+            Task.Run(()=>mThread(1,contentHolder,tracks));
+            Task.Run(()=>mThread(2,contentHolder,tracks));
+            Task.Run(()=>mThread(3,contentHolder,tracks));
+            Task.Run(() => mThread(4, contentHolder, tracks));
+            Task.Run(() => mThread(5, contentHolder, tracks));
+            Task.Run(() => mThread(6, contentHolder, tracks));
+            Task.Run(() => mThread(7, contentHolder, tracks));
+            Task.Run(() => mThread(8, contentHolder, tracks));
+            Task.Run(() => mThread(9, contentHolder, tracks));
+            Task.Run(() => mThread(10, contentHolder, tracks));
+            Task.Run(() => mThread(11, contentHolder, tracks));
             mRunningTasks--;
         }
     }

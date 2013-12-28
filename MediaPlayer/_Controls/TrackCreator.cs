@@ -195,12 +195,20 @@ namespace MediaPlayer
             }
 
 
-            // Check if durationNumber is set we dont want it to be -1.
+            // Check if durationNumber is set , we dont want it to be -1.
+            // At this point we are sure we have a video 
             if (durationNumber == -1)
             {
-                mYTStats.VideoID = videoID;
-                await mYTStats.GetData();
-                durationNumber = mYTStats.DurationInSeconds;
+                try
+                {
+                    mYTStats.VideoID = videoID;
+                    await mYTStats.GetData();
+                    durationNumber = mYTStats.DurationInSeconds;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             
             if (!mIsSearching)

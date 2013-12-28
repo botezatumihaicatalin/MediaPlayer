@@ -12,7 +12,7 @@ namespace MediaPlayer
     {
         private bool mIsCanceled = false;
         private bool mIsDownloading = false;
-        private byte[] mBuffer = new byte[1024 * 10];
+        private int mBufferSize = 1024 * 10;
 
         public bool IsDownloading
         {
@@ -24,8 +24,15 @@ namespace MediaPlayer
             get { return mIsCanceled; }
         }
 
+        public int BufferSize
+        {
+            get { return mBufferSize; }
+            set { mBufferSize = value; }
+        }
+
         public async Task<String> GetHttp(Uri requestUri)
         {
+            byte[] buffer = new byte[mBufferSize];
             mIsCanceled = false;
             mIsDownloading = true;
 
@@ -39,9 +46,9 @@ namespace MediaPlayer
                 responseStream.WriteTimeout = 1000;
 
                 int bytesRead;
-                while (!mIsCanceled && (bytesRead = responseStream.Read(mBuffer, 0, mBuffer.Length)) > 0)
+                while (!mIsCanceled && (bytesRead = responseStream.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    result += UTF8Encoding.UTF8.GetString(mBuffer, 0, bytesRead);
+                    result += UTF8Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 }
             }
 
