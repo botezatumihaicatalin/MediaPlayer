@@ -34,7 +34,6 @@ namespace MediaPlayer
             Tag = tag;
             mClient = new HttpClient();
             mClient.MaxResponseContentBufferSize = 66000;
-            mClient.Timeout = TimeSpan.FromMilliseconds(5000);
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
@@ -47,15 +46,6 @@ namespace MediaPlayer
             mIsSearching = false;
             for (int i = 0; i < 12; i++)
                 mTrackCreators[i].Cancel();
-            await WaitForFinish();
-        }
-
-        public async Task WaitForFinish()
-        {
-            while (mRunningTasks > 0)
-            {
-                await Task.Delay(10);
-            }
         }
 
         private async Task mThread(int index,  GridView contentHolder , XmlNodeList tracks)
@@ -84,14 +74,12 @@ namespace MediaPlayer
 
                 }
             }
-            mRunningTasks --;
         }
 
         public async Task Get(GridView contentHolder, int no)
         {
             mIsSearching = true;
             mRunningTasks ++;
-            mClient.CancelPendingRequests();
             String url = "http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=" +
              Tag +
              "&limit=" +
@@ -124,20 +112,21 @@ namespace MediaPlayer
             {
                 return;
             }
-            mRunningTasks += 12;
-            Task.Run(()=>mThread(0,contentHolder,tracks));            
-            Task.Run(()=>mThread(1,contentHolder,tracks));
-            Task.Run(()=>mThread(2,contentHolder,tracks));
-            Task.Run(()=>mThread(3,contentHolder,tracks));
-            Task.Run(() => mThread(4, contentHolder, tracks));
-            Task.Run(() => mThread(5, contentHolder, tracks));
-            Task.Run(() => mThread(6, contentHolder, tracks));
-            Task.Run(() => mThread(7, contentHolder, tracks));
-            Task.Run(() => mThread(8, contentHolder, tracks));
-            Task.Run(() => mThread(9, contentHolder, tracks));
-            Task.Run(() => mThread(10, contentHolder, tracks));
-            Task.Run(() => mThread(11, contentHolder, tracks));
-            mRunningTasks--;
+            List<Task> tasksList = new List<Task>();
+            tasksList.Add(Task.Run(()=>mThread(0,contentHolder,tracks)));
+            tasksList.Add(Task.Run(() => mThread(1, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(2, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(3, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(4, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(5, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(6, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(7, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(8, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(9, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(10, contentHolder, tracks)));
+            tasksList.Add(Task.Run(() => mThread(11, contentHolder, tracks)));
+            await Task.WhenAll(tasksList.ToArray());
+            mIsSearching = false;
         }
     }
 }
