@@ -34,7 +34,7 @@ namespace MediaPlayer
         {
             mClient.Cancel();
         }
-        public async Task<string> GetYoutubeId()
+        public async Task<string> GetYoutubeVideoId()
         {
             string ID = "";
             string page_source = await mClient.GetHttp(LastFMUri);

@@ -38,8 +38,7 @@ namespace MediaPlayer
             mClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
             mTrackCreators = new TrackCreator[12];
             for (int i = 0; i < 12; i++)
-                mTrackCreators[i] = new TrackCreator();  
-
+                mTrackCreators[i] = new TrackCreator();
         }
 
         public async Task CancelCurrentSearch()
@@ -67,11 +66,11 @@ namespace MediaPlayer
                 {
                     mTrackCreators[index].XML = tracks[i].GetXml();
                     Track compute = await Task.Run(()=>mTrackCreators[index].GetFromXML());
+
                     if (compute == null)
-                    {
-                        continue;
-                    }
-                    else if (mIsSearching)
+                        continue; 
+
+                    if (mIsSearching)
                     {                        
                         await contentHolder.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                         {
@@ -80,7 +79,7 @@ namespace MediaPlayer
                         });
                     }
                 }
-                catch (Exception error)
+                catch (Exception)
                 {
 
                 }

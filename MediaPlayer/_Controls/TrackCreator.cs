@@ -63,9 +63,10 @@ namespace MediaPlayer
         public async Task<Track> GetFromXML()
         {
             mIsSearching = true;
+
             if (!mIsSearching)
             {
-                return null;
+                throw new OperationCanceledException();
             }
             
             mXmlDocument.LoadXml(XML);
@@ -78,20 +79,24 @@ namespace MediaPlayer
             String artistName = names[1].InnerText;
             String musicLink = music_url[0].InnerText;
 
+            if (!mIsSearching)
+            {
+                throw new OperationCanceledException();
+            }
+
             Track track = new Track();
             //try to get this track from database
             track = await DatabaseHelper.GetTrackFromDatabase(musicLink);
+
+            if (!mIsSearching)
+            {
+                throw new OperationCanceledException();
+            }
+
             if (track != null)
             {
-                try
-                {
-                    mYTDecoder.VideoID = track.VideoID;
-                    track.CacheUriString = await mYTDecoder.FetchURL();
-                }
-                catch (Exception error)
-                {
-                    return null;
-                }                 
+                mYTDecoder.VideoID = track.VideoID;
+                track.CacheUriString = await mYTDecoder.FetchURL();               
                 return track;
             }
 
@@ -104,17 +109,27 @@ namespace MediaPlayer
 
             if (!mIsSearching)
             {
-                return null;
+                throw new OperationCanceledException();
             }
 
             // Check if last fm page has an youtube link
             try
             {
                 mPageScrapper.LastFMUri = new Uri(musicLink);
-                videoID = await mPageScrapper.GetYoutubeId();
+                videoID = await mPageScrapper.GetYoutubeVideoId();
+
+                if (!mIsSearching)
+                {
+                    throw new OperationCanceledException();
+                }
 
                 mYTDecoder.VideoID = videoID;
                 cacheUrl = await mYTDecoder.FetchURL();
+
+                if (!mIsSearching)
+                {
+                    throw new OperationCanceledException();
+                }
 
                 // Check if it contains signature. If not, the video it isn't good
                 if (!cacheUrl.Contains("&signature="))
@@ -141,49 +156,52 @@ namespace MediaPlayer
                 videoID = "NONE";
                 cacheUrl = "";
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                return null;
+                throw error;
             }
 
             if (!mIsSearching)
             {
-                return null;
+                throw new OperationCanceledException();
             }
 
             // If videoID is "NONE" at this point it means either no video is on the LastFM page or the video cannot be played , so we will search Youtube
             if (videoID == "NONE")
             {
-                try
+                mYTSearch.ArtistName = artistName;
+                mYTSearch.TrackName = trackName;
+                Pair<string, string> pair = await mYTSearch.GetAVideoCacheUri();
+
+                if (!mIsSearching)
                 {
-                    mYTSearch.ArtistName = artistName;
-                    mYTSearch.TrackName = trackName;
-                    Pair<string, string> pair = await mYTSearch.GetAVideoCacheUri();
-
-                    videoID = pair.Second;
-                    cacheUrl = pair.First;
-
-                    if (videoID != "NONE")
-                    {
-                        mYTStats.VideoID = videoID;
-                        await mYTStats.GetData();
-                        durationNumber = mYTStats.DurationInSeconds;
-                    }
+                    throw new OperationCanceledException();
                 }
-                catch (Exception error)
+
+                videoID = pair.Second;
+                cacheUrl = pair.First;
+
+                if (videoID != "NONE")
                 {
-                     return null;
+                    mYTStats.VideoID = videoID;
+                    await mYTStats.GetData();
+                    durationNumber = mYTStats.DurationInSeconds;
                 }
             }
 
             if (!mIsSearching)
             {
-                return null;
+                throw new OperationCanceledException();
             }
 
             // If videoID is "NONE" at this point then the track doesn't have a video attached or we couldnt find one, so we dont show it.
             if (videoID == "NONE")
                 return null;
+
+            if (!mIsSearching)
+            {
+                throw new OperationCanceledException();
+            }
 
             var length = Convert.ToInt32(images.Length);
 
@@ -205,33 +223,31 @@ namespace MediaPlayer
                 }
             }
 
+            if (!mIsSearching)
+            {
+                throw new OperationCanceledException();
+            }
 
             // Check if durationNumber is set , we dont want it to be -1.
             // At this point we are sure we have a video 
             if (durationNumber == -1)
             {
-                try
-                {
-                    mYTStats.VideoID = videoID;
-                    await mYTStats.GetData();
-                    durationNumber = mYTStats.DurationInSeconds;
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-            
-            if (!mIsSearching)
-            {
-                return null;
+                mYTStats.VideoID = videoID;
+                await mYTStats.GetData();
+                durationNumber = mYTStats.DurationInSeconds;
             }
 
-            mIsSearching = false;
+            if (!mIsSearching)
+            {
+                throw new OperationCanceledException();
+            }
+
 
             //now we have all the info for the track, we store them to the database
             track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
             await DatabaseHelper.AddTrackToDatabase(track);
+            
+            mIsSearching = false;
 
             return track;
         }

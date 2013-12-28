@@ -69,8 +69,9 @@ namespace MediaPlayer
             string youtubeVideo = "";
             string videoId = "";
 
-            for (int index = 0; index <= contents.Length && mIsRunning; index += string_to_search.Length)
+            for (int index = 0; mIsRunning && index <= contents.Length; index += string_to_search.Length)
             {
+
                 index = contents.IndexOf(string_to_search, index);
                 if (index == -1) return new Pair<string,string>("http://127.0.0.1","NONE");
                 int copy = index;
@@ -82,7 +83,8 @@ namespace MediaPlayer
                     copy++;
                 }
                 Match youtubeMatch = youtubeVideoRegex.Match(youtubeVideo);
-                if (youtubeMatch.Success)
+
+                if (mIsRunning && youtubeMatch.Success)
                 {
                     videoId = youtubeMatch.Groups[1].Value;
                     mDecoder.VideoID = videoId;
@@ -102,6 +104,13 @@ namespace MediaPlayer
                     }
                 }
             }
+
+            if (!mIsRunning)
+            {
+                mIsRunning = false;
+                throw new OperationCanceledException();
+            }
+
             mIsRunning = false;
             return new Pair<string, string>("http://127.0.0.1", "NONE");
         }

@@ -20,6 +20,7 @@ namespace MediaPlayer
             {"5B","["},{"5D","]"},{"60","`"},{"25","%"}};
 
         private HttpDownloader mClient;
+        private bool mIsRunning;
         public string VideoID
         {
             get;
@@ -50,12 +51,15 @@ namespace MediaPlayer
 
         public async Task<string> FetchURL()
         {
-            mClient.Cancel();
+            mIsRunning = true;
             string result;
             result = await mClient.GetHttp(new Uri("http://www.youtube.com/watch?v=" + VideoID));                                       
             string startSearchString = "adaptive_fmts";
             int startIndex = result.IndexOf(startSearchString);
-        
+
+            if (!mIsRunning)
+                throw new OperationCanceledException();
+            
             if (startIndex == -1)
             {
                 throw new YoutubeVideoUrlNotFoundException();
@@ -64,6 +68,9 @@ namespace MediaPlayer
             startIndex += "adaptive_fmts".Length;
             result = result.Substring(startIndex, result.Length - startIndex);
             mDecodeURL(ref result);
+
+            if (!mIsRunning)
+                throw new OperationCanceledException();
 
             int audioIndex = result.IndexOf("type=audio");
             if (audioIndex == -1)
@@ -76,6 +83,9 @@ namespace MediaPlayer
 
             int urlIndex = result.IndexOf("url=");
 
+            if (!mIsRunning)
+                throw new OperationCanceledException();
+
             if (urlIndex == -1)
             {
                 throw new YoutubeVideoUrlNotFoundException();
@@ -87,6 +97,9 @@ namespace MediaPlayer
             int finalIndex = result.IndexOf("\\u0026");
             result = result.Substring(0, finalIndex);
 
+            if (!mIsRunning)
+                throw new OperationCanceledException();
+
             string[] remaining = { ",init=", ",type=", ",index=" , ",bitrate=" , ",itag="};
 
             foreach (string str in remaining)
@@ -96,7 +109,10 @@ namespace MediaPlayer
                 {
                     result = result.Substring(0, position);
                 }
+                if (!mIsRunning)
+                    throw new OperationCanceledException();
             }
+
 
             return result;
         }
