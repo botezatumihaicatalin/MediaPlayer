@@ -109,34 +109,34 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataLayer.cs" />
-    <Compile Include="GlobalArray.cs" />
+    <Compile Include="_Data\DataLayer.cs" />
+    <Compile Include="_Data\GlobalArray.cs" />
     <Compile Include="_HttpsRequests\HttpDownloader.cs" />
-    <Compile Include="Pair.cs" />
-    <Compile Include="PlayList.cs" />
-    <Compile Include="PlaylistPage.xaml.cs">
+    <Compile Include="_Models\Pair.cs" />
+    <Compile Include="_Controls\PlayList.cs" />
+    <Compile Include="_Windows\PlaylistPage.xaml.cs">
       <DependentUpon>PlaylistPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Preferences.cs" />
+    <Compile Include="_Data\Preferences.cs" />
     <Compile Include="SettingsFlyout1.xaml.cs">
       <DependentUpon>SettingsFlyout1.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsFlyout2.xaml.cs">
       <DependentUpon>SettingsFlyout2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SimilarTags.cs" />
-    <Compile Include="SliderValueConverter.cs" />
-    <Compile Include="Splash.xaml.cs" />
-    <Compile Include="ToastAndTileNotifications.cs" />
-    <Compile Include="Track.cs" />
+    <Compile Include="_HttpsRequests\SimilarTags.cs" />
+    <Compile Include="_Controls\SliderValueConverter.cs" />
+    <Compile Include="_Windows\Splash.xaml.cs" />
+    <Compile Include="_Controls\ToastAndTileNotifications.cs" />
+    <Compile Include="_Models\Track.cs" />
     <Compile Include="_HttpsRequests\LastFMPageScrapper.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="_Windows\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MediaPlayer.cs" />
+    <Compile Include="_Controls\MediaPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_HttpsRequests\TopTrackByTag.cs" />
-    <Compile Include="TrackCreator.cs" />
+    <Compile Include="_Controls\TrackCreator.cs" />
     <Compile Include="_HttpsRequests\YoutubeDecoder.cs" />
     <Compile Include="_HttpsRequests\YoutubeSearch.cs" />
     <Compile Include="_HttpsRequests\YoutubeStats.cs" />
@@ -205,11 +205,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="_Windows\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PlaylistPage.xaml">
+    <Page Include="_Windows\PlaylistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,7 +221,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Splash.xaml">
+    <Page Include="_Windows\Splash.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -233,10 +233,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_Controls\" />
-    <Folder Include="_Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
