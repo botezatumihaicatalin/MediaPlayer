@@ -140,8 +140,8 @@
     <Compile Include="YoutubeDecoder.cs" />
     <Compile Include="YoutubeSearch.cs" />
     <Compile Include="YoutubeStats.cs" />
-    <Compile Include="YoutubeVideoNotFoundException.cs" />
-    <Compile Include="YoutubeVideoUrlNotFoundException.cs" />
+    <Compile Include="Exceptions\YoutubeVideoNotFoundException.cs" />
+    <Compile Include="Exceptions\YoutubeVideoUrlNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -232,6 +232,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="HttpsRequests\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
