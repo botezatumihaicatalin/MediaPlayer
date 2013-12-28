@@ -4,6 +4,8 @@
 *.o
 *.obj
 *.suo
+*.v12.suo
+*.v12
 
 # Compiled Dynamic libraries
 *.so
