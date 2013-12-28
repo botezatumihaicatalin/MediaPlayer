@@ -80,9 +80,20 @@ namespace MediaPlayer
 
             Track track = new Track();
             //try to get this track from database
-            track = await DatabaseHelper.getTrackFromDatabase(musicLink);
+            track = await DatabaseHelper.GetTrackFromDatabase(musicLink);
             if (track != null)
+            {
+                try
+                {
+                    mYTDecoder.VideoID = track.VideoID;
+                    track.CacheUriString = await mYTDecoder.FetchURL();
+                }
+                catch (Exception error)
+                {
+                    return null;
+                }                 
                 return track;
+            }
 
             //track wasn't found, so we get all the needed info
             Uri imageUri = new Uri("http://simpleicon.com/wp-content/uploads/music-note-5.png");
@@ -220,7 +231,7 @@ namespace MediaPlayer
 
             //now we have all the info for the track, we store them to the database
             track = new Track(artistName, trackName, musicLink, durationNumber, imageUri, videoID, cacheUrl);
-            DatabaseHelper.addTrackToDatabase(track);
+            await DatabaseHelper.AddTrackToDatabase(track);
 
             return track;
         }

@@ -13,12 +13,11 @@ namespace MediaPlayer._Data
 {
     class DatabaseHelper
     {
-        public async static Task addTrackToDatabase(Track track)
+        public async static Task AddTrackToDatabase(Track track)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFile storageFile = null;
-            
-            storageFile = await storageFolder.CreateFileAsync(""+track.trackID);
+            storageFile = await storageFolder.CreateFileAsync(""+track.TrackID);
 
             DataContractSerializer serializer = new DataContractSerializer(typeof(Track));
             using (Stream fileStream = await storageFile.OpenStreamForWriteAsync())
@@ -28,7 +27,7 @@ namespace MediaPlayer._Data
             }
         }
 
-        public static async Task<Track> getTrackFromDatabase(String lastFmLink)
+        public static async Task<Track> GetTrackFromDatabase(String lastFmLink)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFile storageFile = null;
@@ -47,7 +46,6 @@ namespace MediaPlayer._Data
                 using (Stream fileStream = await storageFile.OpenStreamForWriteAsync())
                 {
                     track = (Track)serializer.ReadObject(fileStream);
-
                     return track;
                 }
             }

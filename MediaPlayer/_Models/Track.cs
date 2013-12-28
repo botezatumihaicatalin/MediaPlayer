@@ -65,13 +65,13 @@ namespace MediaPlayer
             set;
         }
         [DataMember]
-        public DateTime updatingDate
+        public DateTime UpdatingDate
         {
             get;
             set;
         }
         [DataMember]
-        public int trackID
+        public int TrackID
         {
             get;
             set;
@@ -118,17 +118,17 @@ namespace MediaPlayer
 
             for (int i = 0; i < this.LastFMLink.Length; i++)
             {
-                trackID = trackID * BASE + this.LastFMLink[i];
-                while (trackID > MOD)
-                    trackID -= MOD;
+                TrackID = TrackID * BASE + this.LastFMLink[i];
+                while (TrackID > MOD)
+                    TrackID -= MOD;
             }
 
-            return trackID;
+            return TrackID;
         }
 
         private void setUpdatingDate()
         {
-            updatingDate = DateTime.Now;
+            UpdatingDate = DateTime.Now;
         }
     }
 }
