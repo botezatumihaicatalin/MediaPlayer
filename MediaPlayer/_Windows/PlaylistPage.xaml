@@ -10,19 +10,19 @@
     <Page.TopAppBar>
         <AppBar>
             <Viewbox>
-            <Canvas x:Name="CanvasTop"  Height="80" Width="1366">
-                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="15" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox1_QuerySubmitted"  Loaded="SearchBox1_Loaded"/>
-                <AppBarButton x:Name="BackButton" HorizontalAlignment="Left" Canvas.Left="12" Canvas.Top="9" VerticalAlignment="Top" Icon="Back"  Click="BackButtonClick" Height="69" Width="91" RenderTransformOrigin="0.5,0.5">
+            <Canvas x:Name="CanvasTop"  Height="70" Width="1366">
+                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="48" Canvas.Left="120" Canvas.Top="12" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox1_QuerySubmitted"  Loaded="SearchBox1_Loaded"/>
+                <AppBarButton x:Name="BackButton" HorizontalAlignment="Left" Canvas.Left="12" Canvas.Top="2" VerticalAlignment="Top" Icon="Back"  Click="BackButtonClick" Height="69" Width="91" RenderTransformOrigin="0.5,0.5">
                     <AppBarButton.RenderTransform>
                         <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
-                <AppBarButton x:Name="RemoveButton" Canvas.Left="1200" Canvas.Top="9" Icon="Remove" RenderTransformOrigin="0.5,0.5" Click="RemoveButtonClick" >
+                <AppBarButton x:Name="RemoveButton" Canvas.Left="1200" Canvas.Top="2" Icon="Remove" RenderTransformOrigin="0.5,0.5" Click="RemoveButtonClick" >
                     <AppBarButton.RenderTransform>
                         <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
-                    <AppBarButton x:Name="SettingsButton" Canvas.Left="1270" Canvas.Top="9" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings"  Height="70" Click="Settings_Click" >
+                    <AppBarButton x:Name="SettingsButton" Canvas.Left="1270" Canvas.Top="2" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings"  Height="70" Click="Settings_Click" >
                         <AppBarButton.RenderTransform>
                             <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                         </AppBarButton.RenderTransform>
@@ -78,13 +78,13 @@
     <Page.BottomAppBar>
         <AppBar>
             <Viewbox>
-            <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Width="1366">
+            <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="70" Width="1366">
                 <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350"  Stretch="UniformToFill"/>
                 <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458"/>
-                <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="45" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}"/>
-                <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="85" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10"/>
-                <Button x:Name="Next_track" Height="55" Canvas.Left="155" Canvas.Top="10" Width="55" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
-                <Button x:Name="Prev_track" Height="55" Canvas.Left="15" Canvas.Top="10" Width="55" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
+                <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="41" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}"/>
+                <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="85" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="8"/>
+                <Button x:Name="Next_track" Height="55" Canvas.Left="155" Canvas.Top="8" Width="55" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
+                <Button x:Name="Prev_track" Height="55" Canvas.Left="15" Canvas.Top="8" Width="55" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
             </Canvas>
             </Viewbox>
         </AppBar>
