@@ -29,10 +29,18 @@ namespace MediaPlayer
         {
             this.InitializeComponent();
             splashScreen = splashscreen;
-            splashImage = splashScreen.ImageLocation; splashScreen.Dismissed += new TypedEventHandler<SplashScreen, Object>(splashScreen_Dismissed);
+            splashScreen.Dismissed += new TypedEventHandler<SplashScreen, Object>(splashScreen_Dismissed);
+            splashImage = splashscreen.ImageLocation;
+            PostionImage();
             PositionProgressRing();
         }
-
+        private void PostionImage()
+        {
+            SplashScreenImage.SetValue(Canvas.LeftProperty, splashImage.X);
+            SplashScreenImage.SetValue(Canvas.TopProperty, splashImage.Y);
+            SplashScreenImage.Height = splashImage.Height;
+            SplashScreenImage.Width = splashImage.Width;
+        }
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
@@ -47,14 +55,8 @@ namespace MediaPlayer
         }
         private void PositionProgressRing()
         {
-            ProgressRingImage.SetValue(Canvas.TopProperty, (splashImage.Y + splashImage.Height + 100));
-            ProgressRingImage.SetValue(Canvas.LeftProperty, splashImage.X);
-            ProgressRingImage.Visibility = Visibility.Visible;
-            SplashScreenImage.SetValue(Canvas.TopProperty, splashImage.Y);
-            SplashScreenImage.SetValue(Canvas.LeftProperty, splashImage.X);
-            SplashScreenImage.Height = splashImage.Height;
-            SplashScreenImage.Width = splashImage.Width;
-            SplashScreenImage.Visibility = Visibility.Visible; 
+            ProgressRing.SetValue(Canvas.LeftProperty, splashImage.X + (splashImage.Width * 0.5) - (ProgressRing.Width * 0.5));
+            ProgressRing.SetValue(Canvas.TopProperty, (splashImage.Y + splashImage.Height + splashImage.Height * 0.1));
         }
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {

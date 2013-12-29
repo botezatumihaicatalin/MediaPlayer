@@ -215,7 +215,7 @@ namespace MediaPlayer
         private async void SearchBox1_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             list.Items.Clear();
-            await  Task.Run(() => PlayList.filterPlayList(args.QueryText,list));
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => PlayList.filterPlayList(args.QueryText, list));
         }
 
         private void SearchBox1_Loaded(object sender, RoutedEventArgs e)

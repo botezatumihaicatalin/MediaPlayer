@@ -12,33 +12,33 @@
         <local:SliderValueConverter x:Key="SliderValueConverter"/>
 
     </Page.Resources>
-
     <Page.TopAppBar>
         <AppBar>
-            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
-                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="45" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox_QuerySubmitted" Loaded="SearchBox1_Loaded" />
-                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="40" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings" Click="Settings_Click" Height="70" >
+            <Viewbox>
+            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Width="1366">
+                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="15" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox_QuerySubmitted" Loaded="SearchBox1_Loaded" />
+                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="9" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings" Click="Settings_Click" Height="70" >
                     <AppBarButton.RenderTransform>
-                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                        <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
-                <AppBarButton x:Name="Playlist" Canvas.Left="1185" Canvas.Top="42" RenderTransformOrigin="0.5,0.5" Icon="OpenWith" ToolTipService.ToolTip="Playlist" Click="Playlist_Click" Height="74">
+                <AppBarButton x:Name="Playlist" Canvas.Left="1200" Canvas.Top="9" RenderTransformOrigin="0.5,0.5" Icon="OpenWith" ToolTipService.ToolTip="Playlist" Click="Playlist_Click" Height="74">
                     <AppBarButton.RenderTransform>
-                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                        <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
 
-                <AppBarButton x:Name="AddPlaylist" RenderTransformOrigin="0.5,0.5" Canvas.Top="41" Canvas.Left="1100" Click="AddPlaylist_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="72" Icon="Add">
+                <AppBarButton x:Name="AddPlaylist" RenderTransformOrigin="0.5,0.5" Canvas.Top="9" Canvas.Left="1130" Click="AddPlaylist_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="72" Icon="Add">
                     <AppBarButton.RenderTransform>
-                        <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+                        <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
 
             </Canvas>
+            </Viewbox>
         </AppBar>
     </Page.TopAppBar>
-
-    <Grid Background="#F1F1F1">
+    <Grid Background="#FFA60000">
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>
             <RowDefinition/>
@@ -47,8 +47,6 @@
             x:Name="list"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Width="1366" 
-            Height="768"
             AutomationProperties.AutomationId="ItemsGridView"
             AutomationProperties.Name="Items"
             ItemsSource="{Binding Task}"
@@ -79,16 +77,18 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <AppBar Margin="0,-80,0,0">
-            <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Margin="0,-40,0,0" VerticalAlignment="Top" Background="#FF403D3D">
-                <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350" Canvas.Top="40" Stretch="UniformToFill"/>
-                <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458" Canvas.Top="40"/>
-                <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="85" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}" ThumbToolTipValueConverter="{StaticResource SliderValueConverter}"/>
-                <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="90" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="47"/>
-                <Button x:Name="Next_track" Height="69" Canvas.Left="170" Canvas.Top="47" Width="75" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
-                <Button x:Name="Prev_track" Height="69" Canvas.Left="5" Canvas.Top="47" Width="75" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
-                <Button x:Name="FeelLucky" HorizontalAlignment="Left"  Height="69" VerticalAlignment="Top" Width="75" Canvas.Left="270" Canvas.Top="47"  Tapped="FeelLucky_Tapped" Template="{StaticResource StarsButtonTemplate}" ToolTipService.ToolTip="Feel lucky! By clicking this, you will get the music you search the most."/>
-            </Canvas>
+        <AppBar >
+            <Viewbox>
+                <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Width="1366"  >
+                    <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350"  Stretch="UniformToFill"/>
+                    <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458"  />
+                    <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="45" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}" ThumbToolTipValueConverter="{StaticResource SliderValueConverter}"/>
+                    <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="85" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10"/>
+                    <Button x:Name="Next_track" Height="55" Canvas.Left="155" Canvas.Top="10" Width="55" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
+                    <Button x:Name="Prev_track" Height="55" Canvas.Left="15" Canvas.Top="10" Width="55" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
+                    <Button x:Name="FeelLucky" HorizontalAlignment="Left"  Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="225" Canvas.Top="10"  Tapped="FeelLucky_Tapped" Template="{StaticResource StarsButtonTemplate}" ToolTipService.ToolTip="Feel lucky! By clicking this, you will get the music you search the most."/>
+                </Canvas>
+            </Viewbox>
         </AppBar>
     </Page.BottomAppBar>
 
