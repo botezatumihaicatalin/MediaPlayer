@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="50150MihaiSalavastru.SoulPlayer" Publisher="CN=E899C301-1FDD-4E96-BE75-A2D2F8F71790" Version="1.1.0.5" />
+  <Identity Name="50150MihaiSalavastru.SoulPlayer" Publisher="CN=E899C301-1FDD-4E96-BE75-A2D2F8F71790" Version="1.1.0.7" />
   <Properties>
     <DisplayName>Soul Player</DisplayName>
     <PublisherDisplayName>Mihai Salavastru</PublisherDisplayName>
