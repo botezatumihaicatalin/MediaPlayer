@@ -180,9 +180,9 @@ namespace MediaPlayer
                 MediaPlayer.MediaIndex = -1;
                 SearchBox1.IsEnabled = false;
                 FeelLucky.IsEnabled = false;
-                await Task.Run(()=>searchLayer.CancelSearch());
+                searchLayer.CancelSearch();
                 searchLayer = new DataLayer();
-                Task.Run(()=>searchLayer.GetTracksByPreferences(list));
+                Task.Run(()=>searchLayer.GetTracksByPreferences(progressTracker , list));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }
@@ -214,10 +214,10 @@ namespace MediaPlayer
             {
                 SearchBox1.IsEnabled = false;
                 FeelLucky.IsEnabled = false;
-                await Task.Run(()=>searchLayer.CancelSearch());
+                searchLayer.CancelSearch();
                 searchLayer = new DataLayer();
                 string txt = args.QueryText;
-                Task.Run(() => searchLayer.GetTrackByTag(list, txt));
+                Task.Run(() => searchLayer.GetTrackByTag(progressTracker , list, txt));
                 SearchBox1.IsEnabled = true;
                 FeelLucky.IsEnabled = true;
             }

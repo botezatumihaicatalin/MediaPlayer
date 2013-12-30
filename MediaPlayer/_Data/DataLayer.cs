@@ -19,23 +19,39 @@ namespace MediaPlayer
             mIsSearching = false;
         }
 
-        public async Task CancelSearch()
+        public void CancelSearch()
         {
             mIsSearching = false;
-            await mSimilarTracks.CancelCurrentSearch();
+            mSimilarTracks.CancelCurrentSearch();
         }
 
-        public async Task GetTracksByPreferences(GridView contentHolder)
+        private async void mSetupProgressBar(ProgressBar progressBar , int maxValue)
+        {
+            if (progressBar == null || maxValue < 0)
+                return;
+
+            await progressBar.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                progressBar.Value = 0;
+                progressBar.Maximum = maxValue;
+            });
+        }
+
+        public async Task GetTracksByPreferences(ProgressBar progressBar , GridView contentHolder)
         {
             mIsSearching = true;
             List<String> tags = await Preferences.getTopTags();
+
             int n = tags.Count;
+
+            mSetupProgressBar(progressBar, ((int)(100 / n) * n));
+            
             for (int i = 0; i < n && mIsSearching; i++)
             {
                 mSimilarTracks = new TopTracksByTag(tags[i]);
                 try
                 {
-                    await mSimilarTracks.Get(contentHolder, 100 / n);                    
+                    await mSimilarTracks.Get(100 / n , progressBar , contentHolder);                    
                 }
                 catch (Exception error)
                 {
@@ -43,13 +59,14 @@ namespace MediaPlayer
             }
         }
 
-        public async Task GetTrackByTag(GridView contentHolder, String tag)
+        public async Task GetTrackByTag(ProgressBar progressBar, GridView contentHolder, String tag)
         {
             mIsSearching = true;
             try
             {
+                mSetupProgressBar(progressBar, 100);
                 mSimilarTracks = new TopTracksByTag(tag);
-                await mSimilarTracks.Get(contentHolder, 100);
+                await mSimilarTracks.Get(100, progressBar , contentHolder);
             }
             catch (Exception)
             {
@@ -70,14 +87,14 @@ namespace MediaPlayer
                 catch (Exception err)
                 {
                     return;
-                }                
-
+                }
+                mSetupProgressBar(progressBar, 15 * Math.Min(tags.Count, 3));
                 for (int i = 0; i < tags.Count && i < 3 && mIsSearching; i++)
                 {
                     try
                     {
                         mSimilarTracks = new TopTracksByTag(tags[i]);
-                        await mSimilarTracks.Get(contentHolder, 15);
+                        await mSimilarTracks.Get(15 , progressBar , contentHolder);
                     }
                     catch (Exception error)
                     {
