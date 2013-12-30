@@ -15,20 +15,20 @@
     <Page.TopAppBar>
         <AppBar>
             <Viewbox>
-            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="80" Width="1366">
-                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="52" Canvas.Left="120" Canvas.Top="15" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox_QuerySubmitted" Loaded="SearchBox1_Loaded" />
-                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="9" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings" Click="Settings_Click" Height="70" >
+            <Canvas x:Name="CanvasTop" HorizontalAlignment="Left" Height="70" Width="1366">
+                <SearchBox x:Name="SearchBox1"  FocusOnKeyboardInput="True"  Height="48" Canvas.Left="120" Canvas.Top="12" VerticalAlignment="Top" Width="718" ToolTipService.ToolTip="Enter the search tag" FontSize="20" QuerySubmitted="SearchBox_QuerySubmitted" Loaded="SearchBox1_Loaded" />
+                <AppBarButton x:Name="Settings" Canvas.Left="1270" Canvas.Top="2" RenderTransformOrigin="0.5,0.5" Icon="Setting" ToolTipService.ToolTip="Settings" Click="Settings_Click" Height="70" >
                     <AppBarButton.RenderTransform>
                         <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
-                <AppBarButton x:Name="Playlist" Canvas.Left="1200" Canvas.Top="9" RenderTransformOrigin="0.5,0.5" Icon="OpenWith" ToolTipService.ToolTip="Playlist" Click="Playlist_Click" Height="74">
+                <AppBarButton x:Name="Playlist" Canvas.Left="1200" Canvas.Top="2" RenderTransformOrigin="0.5,0.5" Icon="OpenWith" ToolTipService.ToolTip="Playlist" Click="Playlist_Click" Height="74">
                     <AppBarButton.RenderTransform>
                         <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
                 </AppBarButton>
 
-                <AppBarButton x:Name="AddPlaylist" RenderTransformOrigin="0.5,0.5" Canvas.Top="9" Canvas.Left="1130" Click="AddPlaylist_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="72" Icon="Add">
+                <AppBarButton x:Name="AddPlaylist" RenderTransformOrigin="0.5,0.5" Canvas.Top="2" Canvas.Left="1130" Click="AddPlaylist_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="72" Icon="Add">
                     <AppBarButton.RenderTransform>
                         <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                     </AppBarButton.RenderTransform>
@@ -79,14 +79,14 @@
     <Page.BottomAppBar>
         <AppBar >
             <Viewbox>
-                <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="80" Width="1366"  >
+                <Canvas x:Name="CanvasHolder" HorizontalAlignment="Left" Height="70" Width="1366"  >
                     <Image x:Name="VideoImageHolder" HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="76" Canvas.Left="350"  Stretch="UniformToFill"/>
                     <TextBlock x:Name="VideoTitleHolder" HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" VerticalAlignment="Top" Width="878" FontSize="36" Canvas.Left="458"  />
-                    <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="45" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}" ThumbToolTipValueConverter="{StaticResource SliderValueConverter}"/>
-                    <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="85" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="10"/>
-                    <Button x:Name="Next_track" Height="55" Canvas.Left="155" Canvas.Top="10" Width="55" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
-                    <Button x:Name="Prev_track" Height="55" Canvas.Left="15" Canvas.Top="10" Width="55" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
-                    <Button x:Name="FeelLucky" HorizontalAlignment="Left"  Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="225" Canvas.Top="10"  Tapped="FeelLucky_Tapped" Template="{StaticResource StarsButtonTemplate}" ToolTipService.ToolTip="Feel lucky! By clicking this, you will get the music you search the most."/>
+                    <Slider x:Name="ProgressSlider" IsThumbToolTipEnabled="True" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="986" Canvas.Left="350" Canvas.Top="41" StepFrequency="0.1" Foreground="#FFB41D1D" Background="Transparent" BorderBrush="{x:Null}" Orientation="Horizontal" IsTapEnabled="False" IsHoldingEnabled="False" Template="{StaticResource SliderTemplate}" ThumbToolTipValueConverter="{StaticResource SliderValueConverter}"/>
+                    <Image x:Name="PlayPause" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="55" Canvas.Left="85" Source="../Assets/play_147x147.png" Tapped="PlayPause_Tapped" Stretch="Fill" Canvas.Top="8"/>
+                    <Button x:Name="Next_track" Height="55" Canvas.Left="155" Canvas.Top="8" Width="55" Tapped="Next_track_Tapped" Template="{StaticResource NextButtonTemplate}"/>
+                    <Button x:Name="Prev_track" Height="55" Canvas.Left="15" Canvas.Top="8" Width="55" Tapped="Prev_track_Tapped" Template="{StaticResource PrevButtonTemplate}"/>
+                    <Button x:Name="FeelLucky" HorizontalAlignment="Left"  Height="68" VerticalAlignment="Top" Width="68" Canvas.Left="225" Canvas.Top="0"  Tapped="FeelLucky_Tapped" Template="{StaticResource StarsButtonTemplate}" ToolTipService.ToolTip="Feel lucky! By clicking this, you will get the music you search the most."/>
                 </Canvas>
             </Viewbox>
         </AppBar>
