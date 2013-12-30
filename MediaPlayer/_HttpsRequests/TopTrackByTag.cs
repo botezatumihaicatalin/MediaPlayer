@@ -48,7 +48,7 @@ namespace MediaPlayer
                 mTrackCreators[i].Cancel();
         }
 
-        private async Task mThread(int index, XmlNodeList tracks , ProgressBar progressBar = null,  GridView contentHolder = null)
+        private async Task mThread(int index, XmlNodeList tracks ,GridView contentHolder = null)
         {
             for (int i = index; i < tracks.Length && mIsSearching; i += 12)
             {
@@ -69,19 +69,10 @@ namespace MediaPlayer
                 {
 
                 }
-
-                if (mIsSearching && progressBar != null)
-                {
-                    await progressBar.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        progressBar.Value++;
-                    });
-                }
-
             }
         }
 
-        public async Task Get(int numberOfTracks, ProgressBar progressBar = null, GridView contentHolder = null)
+        public async Task Get(int numberOfTracks , GridView contentHolder = null)
         {
             mIsSearching = true;
             mRunningTasks ++;
@@ -118,18 +109,18 @@ namespace MediaPlayer
                 return;
             }
             List<Task> tasksList = new List<Task>();
-            tasksList.Add(Task.Run(()=>mThread(0, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(1, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(2, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(3, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(4, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(5, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(6, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(7, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(8, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(9, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(10, tracks, progressBar, contentHolder)));
-            tasksList.Add(Task.Run(() => mThread(11, tracks, progressBar, contentHolder)));
+            tasksList.Add(Task.Run(()=>mThread(0, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(1, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(2, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(3, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(4, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(5, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(6, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(7, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(8, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(9, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(10, tracks,  contentHolder)));
+            tasksList.Add(Task.Run(() => mThread(11, tracks,  contentHolder)));
             await Task.WhenAll(tasksList.ToArray());
 
             mIsSearching = false;

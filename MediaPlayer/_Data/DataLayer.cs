@@ -25,59 +25,67 @@ namespace MediaPlayer
             mSimilarTracks.CancelCurrentSearch();
         }
 
-        private async void mSetupProgressBar(ProgressBar progressBar , int maxValue)
+        private async void mSetupProgressBar(ProgressBar progressBar, Visibility vizibility)
         {
-            if (progressBar == null || maxValue < 0)
+            if (progressBar == null)
                 return;
 
             await progressBar.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
-                progressBar.Value = 0;
-                progressBar.Maximum = maxValue;
+                progressBar.Visibility = vizibility;
             });
         }
 
-        public async Task GetTracksByPreferences(ProgressBar progressBar , GridView contentHolder)
+        public async Task GetTracksByPreferences(ProgressBar progressBar, GridView contentHolder)
         {
             mIsSearching = true;
+            if (mIsSearching)
+                mSetupProgressBar(progressBar, Visibility.Visible);
             List<String> tags = await Preferences.getTopTags();
 
             int n = tags.Count;
 
-            mSetupProgressBar(progressBar, ((int)(100 / n) * n));
-            
+
             for (int i = 0; i < n && mIsSearching; i++)
             {
                 mSimilarTracks = new TopTracksByTag(tags[i]);
                 try
                 {
-                    await mSimilarTracks.Get(100 / n , progressBar , contentHolder);                    
+                    await mSimilarTracks.Get(100 / n, contentHolder);
                 }
                 catch (Exception error)
                 {
                 }
             }
+
+            if (mIsSearching)
+                mSetupProgressBar(progressBar, Visibility.Collapsed);
         }
 
         public async Task GetTrackByTag(ProgressBar progressBar, GridView contentHolder, String tag)
         {
             mIsSearching = true;
+            if (mIsSearching)
+                mSetupProgressBar(progressBar, Visibility.Visible);
+            
             try
             {
-                mSetupProgressBar(progressBar, 100);
                 mSimilarTracks = new TopTracksByTag(tag);
-                await mSimilarTracks.Get(100, progressBar , contentHolder);
+                await mSimilarTracks.Get(100, contentHolder);
             }
             catch (Exception)
             {
 
             }
 
-            if (!mIsSearching) return;
-            if (contentHolder.Items.Count == 0)
-            {   
-                //luam primele 3 taguri asemanatoare
+            if (mIsSearching)
+                mSetupProgressBar(progressBar, Visibility.Collapsed);
 
+            if (contentHolder.Items.Count == 0 && mIsSearching)
+            {
+                //luam primele 3 taguri asemanatoare
+                if (mIsSearching)
+                    mSetupProgressBar(progressBar, Visibility.Visible);
                 SimilarTags similarTags = new SimilarTags(tag);
                 List<String> tags = null;
                 try
@@ -88,18 +96,19 @@ namespace MediaPlayer
                 {
                     return;
                 }
-                mSetupProgressBar(progressBar, 15 * Math.Min(tags.Count, 3));
                 for (int i = 0; i < tags.Count && i < 3 && mIsSearching; i++)
                 {
                     try
                     {
                         mSimilarTracks = new TopTracksByTag(tags[i]);
-                        await mSimilarTracks.Get(15 , progressBar , contentHolder);
+                        await mSimilarTracks.Get(15, contentHolder);
                     }
                     catch (Exception error)
                     {
                     }
                 }
+                if (mIsSearching)
+                    mSetupProgressBar(progressBar, Visibility.Collapsed);
             }
         }
     }
