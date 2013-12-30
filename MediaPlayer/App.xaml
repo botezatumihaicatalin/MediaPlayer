@@ -18,6 +18,7 @@
             <SolidColorBrush x:Key="ToggleSwitchCurtainDisabledBackgroundThemeBrush" Color="Transparent" />
             <SolidColorBrush x:Key="ToggleSwitchCurtainPointerOverBackgroundThemeBrush" Color="White" />
             <SolidColorBrush x:Key="ToggleSwitchCurtainPressedBackgroundThemeBrush" Color="White" />
+            <x:String x:Key="ProgressBarIndeterminateForegroundThemeBrush">#CCCCCC</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

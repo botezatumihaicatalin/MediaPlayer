@@ -33,7 +33,7 @@
                             <CompositeTransform ScaleX="1.2" ScaleY="1.2"/>
                         </AppBarButton.RenderTransform>
                     </AppBarButton>
-
+                    <ProgressBar x:Name="progressTracker" Canvas.Top="60" HorizontalAlignment="Left" IsIndeterminate="True" Height="10" VerticalAlignment="Top" Width="1366"/>
                 </Canvas>
             </Viewbox>
         </AppBar>
@@ -74,7 +74,7 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <ProgressBar x:Name="progressTracker" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="1366"/>
+
     </Grid>
 
     <Page.BottomAppBar>
