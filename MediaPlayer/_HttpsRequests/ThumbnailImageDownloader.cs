@@ -40,7 +40,8 @@ namespace MediaPlayer._HttpsRequests
         }
 
         /// <summary>
-        /// Enqueues the Uri to be downloaded and saved to Local Application Folder with the name 'thumbnail.jpg'
+        /// Enqueues the Uri to be downloaded and saved to Local Application Folder with the name 'thumbnail.jpg' and sets 
+        /// the MediaControl.AlbumArt value with the image when its downloaded.
         /// </summary>
         /// <param name="uri">The Uri to be downloaded</param>
         public void EnqueueToDownload(Uri uri)
@@ -49,6 +50,17 @@ namespace MediaPlayer._HttpsRequests
             {
                 lock (mLock)
                     mUriQueue.Enqueue(uri);
+            }
+        }
+
+        /// <summary>
+        /// Clears the download queue.
+        /// </summary>
+        public void ClearDownloadQueue()
+        {
+            lock(mLock)
+            {
+                mUriQueue.Clear();
             }
         }
 

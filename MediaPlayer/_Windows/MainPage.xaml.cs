@@ -68,7 +68,6 @@ namespace MediaPlayer
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
-            ThmbnailImageDownloader.GetInstance().EnqueueToDownload(new Uri("http://d24w6bsrhbeh9d.cloudfront.net/photo/aEwMmbx_700b_v1.jpg"));
             list.ItemClick += Grid_ItemClick;
         }
 

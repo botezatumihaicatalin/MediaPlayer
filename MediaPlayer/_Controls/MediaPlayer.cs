@@ -143,6 +143,7 @@ namespace MediaPlayer
                 {
                     MediaControl.TrackName = CurrentTrack.Name;
                     MediaControl.ArtistName = CurrentTrack.Artist;
+                    ThmbnailImageDownloader.GetInstance().ClearDownloadQueue();
                     ThmbnailImageDownloader.GetInstance().EnqueueToDownload(CurrentTrack.ImageUri);
                 }
             }
