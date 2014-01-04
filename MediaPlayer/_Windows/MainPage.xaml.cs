@@ -22,6 +22,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using MediaPlayer._HttpsRequests;
+using MediaPlayer._Data;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -66,7 +68,7 @@ namespace MediaPlayer
             MediaControl.PlayPressed += MediaControl_PlayPressed;
             MediaControl.PausePressed += MediaControl_PausePressed;
             MediaControl.PlayPauseTogglePressed += MediaControl_PlayPauseTogglePressed;
-
+            ThmbnailImageDownloader.GetInstance().EnqueueToDownload(new Uri("http://d24w6bsrhbeh9d.cloudfront.net/photo/aEwMmbx_700b_v1.jpg"));
             list.ItemClick += Grid_ItemClick;
         }
 

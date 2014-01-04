@@ -14,6 +14,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using MediaPlayer._HttpsRequests;
 
 namespace MediaPlayer
 {
@@ -32,10 +33,11 @@ namespace MediaPlayer
         private static readonly object mLock = new object();
         private static double mVolume;
 
+
         public static Track CurrentTrack
         {
             get { return mCurrentTrack; }
-            set { mCurrentTrack = value; mPlayed = 0.0 ; mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0; }
+            set { mCurrentTrack = value; mPlayed = 0.0; if (mCurrentTrack != null && mSlider != null) mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0; }
         }
         public static bool PlayButtonState
         {
@@ -82,6 +84,7 @@ namespace MediaPlayer
                 }
                 Volume = 1.0;
             }
+
             mPlayPauseButton = playPauseButton;
 
             if (mMedia.CurrentState == MediaElementState.Playing)
@@ -95,8 +98,10 @@ namespace MediaPlayer
             
             mSlider = progressSlider;
             if (mCurrentTrack != null)
-            {
-                mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0;
+            {                
+                if (mSlider != null)
+                    mSlider.Maximum = mCurrentTrack.Duration * 4.0 / 5.0;
+
                 videoImageHolder.Source = new BitmapImage(mCurrentTrack.ImageUri);
                 videoTitleHolder.Text = mCurrentTrack.Name + " - " + mCurrentTrack.Artist;
             }
@@ -119,35 +124,47 @@ namespace MediaPlayer
         private static void mMedia_MediaEnded(object sender, RoutedEventArgs e)
         {
             Stop();
-            mPlayed = mSlider.Maximum;
-            if (OnMediaEnded != null) OnMediaEnded(EventArgs.Empty);
+            
+            if (mSlider != null)
+                mPlayed = mSlider.Maximum;
+
+            if (OnMediaEnded != null) 
+                OnMediaEnded(EventArgs.Empty);
         }
 
         private static async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             if (mMedia.CurrentState == MediaElementState.Opening)
             {
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
-                MediaControl.TrackName = CurrentTrack.Name;
-                MediaControl.ArtistName = CurrentTrack.Artist;
-                await mSaveImageToFile(CurrentTrack.ImageUri);
-                MediaControl.AlbumArt = new Uri("ms-appdata:///Local/thumbnail.jpg");
+                if (mPlayPauseButton != null)
+                    mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
+              
+                if (mCurrentTrack != null)
+                {
+                    MediaControl.TrackName = CurrentTrack.Name;
+                    MediaControl.ArtistName = CurrentTrack.Artist;
+                    ThmbnailImageDownloader.GetInstance().EnqueueToDownload(CurrentTrack.ImageUri);
+                }
             }
             if (mMedia.CurrentState == MediaElementState.Playing)
             {
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
+                if (mPlayPauseButton != null)
+                    mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/pause_147x147.png"));
             }
             if (mMedia.CurrentState == MediaElementState.Paused)
             {
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+                if (mPlayPauseButton != null)
+                    mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
             if (mMedia.CurrentState == MediaElementState.Stopped)
             {
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+                if (mPlayPauseButton != null)
+                    mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
             if (mMedia.CurrentState == MediaElementState.Buffering)
             {
-                mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
+                if (mPlayPauseButton != null)
+                    mPlayPauseButton.Source = new BitmapImage(new Uri("ms-appx:///Assets/play_147x147.png"));
             }
         }
 
@@ -157,32 +174,36 @@ namespace MediaPlayer
 
         private static void mTick(object sender, object e)
         {
-            if (mMedia.CurrentState == MediaElementState.Playing && mPlayed <= mCurrentTrack.Duration * 4.0 * mMedia.DownloadProgress / 5.0)
+            lock (mLock)
             {
-                mPlayed += 0.1;
-                if (mPlayed >= 2.0 && mPlayed <= 2.1)
+                if (mMedia.CurrentState == MediaElementState.Playing && mCurrentTrack != null && mPlayed <= mCurrentTrack.Duration * 4.0 * mMedia.DownloadProgress / 5.0)
                 {
-                    try
+                    mPlayed += 0.1;
+                    if (mPlayed >= 2.0 && mPlayed <= 2.1)
                     {
-                        ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
-                        ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                        try
+                        {
+                            ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                            ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                        }
+                        catch (Exception) { }
                     }
-                    catch (Exception) { }
                 }
+                if (mSlider != null)
+                    mSlider.Value = mPlayed;
             }
-            mSlider.Value = mPlayed;
         }
 
         public static void Play()
         {
             lock (mLock)
             {
-                if (mMedia.Source != new Uri(mCurrentTrack.CacheUriString))
+                if (mCurrentTrack != null && mMedia.Source != new Uri(mCurrentTrack.CacheUriString))
                 {
                     mMedia.Source = new Uri(mCurrentTrack.CacheUriString);
                 }
 
-                if (mPlayed == mSlider.Maximum)
+                if (mSlider != null && mPlayed == mSlider.Maximum)
                     mPlayed = 0;
 
                 mPlayPause = true;
@@ -213,48 +234,5 @@ namespace MediaPlayer
             if (mPlayPause) Pause();
             else Play();
         }
-        private static async Task mSaveImageToFile(Uri path)
-        {
-            HttpWebRequest request;
-            WebResponse response;
-            Stream stream;
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile storageFile = await storageFolder.CreateFileAsync("thumbnail.jpg", CreationCollisionOption.ReplaceExisting);
-
-            request = (HttpWebRequest)WebRequest.Create(path);
-            try
-            {
-                request = (HttpWebRequest)WebRequest.Create(path);
-                response = await request.GetResponseAsync();
-                stream = response.GetResponseStream();
-
-                using (IRandomAccessStream fileStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    using (IOutputStream outputStream = fileStream.GetOutputStreamAt(0))
-                    {
-                        using (DataWriter dataWriter = new DataWriter(outputStream))
-                        {
-                            int one_byte;
-                            while ((one_byte = stream.ReadByte()) != -1)
-                            {
-                                dataWriter.WriteByte(Convert.ToByte(one_byte));
-                            }
-                            await dataWriter.StoreAsync();
-                            dataWriter.DetachStream();
-                            dataWriter.Dispose();
-                        }
-                        outputStream.Dispose();
-                    }
-                    fileStream.Dispose();
-                }
-                stream.Dispose();
-                response.Dispose();
-            }
-            catch (Exception er)
-            {
-
-            }
-        }
-
     }
 }

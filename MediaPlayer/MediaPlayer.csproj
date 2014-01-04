@@ -109,6 +109,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="_HttpsRequests\ThumbnailImageDownloader.cs" />
     <Compile Include="_Data\DatabaseHelper.cs" />
     <Compile Include="_Data\DataLayer.cs" />
     <Compile Include="_Data\GlobalArray.cs" />

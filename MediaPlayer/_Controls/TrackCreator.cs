@@ -59,7 +59,10 @@ namespace MediaPlayer
             mPageScrapper.Cancel();
         }
 
-
+        /// <summary>
+        /// Creates the Track from the XML given in constructor of TrackCreator.
+        /// </summary>
+        /// <returns> Returns Track </returns>
         public async Task<Track> GetFromXML()
         {
             mIsSearching = true;
