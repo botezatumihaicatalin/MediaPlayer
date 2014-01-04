@@ -82,7 +82,6 @@ namespace MediaPlayer
         private async void RemoveExtendedSplash()
         {
             await Task.Delay(TimeSpan.FromSeconds(1.5));
-            //Window.Current.Content = new MainPage();
             RootFrame = new Frame();
             RootFrame.Style = App.Current.Resources["RootFrameStyle"] as Style;
             RootFrame.Navigate(typeof(MainPage));

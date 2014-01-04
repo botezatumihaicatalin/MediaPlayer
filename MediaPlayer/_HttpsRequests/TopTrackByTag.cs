@@ -28,6 +28,8 @@ namespace MediaPlayer
             get;
             set;
         }
+
+
         public TopTracksByTag(String tag)
         {
             mRunningTasks = 0;
@@ -40,6 +42,9 @@ namespace MediaPlayer
                 mTrackCreators[i] = new TrackCreator();
         }
 
+        /// <summary>
+        /// Cancels the search that was requested.
+        /// </summary>
         public void CancelCurrentSearch()
         {
             mClient.CancelPendingRequests();
@@ -72,6 +77,13 @@ namespace MediaPlayer
             }
         }
 
+        /// <summary>
+        /// Download the top tracks from the given tag in the TopTrackByTag constructor
+        /// </summary>
+        /// <param name="numberOfTracks">The number of tracks to be downloaded</param>
+        /// <param name="contentHolder">(optional) The gridview where the track is shown , if Track is binded to the Gridview</param>
+        /// <returns>Returns Task</returns>  
+        /// 
         public async Task Get(int numberOfTracks , GridView contentHolder = null)
         {
             mIsSearching = true;

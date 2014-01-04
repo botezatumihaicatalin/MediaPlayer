@@ -201,6 +201,8 @@ namespace MediaPlayer
             nextTrack();
         }
 
+        
+
         private async void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             if (SettingsFlyout1.Queue == false)

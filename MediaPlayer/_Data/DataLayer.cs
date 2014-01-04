@@ -27,7 +27,7 @@ namespace MediaPlayer
 
         private async void mSetupProgressBar(ProgressBar progressBar, Visibility vizibility)
         {
-            if (progressBar == null)
+            if (progressBar == null || vizibility == null)
                 return;
 
             await progressBar.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
@@ -36,6 +36,12 @@ namespace MediaPlayer
             });
         }
 
+        /// <summary>
+        /// Gets the top 3 most searched tags and then downloads 100 tracks from these tags (33 for each tag)
+        /// </summary>
+        /// <param name="progressBar">An indeterminate ProgressBar to update when the download starts and ends.</param>
+        /// <param name="contentHolder">The GridView where the tracks are shown.</param>
+        /// <returns>Returns Task</returns>
         public async Task GetTracksByPreferences(ProgressBar progressBar, GridView contentHolder)
         {
             mIsSearching = true;
@@ -44,7 +50,7 @@ namespace MediaPlayer
             List<String> tags = await Preferences.getTopTags();
 
             int n = tags.Count;
-
+            
 
             for (int i = 0; i < n && mIsSearching; i++)
             {
@@ -62,6 +68,13 @@ namespace MediaPlayer
                 mSetupProgressBar(progressBar, Visibility.Collapsed);
         }
 
+        /// <summary>
+        /// Tries to download 100 tracks from the given tag , if not it downloads the similar tags and then downloads 45 tracks for the first 3 tags
+        /// </summary>
+        /// <param name="progressBar">An indeterminate ProgressBar to update when the download starts and ends.</param>
+        /// <param name="contentHolder">The GridView where the tracks are shown.</param>
+        /// <param name="tag">The tag where tracks will be searched</param>
+        /// <returns>Returns Task</returns>
         public async Task GetTrackByTag(ProgressBar progressBar, GridView contentHolder, String tag)
         {
             mIsSearching = true;
