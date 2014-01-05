@@ -184,8 +184,8 @@ namespace MediaPlayer
                     {
                         try
                         {
-                            ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
-                            ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, CurrentTrack.ImageUri.AbsoluteUri);
+                            ToastAndTileNotifications.ToastNotifications(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
+                            ToastAndTileNotifications.LiveTileOn(CurrentTrack.Artist, CurrentTrack.Name, "ms-appdata:///Local/thumbnail.jpg");
                         }
                         catch (Exception) { }
                     }
