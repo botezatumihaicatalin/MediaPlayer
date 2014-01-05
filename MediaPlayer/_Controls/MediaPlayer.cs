@@ -132,7 +132,7 @@ namespace MediaPlayer
                 OnMediaEnded(EventArgs.Empty);
         }
 
-        private static async void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
+        private static void mMedia_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             if (mMedia.CurrentState == MediaElementState.Opening)
             {

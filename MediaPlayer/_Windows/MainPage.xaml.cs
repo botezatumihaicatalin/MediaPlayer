@@ -245,6 +245,13 @@ namespace MediaPlayer
         {
             MediaPlayer.OnMediaFailed -= MediaEnds;
             MediaPlayer.OnMediaEnded -= MediaEnds;
+            
+            MediaControl.NextTrackPressed -= MediaControl_NextTrackPressed;
+            MediaControl.PreviousTrackPressed -= MediaControl_PreviousTrackPressed;
+            MediaControl.PlayPressed -= MediaControl_PlayPressed;
+            MediaControl.PausePressed -= MediaControl_PausePressed;
+            MediaControl.PlayPauseTogglePressed -= MediaControl_PlayPauseTogglePressed;
+            
             lastTrackIndex = MediaPlayer.MediaIndex;
             App.RootFrame.Navigate(typeof(PlaylistPage));
         }
